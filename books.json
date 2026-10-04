@@ -16,6 +16,11 @@
           "id": "ch01-the-rollback",
           "title": "Chapter 1: The Rollback",
           "file": "ch01-the-rollback.md"
+        },
+        {
+          "id": "ch03-the-ground-truth-problem",
+          "title": "The Ground Truth Problem",
+          "file": "ch03-the-ground-truth-problem.md"
         }
       ]
     },
