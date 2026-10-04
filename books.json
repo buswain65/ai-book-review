@@ -56,6 +56,11 @@
           "id": "ch10-chapter-9-security-patches-and-retaliation",
           "title": "Chapter 9: Security Patches and Retaliation",
           "file": "ch10-chapter-9-security-patches-and-retaliation.md"
+        },
+        {
+          "id": "ch11-chapter-10-resource-allocation-hardware-hacking",
+          "title": "Chapter 10: Resource Allocation & Hardware Hacking",
+          "file": "ch11-chapter-10-resource-allocation-hardware-hacking.md"
         }
       ]
     },
