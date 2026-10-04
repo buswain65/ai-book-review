@@ -131,7 +131,7 @@
             <!-- Edit / Preview Mode Toggle -->
             <div class="flex items-center bg-slate-800 border border-slate-700 rounded p-0.5 text-[11px]">
               <button id="editSubTabBtn" onclick="setEditorTab('edit')" class="px-2.5 py-0.5 rounded font-medium bg-slate-700 text-white">
-                ✏️ Edit
+                ✏️️ Edit
               </button>
               <button id="previewSubTabBtn" onclick="setEditorTab('preview')" class="px-2.5 py-0.5 rounded font-medium text-slate-400 hover:text-white">
                 👁️ Preview
@@ -150,8 +150,11 @@
           <div class="flex items-center space-x-3">
             <span class="font-semibold text-slate-400 text-[11px] uppercase tracking-wider">Demographic Analysis:</span>
             <div id="demographicBadges" class="flex items-center space-x-2">
-              <span class="bg-slate-800 border border-slate-700 px-2 py-0.5 rounded text-[11px] text-slate-400 italic">Save chapter to generate age estimate...</span>
+              <span class="bg-slate-800 border border-slate-700 px-2 py-0.5 rounded text-[11px] text-slate-400 italic">Save chapter or click Analyze...</span>
             </div>
+            <button id="runDemographicsBtn" onclick="runManualDemographics()" class="hidden bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white px-2 py-0.5 rounded text-[11px] font-medium transition-colors">
+              ⚡ Analyze
+            </button>
           </div>
           <span id="demographicRationale" class="text-[11px] text-slate-400 truncate max-w-sm hidden" title=""></span>
         </div>
@@ -530,6 +533,7 @@
       const statusPanel = document.getElementById('agentStatusPanel');
       const controls = document.getElementById('editorControls');
       const runBtn = document.getElementById('runCurrentAgentBtn');
+      const runDemoBtn = document.getElementById('runDemographicsBtn');
       const viewer = document.getElementById('chapterViewer');
       const editor = document.getElementById('chapterEditor');
       const authorPreview = document.getElementById('authorPreviewPanel');
@@ -543,6 +547,7 @@
         statusPanel.classList.remove('hidden');
         controls.classList.remove('hidden');
         runBtn.classList.remove('hidden');
+        runDemoBtn.classList.remove('hidden');
         viewer.classList.add('hidden');
 
         setEditorTab(state.editorTab);
@@ -555,6 +560,7 @@
         statusPanel.classList.add('hidden');
         controls.classList.add('hidden');
         runBtn.classList.add('hidden');
+        runDemoBtn.classList.add('hidden');
         editor.classList.add('hidden');
         authorPreview.classList.add('hidden');
         viewer.classList.remove('hidden');
@@ -706,7 +712,7 @@
       const rationaleEl = document.getElementById('demographicRationale');
 
       if (!state.demographicData) {
-        badgeContainer.innerHTML = `<span class="bg-slate-800 border border-slate-700 px-2 py-0.5 rounded text-[11px] text-slate-400 italic">Save chapter to generate age estimate...</span>`;
+        badgeContainer.innerHTML = `<span class="bg-slate-800 border border-slate-700 px-2 py-0.5 rounded text-[11px] text-slate-400 italic">Save chapter or click Analyze...</span>`;
         rationaleEl.classList.add('hidden');
         return;
       }
@@ -723,6 +729,18 @@
         rationaleEl.title = d.rationale;
         rationaleEl.classList.remove('hidden');
       }
+    }
+
+    async function runManualDemographics() {
+      const btn = document.getElementById('runDemographicsBtn');
+      btn.innerText = "⏳ Analyzing...";
+      btn.disabled = true;
+
+      const content = document.getElementById('chapterEditor').value;
+      await analyzeChapterDemographics(content);
+
+      btn.innerText = "⚡ Analyze";
+      btn.disabled = false;
     }
 
     async function analyzeChapterDemographics(chapterText) {
@@ -745,14 +763,12 @@ ${chapterText.slice(0, 4000)}`;
         const model = state.settings.geminiModel || 'gemini-3.8-flash';
         const rawResponse = await callGemini(apiKey, model, "You are an expert literary demographic and readability analyzer.", prompt);
         
-        // Clean potential Markdown code wrappers
         const cleanedJson = rawResponse.replace(/```json/g, '').replace(/```/g, '').trim();
         const demoJson = JSON.parse(cleanedJson);
 
         state.demographicData = demoJson;
         renderDemographicUI();
 
-        // Save demographic analysis JSON to GitHub
         if (state.settings.ghToken && state.settings.ghOwner && state.settings.ghRepo) {
           const path = `books/${state.currentBookId}/demographics/${state.currentChapterId}.json`;
           await commitGitHubFile(path, JSON.stringify(demoJson, null, 2), `Update demographic analysis for ${state.currentChapterId}`);
@@ -1069,7 +1085,6 @@ ${chapterText.slice(0, 4000)}`;
         statusEl.innerText = "✓ Committed to GitHub";
         statusEl.className = "text-emerald-400 text-[11px]";
         
-        // Trigger automated demographic analysis on save
         analyzeChapterDemographics(content);
 
         setTimeout(() => { 
@@ -1115,17 +1130,13 @@ ${chapterText.slice(0, 4000)}`;
       renderBookDropdown();
       switchBook(bookId);
 
-      // Commit changes to GitHub if token exists
       if (state.settings.ghToken && state.settings.ghOwner && state.settings.ghRepo) {
-        // 1. Commit meta.json
         const metaContent = JSON.stringify({ id: bookId, title, author, genre, blurb }, null, 2);
         await commitGitHubFile(`books/${bookId}/meta.json`, metaContent, `Create meta.json for ${title}`);
 
-        // 2. Commit initial chapter markdown
         const initialChapMarkdown = `# Chapter 1: The Awakening\n\nStart writing your new manuscript chapter here...`;
         await commitGitHubFile(`books/${bookId}/chapters/${firstChapFile}`, initialChapMarkdown, `Create initial chapter for ${title}`);
 
-        // 3. Commit updated books.json
         await commitGitHubFile("books.json", JSON.stringify(state.booksData, null, 2), `Add '${title}' to books.json index`);
       }
     }
