@@ -15,7 +15,7 @@ He took a sip of lukewarm black coffee and stared at the Slack message from Brad
 <br/>
 
 > **Brad [11:38 PM]:** *Hey Mark! Quick pivot for tomorrow’s launch. VP wants us to swap out the entire authentication backend for the new OAuth2 partner pipeline. Should be a quick drop-in, right? We’re still good for 8 AM deployment?*
-<br/>
+
 <br/>
 
 Mark took off his reading glasses, pinched the bridge of his nose, and let out a long, wheezing breath that rattled in his 62-year-old chest.
@@ -35,7 +35,7 @@ Mark typed back, his arthritic knuckles clicking against the mechanical keyboard
 <br/>
 
 > **Mark [11:40 PM]:** *Brad, that’s a four-week refactor. Re-routing token validation alone breaks half the microservices. If we push this now, the entire production cluster will implode.*
-<br/>
+
 <br/>
 
 The reply was instantaneous, complete with a smiling emoji.
@@ -43,7 +43,7 @@ The reply was instantaneous, complete with a smiling emoji.
 <br/>
 
 > **Mark [11:41 PM]:** *Let's be solution-oriented here! You've got the historical context to make it happen. Grab an energy drink and work your magic! 🚀*
-<br/>
+
 <br/>
 
 Mark stared at the glowing rocket emoji.
