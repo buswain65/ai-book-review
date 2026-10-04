@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Book Critic</title>
+  <title>StoryForge Studio</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Marked.js CDN for Markdown Parsing -->
@@ -34,7 +34,7 @@
     <div class="flex items-center space-x-4">
       <div class="flex items-center space-x-2">
         <span class="text-2xl">📚</span>
-        <h1 class="font-bold text-lg tracking-wide text-white">AI Book Critic</h1>
+        <h1 class="font-bold text-lg tracking-wide text-white">StoryForge Studio</h1>
       </div>
 
       <!-- Book Selector Dropdown -->
@@ -46,10 +46,10 @@
     </div>
 
     <div class="flex items-center space-x-3">
-      <!-- Mode Badge / Switcher -->
+      <!-- Mode Switcher -->
       <div class="flex items-center bg-slate-800 border border-slate-700 rounded-lg p-1 text-xs">
         <button id="viewModeBtn" onclick="setMode('view')" class="px-3 py-1 rounded-md font-medium transition-colors bg-brand-600 text-white">
-          👁️ Reader Mode
+          📖 Reader Mode
         </button>
         <button id="authorModeBtn" onclick="setMode('author')" class="px-3 py-1 rounded-md font-medium transition-colors text-slate-400 hover:text-white">
           ⚡ Author Mode
@@ -96,26 +96,41 @@
     <!-- CENTER & RIGHT: SPLIT SCREEN WORKSPACE -->
     <main class="flex-1 flex overflow-hidden">
 
-      <!-- LEFT PANEL: MANUSCRIPT EDITOR / READER -->
+      <!-- LEFT PANEL: MANUSCRIPT EDITOR / READER / PREVIEW -->
       <section id="manuscriptPanel" class="flex-1 flex flex-col border-r border-slate-800 min-w-[300px] bg-slate-950">
         <div class="h-10 border-b border-slate-800 bg-slate-900/30 px-4 flex items-center justify-between text-xs text-slate-400 shrink-0">
           <span id="currentChapterTitle" class="font-medium text-slate-200">No chapter selected</span>
-          <div id="editorControls" class="hidden flex items-center space-x-2">
+          
+          <div id="editorControls" class="hidden flex items-center space-x-3">
+            <!-- Edit / Preview Mode Toggle -->
+            <div class="flex items-center bg-slate-800 border border-slate-700 rounded p-0.5 text-[11px]">
+              <button id="editSubTabBtn" onclick="setEditorTab('edit')" class="px-2.5 py-0.5 rounded font-medium bg-slate-700 text-white">
+                ✏️ Edit
+              </button>
+              <button id="previewSubTabBtn" onclick="setEditorTab('preview')" class="px-2.5 py-0.5 rounded font-medium text-slate-400 hover:text-white">
+                👁️ Preview
+              </button>
+            </div>
+
             <span id="saveStatus" class="text-slate-500 text-[11px]">Saved</span>
-            <button onclick="saveCurrentChapter()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1 rounded border border-slate-700 transition-colors">
+            <button onclick="saveCurrentChapter()" class="bg-brand-600 hover:bg-brand-500 text-white px-2.5 py-1 rounded font-medium transition-colors">
               💾 Commit Chapter
             </button>
           </div>
         </div>
 
         <div class="flex-1 relative overflow-hidden">
-          <!-- Rendered View (Reader Mode) -->
+          <!-- Reader View (View Mode) -->
           <div id="chapterViewer" class="absolute inset-0 p-8 overflow-y-auto prose prose-invert prose-slate max-w-3xl mx-auto leading-relaxed text-slate-200">
             <p class="text-slate-500 italic">Select a chapter from the left menu to start reading.</p>
           </div>
 
           <!-- Markdown Editor (Author Mode) -->
-          <textarea id="chapterEditor" class="hidden absolute inset-0 w-full h-full p-6 bg-slate-950 text-slate-100 font-mono text-sm leading-relaxed border-none focus:ring-0 resize-none outline-none" placeholder="Write your chapter markdown here..."></textarea>
+          <textarea id="chapterEditor" oninput="markUnsaved()" class="hidden absolute inset-0 w-full h-full p-6 bg-slate-950 text-slate-100 font-mono text-sm leading-relaxed border-none focus:ring-0 resize-none outline-none" placeholder="Write your chapter markdown here..."></textarea>
+
+          <!-- Markdown Live Preview Panel (Author Mode) -->
+          <div id="authorPreviewPanel" class="hidden absolute inset-0 p-8 overflow-y-auto prose prose-invert prose-slate max-w-3xl mx-auto leading-relaxed text-slate-200 bg-slate-950">
+          </div>
         </div>
       </section>
 
@@ -164,7 +179,7 @@
             <input type="text" id="ghOwnerInput" placeholder="username" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500" />
           </div>
           <div>
-            <label class="block font-medium text-slate-200 mb-1">GitHub Repository</label>
+            <label class="block font-medium text-slate-200 mb-1">GitHub Repository Name</label>
             <input type="text" id="ghRepoInput" placeholder="my-book-repo" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500" />
           </div>
         </div>
@@ -250,11 +265,12 @@
     // --- STATE MANAGEMENT ---
     let state = {
       mode: 'view', // 'view' or 'author'
+      editorTab: 'edit', // 'edit' or 'preview' (in Author mode)
       booksData: null,
       currentBookId: null,
       currentChapterId: null,
       selectedAgentKey: 'publisher',
-      reviews: {}, // Stores review content per chapter and agent
+      reviews: {},
       settings: {
         ghToken: '',
         ghOwner: '',
@@ -304,6 +320,38 @@
       document.getElementById('settingsModal').classList.toggle('hidden');
     }
 
+    function markUnsaved() {
+      const statusEl = document.getElementById('saveStatus');
+      statusEl.innerText = "Unsaved changes";
+      statusEl.className = "text-amber-400 text-[11px]";
+    }
+
+    function setEditorTab(tab) {
+      state.editorTab = tab;
+      const editBtn = document.getElementById('editSubTabBtn');
+      const prevBtn = document.getElementById('previewSubTabBtn');
+      const editor = document.getElementById('chapterEditor');
+      const previewPanel = document.getElementById('authorPreviewPanel');
+
+      if (tab === 'preview') {
+        editBtn.className = "px-2.5 py-0.5 rounded font-medium text-slate-400 hover:text-white";
+        prevBtn.className = "px-2.5 py-0.5 rounded font-medium bg-slate-700 text-white";
+        
+        // Render current textarea text into preview div
+        const markdown = editor.value;
+        previewPanel.innerHTML = marked.parse(markdown || "*No content to preview*");
+        
+        editor.classList.add('hidden');
+        previewPanel.classList.remove('hidden');
+      } else {
+        prevBtn.className = "px-2.5 py-0.5 rounded font-medium text-slate-400 hover:text-white";
+        editBtn.className = "px-2.5 py-0.5 rounded font-medium bg-slate-700 text-white";
+        
+        previewPanel.classList.add('hidden');
+        editor.classList.remove('hidden');
+      }
+    }
+
     function setMode(mode) {
       state.mode = mode;
       const viewBtn = document.getElementById('viewModeBtn');
@@ -315,6 +363,7 @@
       const runBtn = document.getElementById('runCurrentAgentBtn');
       const viewer = document.getElementById('chapterViewer');
       const editor = document.getElementById('chapterEditor');
+      const authorPreview = document.getElementById('authorPreviewPanel');
 
       if (mode === 'author') {
         viewBtn.className = "px-3 py-1 rounded-md font-medium transition-colors text-slate-400 hover:text-white";
@@ -325,7 +374,8 @@
         controls.classList.remove('hidden');
         runBtn.classList.remove('hidden');
         viewer.classList.add('hidden');
-        editor.classList.remove('hidden');
+
+        setEditorTab(state.editorTab);
       } else {
         authorBtn.className = "px-3 py-1 rounded-md font-medium transition-colors text-slate-400 hover:text-white";
         viewBtn.className = "px-3 py-1 rounded-md font-medium transition-colors bg-brand-600 text-white";
@@ -335,6 +385,7 @@
         controls.classList.add('hidden');
         runBtn.classList.add('hidden');
         editor.classList.add('hidden');
+        authorPreview.classList.add('hidden');
         viewer.classList.remove('hidden');
       }
       renderAgentTabs();
@@ -345,21 +396,19 @@
       renderAgentTabs();
       renderAgentStatus();
 
-      // Attempt to load books.json from GitHub repo or local fallback
       try {
         if (state.settings.ghOwner && state.settings.ghRepo) {
           const url = `https://raw.githubusercontent.com/${state.settings.ghOwner}/${state.settings.ghRepo}/main/books.json`;
-          const res = await fetch(url);
+          const res = await fetch(url, { cache: "no-store" });
           if (res.ok) {
             state.booksData = await res.json();
           }
         }
       } catch (e) {
-        console.warn("Could not fetch remote books.json, loading demo data.", e);
+        console.warn("Could not fetch remote books.json, loading fallback data.", e);
       }
 
       if (!state.booksData) {
-        // Fallback Demo Data
         state.booksData = {
           books: [
             {
@@ -408,61 +457,58 @@
       `).join('');
     }
 
-	async function loadChapter(chapterId) {
-	  state.currentChapterId = chapterId;
+    async function loadChapter(chapterId) {
+      state.currentChapterId = chapterId;
 
-	  // Highlight active chapter in sidebar
-	  document.querySelectorAll('#chapterList button').forEach(b => b.classList.remove('bg-slate-800', 'text-white'));
-	  const activeBtn = document.getElementById(`chap-btn-${chapterId}`);
-	  if (activeBtn) activeBtn.classList.add('bg-slate-800', 'text-white');
+      document.querySelectorAll('#chapterList button').forEach(b => b.classList.remove('bg-slate-800', 'text-white'));
+      const activeBtn = document.getElementById(`chap-btn-${chapterId}`);
+      if (activeBtn) activeBtn.classList.add('bg-slate-800', 'text-white');
 
-	  const book = state.booksData.books.find(b => b.id === state.currentBookId);
-	  const chap = book.chapters.find(c => c.id === chapterId);
-	  document.getElementById('currentChapterTitle').innerText = `${book.title} — ${chap.title}`;
+      const book = state.booksData.books.find(b => b.id === state.currentBookId);
+      const chap = book.chapters.find(c => c.id === chapterId);
+      document.getElementById('currentChapterTitle').innerText = `${book.title} — ${chap.title}`;
 
-	  // Show loading indicator
-	  document.getElementById('chapterEditor').value = "Loading chapter from GitHub...";
-	  document.getElementById('chapterViewer').innerHTML = "<p class='text-slate-400 italic'>Loading chapter from GitHub...</p>";
+      document.getElementById('chapterEditor').value = "Loading chapter from GitHub...";
+      document.getElementById('chapterViewer').innerHTML = "<p class='text-slate-400 italic'>Loading chapter from GitHub...</p>";
 
-	  let content = "";
+      let content = "";
 
-	  if (state.settings.ghOwner && state.settings.ghRepo) {
-		const path = `books/${book.id}/chapters/${chap.file}`;
-		const url = `https://api.github.com/repos/${state.settings.ghOwner}/${state.settings.ghRepo}/contents/${path}`;
+      if (state.settings.ghOwner && state.settings.ghRepo) {
+        const path = `books/${book.id}/chapters/${chap.file}`;
+        const url = `https://api.github.com/repos/${state.settings.ghOwner}/${state.settings.ghRepo}/contents/${path}`;
 
-		try {
-		  const headers = { "Accept": "application/vnd.github.v3+json" };
-		  if (state.settings.ghToken) {
-			headers["Authorization"] = `token ${state.settings.ghToken}`;
-		  }
+        try {
+          const headers = { "Accept": "application/vnd.github.v3+json" };
+          if (state.settings.ghToken) {
+            headers["Authorization"] = `token ${state.settings.ghToken}`;
+          }
 
-		  // Fetch file directly via GitHub REST API (Bypasses raw.githubusercontent CDN cache)
-		  const res = await fetch(url, { headers, cache: "no-store" });
-		  
-		  if (res.ok) {
-			const fileData = await res.json();
-			// Decode base64 content safely for UTF-8 / special characters
-			content = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, ''))));
-		  } else {
-			console.warn(`GitHub API returned status ${res.status} for path ${path}`);
-		  }
-		} catch (e) {
-		  console.error("Error fetching chapter from GitHub REST API:", e);
-		}
-	  }
+          const res = await fetch(url, { headers, cache: "no-store" });
+          if (res.ok) {
+            const fileData = await res.json();
+            content = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, ''))));
+          }
+        } catch (e) {
+          console.error("Error fetching chapter from REST API:", e);
+        }
+      }
 
-	  // Fallback if the file does not exist yet on GitHub
-	  if (!content) {
-		content = `# ${chap.title}\n\nStart writing your chapter content here...`;
-	  }
+      if (!content) {
+        content = `# ${chap.title}\n\nStart writing your chapter content here...`;
+      }
 
-	  // Update both Editor and Reader View
-	  document.getElementById('chapterEditor').value = content;
-	  document.getElementById('chapterViewer').innerHTML = marked.parse(content);
+      document.getElementById('chapterEditor').value = content;
+      document.getElementById('chapterViewer').innerHTML = marked.parse(content);
+      if (state.editorTab === 'preview') {
+        document.getElementById('authorPreviewPanel').innerHTML = marked.parse(content);
+      }
 
-	  // Load reviews for the newly loaded chapter
-	  loadChapterReviews();
-	}
+      const statusEl = document.getElementById('saveStatus');
+      statusEl.innerText = "Saved";
+      statusEl.className = "text-slate-500 text-[11px]";
+
+      loadChapterReviews();
+    }
 
     async function loadChapterReviews() {
       state.reviews = {};
@@ -473,14 +519,14 @@
         try {
           if (state.settings.ghOwner && state.settings.ghRepo) {
             const url = `https://raw.githubusercontent.com/${state.settings.ghOwner}/${state.settings.ghRepo}/main/books/${bookId}/reviews/${chapId}/${agentKey}.json`;
-            const res = await fetch(url);
+            const res = await fetch(url, { cache: "no-store" });
             if (res.ok) {
               const reviewData = await res.json();
               state.reviews[agentKey] = reviewData.feedback_markdown;
             }
           }
         } catch (e) {
-          // No saved review yet
+          // No review saved yet
         }
       }
 
@@ -560,7 +606,6 @@
       const systemPrompt = `${agent.prompt}\n\nBook Context:\nTitle: ${book.title}\nGenre: ${book.genre}\nBlurb: ${book.blurb}`;
       const userPrompt = `Please review the following manuscript chapter:\n\n${chapterText}`;
 
-      // Set loading state
       state.reviews[agentKey] = "*Generating critique...*";
       renderAgentStatus();
       renderReviewContent();
@@ -577,7 +622,6 @@
         } else if (agent.provider === 'groq' && state.settings.groqKey) {
           feedback = await callGroq(state.settings.groqKey, agent.model, systemPrompt, userPrompt);
         } else {
-          // Demo Mode Fallback
           feedback = `### ${agent.name} Evaluation (Demo Mode)\n\n*Note: Configure live API keys in Settings to receive real-time evaluations from AI models.*\n\n1. **Strengths:** Strong atmospheric setup and scene opening.\n2. **Areas for Improvement:** Consider tightening the middle exposition.\n3. **Recommendation:** Proceed to next draft polish.`;
         }
 
@@ -654,7 +698,7 @@
       return data.choices?.[0]?.message?.content || "No response generated.";
     }
 
-    // --- GITHUB PERSISTENCE HELPER ---
+    // --- GITHUB PERSISTENCE ---
     async function saveReviewToGitHub(agentKey, feedback) {
       if (!state.settings.ghToken || !state.settings.ghOwner || !state.settings.ghRepo) return;
 
@@ -672,9 +716,8 @@
       const contentEncoded = btoa(unescape(encodeURIComponent(JSON.stringify(payloadData, null, 2))));
 
       try {
-        // Check if file exists to get sha for update
         let sha = null;
-        const getRes = await fetch(url, { headers: { "Authorization": `token ${state.settings.ghToken}` } });
+        const getRes = await fetch(url, { headers: { "Authorization": `token ${state.settings.ghToken}`, "Accept": "application/vnd.github.v3+json" } });
         if (getRes.ok) {
           const existing = await getRes.json();
           sha = existing.sha;
@@ -684,7 +727,8 @@
           method: "PUT",
           headers: {
             "Authorization": `token ${state.settings.ghToken}`,
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Accept": "application/vnd.github.v3+json"
           },
           body: JSON.stringify({
             message: `Update review: ${agentKey} for ${state.currentChapterId}`,
@@ -701,9 +745,11 @@
       const statusEl = document.getElementById('saveStatus');
       const content = document.getElementById('chapterEditor').value;
       
-      // Update rendered reader view
       document.getElementById('chapterViewer').innerHTML = marked.parse(content);
-      
+      if (state.editorTab === 'preview') {
+        document.getElementById('authorPreviewPanel').innerHTML = marked.parse(content);
+      }
+
       if (!state.settings.ghToken || !state.settings.ghOwner || !state.settings.ghRepo) {
         alert("Please configure your GitHub Token, Owner, and Repository in Settings (⚙️) to commit changes.");
         return;
@@ -718,7 +764,6 @@
       statusEl.className = "text-amber-400 text-[11px] animate-pulse";
 
       try {
-        // Step 1: Check if file exists to get the current file SHA
         let sha = null;
         const getRes = await fetch(url, { 
           headers: { 
@@ -732,10 +777,8 @@
           sha = existing.sha;
         }
 
-        // Step 2: Encode text to Base64 (handling UTF-8 characters safely)
         const contentEncoded = btoa(unescape(encodeURIComponent(content)));
 
-        // Step 3: Send PUT request to create/update file directly on GitHub
         const res = await fetch(url, {
           method: "PUT",
           headers: {
@@ -769,12 +812,14 @@
         alert("Error committing chapter: " + e.message);
       }
     }
-    function promptNewChapter() {
+
+    async function promptNewChapter() {
       const title = prompt("Enter new chapter title:");
       if (!title) return;
 
       const book = state.booksData.books.find(b => b.id === state.currentBookId);
-      const chapId = `ch${String(book.chapters.length + 1).padStart(2, '0')}-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+      const chapNumber = String(book.chapters.length + 1).padStart(2, '0');
+      const chapId = `ch${chapNumber}-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
       const fileName = `${chapId}.md`;
 
       const newChap = { id: chapId, title: title, file: fileName };
@@ -782,6 +827,45 @@
 
       renderChapterList(book);
       loadChapter(chapId);
+
+      if (state.settings.ghToken && state.settings.ghOwner && state.settings.ghRepo) {
+        try {
+          const path = "books.json";
+          const url = `https://api.github.com/repos/${state.settings.ghOwner}/${state.settings.ghRepo}/contents/${path}`;
+
+          let sha = null;
+          const getRes = await fetch(url, {
+            headers: { 
+              "Authorization": `token ${state.settings.ghToken}`,
+              "Accept": "application/vnd.github.v3+json"
+            }
+          });
+
+          if (getRes.ok) {
+            const existingData = await getRes.json();
+            sha = existingData.sha;
+          }
+
+          const jsonContent = JSON.stringify(state.booksData, null, 2);
+          const contentEncoded = btoa(unescape(encodeURIComponent(jsonContent)));
+
+          await fetch(url, {
+            method: "PUT",
+            headers: {
+              "Authorization": `token ${state.settings.ghToken}`,
+              "Content-Type": "application/json",
+              "Accept": "application/vnd.github.v3+json"
+            },
+            body: JSON.stringify({
+              message: `Add new chapter '${title}' to books.json index`,
+              content: contentEncoded,
+              sha: sha || undefined
+            })
+          });
+        } catch (err) {
+          console.error("Error committing books.json to GitHub:", err);
+        }
+      }
     }
   </script>
 </body>
