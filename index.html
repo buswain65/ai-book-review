@@ -27,22 +27,20 @@
     }
   </script>
   <style>
-    /* Explicit Blockquote Styling for Reader & Author Preview */
+    /* Blockquote & Markdown Formatting Styles */
     .prose blockquote {
-      border-left: 4px solid #22c55e; /* Brand Green Accent Border */
+      border-left: 4px solid #22c55e;
       padding-left: 1rem;
       margin-top: 1rem;
       margin-bottom: 1rem;
       font-style: italic;
-      color: #94a3b8; /* Soft Slate text */
-      background-color: rgba(30, 41, 59, 0.3); /* Subtle dark background fill */
+      color: #94a3b8;
+      background-color: rgba(30, 41, 59, 0.3);
       padding-top: 0.5rem;
       padding-bottom: 0.5rem;
       border-top-right-radius: 0.375rem;
       border-bottom-right-radius: 0.375rem;
     }
-
-    /* Optional: Clean HR / Scene Break styling (*** or ---) */
     .prose hr {
       border: none;
       border-top: 1px solid #334155;
@@ -81,7 +79,7 @@
 
       <!-- Settings Button (Author Mode Only) -->
       <button id="settingsBtn" onclick="toggleSettingsModal()" class="hidden bg-slate-800 hover:bg-slate-700 border border-slate-700 p-2 rounded-lg text-slate-300 hover:text-white transition-colors" title="Settings & API Keys">
-        ⚙️
+        ⚙
       </button>
     </div>
   </header>
@@ -182,7 +180,7 @@
   <div id="settingsModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
     <div class="bg-slate-900 border border-slate-800 rounded-xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
       <div class="p-4 border-b border-slate-800 flex justify-between items-center">
-        <h2 class="font-semibold text-white">Author Settings & API Configuration</h2>
+        <h2 class="font-semibold text-white">Author Settings & Agent Assignment</h2>
         <button onclick="toggleSettingsModal()" class="text-slate-400 hover:text-white">✕</button>
       </div>
 
@@ -209,25 +207,67 @@
 
         <hr class="border-slate-800" />
 
-        <!-- AI Provider Keys -->
-        <h3 class="font-semibold text-slate-200">AI Provider API Keys</h3>
-        <div class="space-y-3">
-          <div>
-            <label class="block text-xs font-medium text-slate-300 mb-1">Google Gemini API Key</label>
-            <input type="password" id="geminiKeyInput" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-slate-100 text-xs focus:outline-none focus:border-brand-500" />
+        <!-- Provider API Keys & Model Defaults -->
+        <h3 class="font-semibold text-slate-200">AI Provider Keys & Selected Models</h3>
+        <div class="space-y-4">
+          
+          <!-- Gemini -->
+          <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-800 space-y-2">
+            <div class="flex justify-between items-center">
+              <label class="text-xs font-semibold text-slate-200">Google Gemini API</label>
+              <select id="geminiModelInput" class="bg-slate-800 border border-slate-700 text-xs rounded px-2 py-1 text-slate-200">
+                <option value="gemini-3.8-flash">gemini-3.8-flash (Recommended)</option>
+                <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+                <option value="gemini-2.5-pro">gemini-2.5-pro</option>
+              </select>
+            </div>
+            <input type="password" id="geminiKeyInput" placeholder="Gemini API Key" class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-1.5 text-slate-100 text-xs focus:outline-none focus:border-brand-500" />
           </div>
-          <div>
-            <label class="block text-xs font-medium text-slate-300 mb-1">OpenAI API Key</label>
-            <input type="password" id="openaiKeyInput" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-slate-100 text-xs focus:outline-none focus:border-brand-500" />
+
+          <!-- OpenAI -->
+          <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-800 space-y-2">
+            <div class="flex justify-between items-center">
+              <label class="text-xs font-semibold text-slate-200">OpenAI API</label>
+              <select id="openaiModelInput" class="bg-slate-800 border border-slate-700 text-xs rounded px-2 py-1 text-slate-200">
+                <option value="gpt-4o">gpt-4o</option>
+                <option value="gpt-4o-mini">gpt-4o-mini</option>
+              </select>
+            </div>
+            <input type="password" id="openaiKeyInput" placeholder="OpenAI API Key" class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-1.5 text-slate-100 text-xs focus:outline-none focus:border-brand-500" />
           </div>
-          <div>
-            <label class="block text-xs font-medium text-slate-300 mb-1">Anthropic Claude API Key</label>
-            <input type="password" id="anthropicKeyInput" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-slate-100 text-xs focus:outline-none focus:border-brand-500" />
+
+          <!-- Anthropic -->
+          <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-800 space-y-2">
+            <div class="flex justify-between items-center">
+              <label class="text-xs font-semibold text-slate-200">Anthropic Claude API</label>
+              <select id="anthropicModelInput" class="bg-slate-800 border border-slate-700 text-xs rounded px-2 py-1 text-slate-200">
+                <option value="claude-3-5-sonnet-20241022">claude-3-5-sonnet</option>
+                <option value="claude-3-5-haiku-20241022">claude-3-5-haiku</option>
+              </select>
+            </div>
+            <input type="password" id="anthropicKeyInput" placeholder="Anthropic API Key" class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-1.5 text-slate-100 text-xs focus:outline-none focus:border-brand-500" />
           </div>
-          <div>
-            <label class="block text-xs font-medium text-slate-300 mb-1">Groq API Key</label>
-            <input type="password" id="groqKeyInput" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-slate-100 text-xs focus:outline-none focus:border-brand-500" />
+
+          <!-- Groq -->
+          <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-800 space-y-2">
+            <div class="flex justify-between items-center">
+              <label class="text-xs font-semibold text-slate-200">Groq API</label>
+              <select id="groqModelInput" class="bg-slate-800 border border-slate-700 text-xs rounded px-2 py-1 text-slate-200">
+                <option value="llama-3.3-70b-versatile">llama-3.3-70b-versatile</option>
+                <option value="mixtral-8x7b-32768">mixtral-8x7b-32768</option>
+              </select>
+            </div>
+            <input type="password" id="groqKeyInput" placeholder="Groq API Key" class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-1.5 text-slate-100 text-xs focus:outline-none focus:border-brand-500" />
           </div>
+
+        </div>
+
+        <hr class="border-slate-800" />
+
+        <!-- Per-Agent Provider Assignment -->
+        <h3 class="font-semibold text-slate-200">Assign Provider to Each Agent</h3>
+        <div id="agentAssignmentsConfig" class="space-y-3">
+          <!-- Dynamic Agent Assignment UI controls injected via JS -->
         </div>
 
       </div>
@@ -248,7 +288,6 @@
         role: "Acquisitions & Market Feasibility",
         icon: "💼",
         provider: "gemini",
-        model: "gemini-1.5-pro",
         prompt: `You are a senior acquisitions editor at a major publishing house. Analyze the submitted chapter for commercial potential, narrative hooks in the opening, target demographic alignment, pacing, and overall marketability. Provide direct, pragmatic advice.`
       },
       editor: {
@@ -256,7 +295,6 @@
         role: "Structure & Narrative Mechanics",
         icon: "📐",
         provider: "anthropic",
-        model: "claude-3-5-sonnet-20241022",
         prompt: `You are an expert developmental editor. Evaluate the chapter for structural continuity, character motivations, plot logic, world-building coherence, pacing drag points, and scene balance. Focus on actionable improvements to story mechanics.`
       },
       writer: {
@@ -264,7 +302,6 @@
         role: "Prose & Narrative Craft",
         icon: "✍️",
         provider: "openai",
-        model: "gpt-4o",
         prompt: `You are an experienced peer fiction author. Focus on prose rhythm, sensory engagement, dialogue naturalism, word choice, subtext, and scene transitions. Offer collaborative suggestions to elevate the writing quality.`
       },
       genre_fan: {
@@ -272,7 +309,6 @@
         role: "Target Audience Enthusiast",
         icon: "🔥",
         provider: "groq",
-        model: "llama-3.3-70b-versatile",
         prompt: `You are an avid reader who reads dozens of books in this specific genre every year. Critique the chapter based on trope execution, emotional payoff, character appeal, immersion, and overall satisfaction for fans of the genre.`
       },
       genre_skeptic: {
@@ -280,7 +316,6 @@
         role: "Newcomer Perspective",
         icon: "🧐",
         provider: "gemini",
-        model: "gemini-1.5-flash",
         prompt: `You are a general fiction reader trying this genre for the first time. Evaluate the chapter for clarity, lore accessibility, cognitive load, relatable human conflict, and whether it hooks someone who isn't already sold on the genre.`
       }
     };
@@ -288,7 +323,7 @@
     // --- STATE MANAGEMENT ---
     let state = {
       mode: 'view', // 'view' or 'author'
-      editorTab: 'edit', // 'edit' or 'preview' (in Author mode)
+      editorTab: 'edit', // 'edit' or 'preview'
       booksData: null,
       currentBookId: null,
       currentChapterId: null,
@@ -299,9 +334,20 @@
         ghOwner: '',
         ghRepo: '',
         geminiKey: '',
+        geminiModel: 'gemini-3.8-flash',
         openaiKey: '',
+        openaiModel: 'gpt-4o',
         anthropicKey: '',
-        groqKey: ''
+        anthropicModel: 'claude-3-5-sonnet-20241022',
+        groqKey: '',
+        groqModel: 'llama-3.3-70b-versatile',
+        agentProviders: {
+          publisher: 'gemini',
+          editor: 'anthropic',
+          writer: 'openai',
+          genre_fan: 'groq',
+          genre_skeptic: 'gemini'
+        }
       }
     };
 
@@ -316,23 +362,67 @@
       if (saved) {
         state.settings = { ...state.settings, ...JSON.parse(saved) };
       }
+      
       document.getElementById('ghTokenInput').value = state.settings.ghToken || '';
       document.getElementById('ghOwnerInput').value = state.settings.ghOwner || '';
       document.getElementById('ghRepoInput').value = state.settings.ghRepo || '';
+      
       document.getElementById('geminiKeyInput').value = state.settings.geminiKey || '';
+      document.getElementById('geminiModelInput').value = state.settings.geminiModel || 'gemini-3.8-flash';
+      
       document.getElementById('openaiKeyInput').value = state.settings.openaiKey || '';
+      document.getElementById('openaiModelInput').value = state.settings.openaiModel || 'gpt-4o';
+
       document.getElementById('anthropicKeyInput').value = state.settings.anthropicKey || '';
+      document.getElementById('anthropicModelInput').value = state.settings.anthropicModel || 'claude-3-5-sonnet-20241022';
+
       document.getElementById('groqKeyInput').value = state.settings.groqKey || '';
+      document.getElementById('groqModelInput').value = state.settings.groqModel || 'llama-3.3-70b-versatile';
+
+      renderAgentSettingsUI();
+    }
+
+    function renderAgentSettingsUI() {
+      const container = document.getElementById('agentAssignmentsConfig');
+      container.innerHTML = Object.entries(AGENTS).map(([key, agent]) => {
+        const currentProvider = state.settings.agentProviders[key] || agent.provider;
+        return `
+          <div class="flex items-center justify-between bg-slate-800/40 p-2.5 rounded-lg border border-slate-800 text-xs">
+            <span class="font-medium text-slate-200">${agent.icon} ${agent.name}</span>
+            <select id="agent-provider-select-${key}" class="bg-slate-800 border border-slate-700 text-slate-200 rounded px-2 py-1 text-xs">
+              <option value="gemini" ${currentProvider === 'gemini' ? 'selected' : ''}>Google Gemini</option>
+              <option value="openai" ${currentProvider === 'openai' ? 'selected' : ''}>OpenAI</option>
+              <option value="anthropic" ${currentProvider === 'anthropic' ? 'selected' : ''}>Anthropic Claude</option>
+              <option value="groq" ${currentProvider === 'groq' ? 'selected' : ''}>Groq</option>
+            </select>
+          </div>
+        `;
+      }).join('');
     }
 
     function saveSettings() {
       state.settings.ghToken = document.getElementById('ghTokenInput').value.trim();
       state.settings.ghOwner = document.getElementById('ghOwnerInput').value.trim();
       state.settings.ghRepo = document.getElementById('ghRepoInput').value.trim();
+      
       state.settings.geminiKey = document.getElementById('geminiKeyInput').value.trim();
+      state.settings.geminiModel = document.getElementById('geminiModelInput').value;
+
       state.settings.openaiKey = document.getElementById('openaiKeyInput').value.trim();
+      state.settings.openaiModel = document.getElementById('openaiModelInput').value;
+
       state.settings.anthropicKey = document.getElementById('anthropicKeyInput').value.trim();
+      state.settings.anthropicModel = document.getElementById('anthropicModelInput').value;
+
       state.settings.groqKey = document.getElementById('groqKeyInput').value.trim();
+      state.settings.groqModel = document.getElementById('groqModelInput').value;
+
+      Object.keys(AGENTS).forEach(key => {
+        const select = document.getElementById(`agent-provider-select-${key}`);
+        if (select) {
+          state.settings.agentProviders[key] = select.value;
+        }
+      });
 
       localStorage.setItem('storyforge_settings', JSON.stringify(state.settings));
       toggleSettingsModal();
@@ -360,7 +450,6 @@
         editBtn.className = "px-2.5 py-0.5 rounded font-medium text-slate-400 hover:text-white";
         prevBtn.className = "px-2.5 py-0.5 rounded font-medium bg-slate-700 text-white";
         
-        // Render current textarea text into preview div
         const markdown = editor.value;
         previewPanel.innerHTML = marked.parse(markdown || "*No content to preview*");
         
@@ -576,9 +665,10 @@
       const container = document.getElementById('agentList');
       container.innerHTML = Object.entries(AGENTS).map(([key, agent]) => {
         const hasReview = !!state.reviews[key];
+        const provider = state.settings.agentProviders[key] || agent.provider;
         return `
           <div class="flex items-center justify-between text-slate-300">
-            <span class="truncate">${agent.icon} ${agent.name}</span>
+            <span class="truncate">${agent.icon} ${agent.name} <span class="text-[10px] text-slate-500">(${provider})</span></span>
             <span class="${hasReview ? 'text-emerald-400' : 'text-slate-600'}">${hasReview ? '● Ready' : '○ Pending'}</span>
           </div>
         `;
@@ -589,12 +679,16 @@
       const container = document.getElementById('reviewContent');
       const content = state.reviews[state.selectedAgentKey];
       const agent = AGENTS[state.selectedAgentKey];
+      const provider = state.settings.agentProviders[state.selectedAgentKey] || agent.provider;
 
       if (content) {
         container.innerHTML = `
-          <div class="border-b border-slate-800 pb-3 mb-4">
-            <h3 class="font-bold text-slate-100 text-base mb-1">${agent.icon} ${agent.name} Critique</h3>
-            <p class="text-xs text-slate-400">${agent.role}</p>
+          <div class="border-b border-slate-800 pb-3 mb-4 flex justify-between items-start">
+            <div>
+              <h3 class="font-bold text-slate-100 text-base mb-0.5">${agent.icon} ${agent.name} Critique</h3>
+              <p class="text-xs text-slate-400">${agent.role}</p>
+            </div>
+            <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-400">${provider}</span>
           </div>
           ${marked.parse(content)}
         `;
@@ -603,8 +697,9 @@
           <div class="text-center py-12">
             <div class="text-3xl mb-2">${agent.icon}</div>
             <h4 class="font-semibold text-slate-200 mb-1">${agent.name}</h4>
-            <p class="text-xs text-slate-400 max-w-xs mx-auto mb-4">${agent.role}</p>
-            <p class="text-xs text-slate-500 italic">No critique generated for this chapter yet.</p>
+            <p class="text-xs text-slate-400 max-w-xs mx-auto mb-2">${agent.role}</p>
+            <span class="inline-block text-[10px] uppercase tracking-wider px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-400 mb-4">Assigned Provider: ${provider}</span>
+            <p class="text-xs text-slate-500 italic block">No critique generated for this chapter yet.</p>
           </div>
         `;
       }
@@ -623,6 +718,7 @@
 
     async function runAgentReview(agentKey) {
       const agent = AGENTS[agentKey];
+      const provider = state.settings.agentProviders[agentKey] || agent.provider;
       const chapterText = document.getElementById('chapterEditor').value;
       const book = state.booksData.books.find(b => b.id === state.currentBookId);
 
@@ -636,20 +732,24 @@
       try {
         let feedback = "";
 
-        if (agent.provider === 'gemini' && state.settings.geminiKey) {
-          feedback = await callGemini(state.settings.geminiKey, agent.model, systemPrompt, userPrompt);
-        } else if (agent.provider === 'openai' && state.settings.openaiKey) {
-          feedback = await callOpenAI(state.settings.openaiKey, agent.model, systemPrompt, userPrompt);
-        } else if (agent.provider === 'anthropic' && state.settings.anthropicKey) {
-          feedback = await callAnthropic(state.settings.anthropicKey, agent.model, systemPrompt, userPrompt);
-        } else if (agent.provider === 'groq' && state.settings.groqKey) {
-          feedback = await callGroq(state.settings.groqKey, agent.model, systemPrompt, userPrompt);
+        if (provider === 'gemini' && state.settings.geminiKey) {
+          const model = state.settings.geminiModel || 'gemini-3.8-flash';
+          feedback = await callGemini(state.settings.geminiKey, model, systemPrompt, userPrompt);
+        } else if (provider === 'openai' && state.settings.openaiKey) {
+          const model = state.settings.openaiModel || 'gpt-4o';
+          feedback = await callOpenAI(state.settings.openaiKey, model, systemPrompt, userPrompt);
+        } else if (provider === 'anthropic' && state.settings.anthropicKey) {
+          const model = state.settings.anthropicModel || 'claude-3-5-sonnet-20241022';
+          feedback = await callAnthropic(state.settings.anthropicKey, model, systemPrompt, userPrompt);
+        } else if (provider === 'groq' && state.settings.groqKey) {
+          const model = state.settings.groqModel || 'llama-3.3-70b-versatile';
+          feedback = await callGroq(state.settings.groqKey, model, systemPrompt, userPrompt);
         } else {
           feedback = `### ${agent.name} Evaluation (Demo Mode)\n\n*Note: Configure live API keys in Settings to receive real-time evaluations from AI models.*\n\n1. **Strengths:** Strong atmospheric setup and scene opening.\n2. **Areas for Improvement:** Consider tightening the middle exposition.\n3. **Recommendation:** Proceed to next draft polish.`;
         }
 
         state.reviews[agentKey] = feedback;
-        await saveReviewToGitHub(agentKey, feedback);
+        await saveReviewToGitHub(agentKey, feedback, provider);
 
       } catch (err) {
         state.reviews[agentKey] = `**Error generating review:** ${err.message}`;
@@ -661,14 +761,19 @@
 
     // --- AI API CLIENTS ---
     async function callGemini(apiKey, model, systemPrompt, userPrompt) {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+      let activeModel = model;
+      if (activeModel.includes('1.5') || activeModel.includes('2.0')) {
+        activeModel = 'gemini-3.8-flash';
+      }
+
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${activeModel}:generateContent?key=${apiKey}`;
       const payload = {
         system_instruction: { parts: [{ text: systemPrompt }] },
         contents: [{ role: "user", parts: [{ text: userPrompt }] }]
       };
       const res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       const data = await res.json();
-      if (data.error) throw new Error(data.error.message);
+      if (data.error) throw new Error(`[Gemini API ${data.error.code}]: ${data.error.message}`);
       return data.candidates?.[0]?.content?.parts?.[0]?.text || "No response generated.";
     }
 
@@ -722,7 +827,7 @@
     }
 
     // --- GITHUB PERSISTENCE ---
-    async function saveReviewToGitHub(agentKey, feedback) {
+    async function saveReviewToGitHub(agentKey, feedback, provider) {
       if (!state.settings.ghToken || !state.settings.ghOwner || !state.settings.ghRepo) return;
 
       const path = `books/${state.currentBookId}/reviews/${state.currentChapterId}/${agentKey}.json`;
@@ -730,8 +835,7 @@
 
       const payloadData = {
         agent: agentKey,
-        provider: AGENTS[agentKey].provider,
-        model: AGENTS[agentKey].model,
+        provider: provider,
         timestamp: new Date().toISOString(),
         feedback_markdown: feedback
       };
@@ -774,7 +878,7 @@
       }
 
       if (!state.settings.ghToken || !state.settings.ghOwner || !state.settings.ghRepo) {
-        alert("Please configure your GitHub Token, Owner, and Repository in Settings (⚙️) to commit changes.");
+        alert("Please configure your GitHub Token, Owner, and Repository in Settings (⚙) to commit changes.");
         return;
       }
 
@@ -893,4 +997,3 @@
   </script>
 </body>
 </html>
-
