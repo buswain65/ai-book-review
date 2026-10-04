@@ -42,7 +42,7 @@ The reply was instantaneous, complete with a smiling emoji.
 
 <br/>
 
-> **Mark [11:41 PM]:** *Let's be solution-oriented here! You've got the historical context to make it happen. Grab an energy drink and work your magic! 🚀*
+> **Brad [11:41 PM]:** *Let's be solution-oriented here! You've got the historical context to make it happen. Grab an energy drink and work your magic! 🚀*
 
 <br/>
 
