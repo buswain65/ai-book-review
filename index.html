@@ -58,11 +58,16 @@
         <h1 class="font-bold text-lg tracking-wide text-white">AI Critic Forge</h1>
       </div>
 
-      <!-- Book Selector Dropdown -->
-      <div class="relative">
+      <!-- Book Selector Dropdown & New Book Trigger -->
+      <div class="flex items-center space-x-2">
         <select id="bookSelect" onchange="switchBook(this.value)" class="bg-slate-800 border border-slate-700 text-slate-200 text-sm rounded-lg focus:ring-brand-500 focus:border-brand-500 px-3 py-1.5 pr-8 cursor-pointer">
           <option value="">Loading books...</option>
         </select>
+
+        <!-- New Book Button (Visible strictly in Author Mode) -->
+        <button id="newBookBtn" onclick="toggleNewBookModal()" class="hidden text-xs bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 hover:text-white px-2.5 py-1.5 rounded-lg font-medium transition-colors">
+          + New Book
+        </button>
       </div>
     </div>
 
@@ -174,6 +179,40 @@
       </section>
 
     </main>
+  </div>
+
+  <!-- NEW BOOK MODAL (Author Mode Only) -->
+  <div id="newBookModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col">
+      <div class="p-4 border-b border-slate-800 flex justify-between items-center">
+        <h2 class="font-semibold text-white">Create New Book Project</h2>
+        <button onclick="toggleNewBookModal()" class="text-slate-400 hover:text-white">✕</button>
+      </div>
+
+      <div class="p-6 space-y-4 text-sm">
+        <div>
+          <label class="block font-medium text-slate-200 mb-1">Book Title *</label>
+          <input type="text" id="newBookTitle" placeholder="e.g. Dragon Rising" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500" />
+        </div>
+        <div>
+          <label class="block font-medium text-slate-200 mb-1">Author Name *</label>
+          <input type="text" id="newBookAuthor" placeholder="e.g. J. R. Author" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500" />
+        </div>
+        <div>
+          <label class="block font-medium text-slate-200 mb-1">Genre *</label>
+          <input type="text" id="newBookGenre" placeholder="e.g. Epic Fantasy" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500" />
+        </div>
+        <div>
+          <label class="block font-medium text-slate-200 mb-1">Blurb / Summary</label>
+          <textarea id="newBookBlurb" rows="3" placeholder="Brief summary of the story premises..." class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500 resize-none"></textarea>
+        </div>
+      </div>
+
+      <div class="p-4 border-t border-slate-800 bg-slate-900/50 flex justify-end space-x-2">
+        <button onclick="toggleNewBookModal()" class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors">Cancel</button>
+        <button onclick="createNewBookSubmit()" class="px-4 py-2 rounded-lg bg-brand-600 text-white font-medium hover:bg-brand-500 transition-colors">Create Book</button>
+      </div>
+    </div>
   </div>
 
   <!-- SETTINGS MODAL -->
@@ -434,6 +473,10 @@
       document.getElementById('settingsModal').classList.toggle('hidden');
     }
 
+    function toggleNewBookModal() {
+      document.getElementById('newBookModal').classList.toggle('hidden');
+    }
+
     function markUnsaved() {
       const statusEl = document.getElementById('saveStatus');
       statusEl.innerText = "Unsaved changes";
@@ -470,6 +513,7 @@
       const viewBtn = document.getElementById('viewModeBtn');
       const authorBtn = document.getElementById('authorModeBtn');
       const settingsBtn = document.getElementById('settingsBtn');
+      const newBookBtn = document.getElementById('newBookBtn');
       const newChapBtn = document.getElementById('newChapterBtn');
       const statusPanel = document.getElementById('agentStatusPanel');
       const controls = document.getElementById('editorControls');
@@ -482,6 +526,7 @@
         viewBtn.className = "px-3 py-1 rounded-md font-medium transition-colors text-slate-400 hover:text-white";
         authorBtn.className = "px-3 py-1 rounded-md font-medium transition-colors bg-brand-600 text-white";
         settingsBtn.classList.remove('hidden');
+        newBookBtn.classList.remove('hidden');
         newChapBtn.classList.remove('hidden');
         statusPanel.classList.remove('hidden');
         controls.classList.remove('hidden');
@@ -493,6 +538,7 @@
         authorBtn.className = "px-3 py-1 rounded-md font-medium transition-colors text-slate-400 hover:text-white";
         viewBtn.className = "px-3 py-1 rounded-md font-medium transition-colors bg-brand-600 text-white";
         settingsBtn.classList.add('hidden');
+        newBookBtn.classList.add('hidden');
         newChapBtn.classList.add('hidden');
         statusPanel.classList.add('hidden');
         controls.classList.add('hidden');
@@ -858,20 +904,9 @@
     }
 
     // --- GITHUB PERSISTENCE ---
-    async function saveReviewToGitHub(agentKey, feedback, provider) {
-      if (!state.settings.ghToken || !state.settings.ghOwner || !state.settings.ghRepo) return;
-
-      const path = `books/${state.currentBookId}/reviews/${state.currentChapterId}/${agentKey}.json`;
+    async function commitGitHubFile(path, contentString, commitMessage) {
+      if (!state.settings.ghToken || !state.settings.ghOwner || !state.settings.ghRepo) return false;
       const url = `https://api.github.com/repos/${state.settings.ghOwner}/${state.settings.ghRepo}/contents/${path}`;
-
-      const payloadData = {
-        agent: agentKey,
-        provider: provider,
-        timestamp: new Date().toISOString(),
-        feedback_markdown: feedback
-      };
-
-      const contentEncoded = btoa(unescape(encodeURIComponent(JSON.stringify(payloadData, null, 2))));
 
       try {
         let sha = null;
@@ -881,7 +916,8 @@
           sha = existing.sha;
         }
 
-        await fetch(url, {
+        const contentEncoded = btoa(unescape(encodeURIComponent(contentString)));
+        const putRes = await fetch(url, {
           method: "PUT",
           headers: {
             "Authorization": `token ${state.settings.ghToken}`,
@@ -889,14 +925,28 @@
             "Accept": "application/vnd.github.v3+json"
           },
           body: JSON.stringify({
-            message: `Update review: ${agentKey} for ${state.currentChapterId}`,
+            message: commitMessage,
             content: contentEncoded,
             sha: sha || undefined
           })
         });
+
+        return putRes.ok;
       } catch (err) {
-        console.error("Failed to commit review to GitHub:", err);
+        console.error(`Failed to commit ${path}:`, err);
+        return false;
       }
+    }
+
+    async function saveReviewToGitHub(agentKey, feedback, provider) {
+      const path = `books/${state.currentBookId}/reviews/${state.currentChapterId}/${agentKey}.json`;
+      const payloadData = {
+        agent: agentKey,
+        provider: provider,
+        timestamp: new Date().toISOString(),
+        feedback_markdown: feedback
+      };
+      await commitGitHubFile(path, JSON.stringify(payloadData, null, 2), `Update review: ${agentKey} for ${state.currentChapterId}`);
     }
 
     async function saveCurrentChapter() {
@@ -916,58 +966,70 @@
       const book = state.booksData.books.find(b => b.id === state.currentBookId);
       const chap = book.chapters.find(c => c.id === state.currentChapterId);
       const path = `books/${book.id}/chapters/${chap.file}`;
-      const url = `https://api.github.com/repos/${state.settings.ghOwner}/${state.settings.ghRepo}/contents/${path}`;
 
       statusEl.innerText = "Committing to GitHub...";
       statusEl.className = "text-amber-400 text-[11px] animate-pulse";
 
-      try {
-        let sha = null;
-        const getRes = await fetch(url, { 
-          headers: { 
-            "Authorization": `token ${state.settings.ghToken}`,
-            "Accept": "application/vnd.github.v3+json"
-          } 
-        });
-        
-        if (getRes.ok) {
-          const existing = await getRes.json();
-          sha = existing.sha;
-        }
+      const ok = await commitGitHubFile(path, content, `Update chapter: ${chap.title}`);
 
-        const contentEncoded = btoa(unescape(encodeURIComponent(content)));
-
-        const res = await fetch(url, {
-          method: "PUT",
-          headers: {
-            "Authorization": `token ${state.settings.ghToken}`,
-            "Content-Type": "application/json",
-            "Accept": "application/vnd.github.v3+json"
-          },
-          body: JSON.stringify({
-            message: `Update chapter: ${chap.title}`,
-            content: contentEncoded,
-            sha: sha || undefined
-          })
-        });
-
-        if (res.ok) {
-          statusEl.innerText = "✓ Committed to GitHub";
-          statusEl.className = "text-emerald-400 text-[11px]";
-          setTimeout(() => { 
-            statusEl.innerText = "Saved"; 
-            statusEl.className = "text-slate-500 text-[11px]";
-          }, 3000);
-        } else {
-          const errData = await res.json();
-          statusEl.innerText = "❌ Commit failed";
-          statusEl.className = "text-rose-400 text-[11px]";
-          alert(`GitHub API Error (${res.status}): ${errData.message}`);
-        }
-      } catch (e) {
-        statusEl.innerText = "❌ Network error";
+      if (ok) {
+        statusEl.innerText = "✓ Committed to GitHub";
+        statusEl.className = "text-emerald-400 text-[11px]";
+        setTimeout(() => { 
+          statusEl.innerText = "Saved"; 
+          statusEl.className = "text-slate-500 text-[11px]";
+        }, 3000);
+      } else {
+        statusEl.innerText = "❌ Commit failed";
         statusEl.className = "text-rose-400 text-[11px]";
-        alert("Error committing chapter: " + e.message);
+        alert(`Failed to save chapter to GitHub. Check your permissions or repository settings.`);
+      }
+    }
+
+    async function createNewBookSubmit() {
+      const title = document.getElementById('newBookTitle').value.trim();
+      const author = document.getElementById('newBookAuthor').value.trim();
+      const genre = document.getElementById('newBookGenre').value.trim();
+      const blurb = document.getElementById('newBookBlurb').value.trim();
+
+      if (!title || !author || !genre) {
+        alert("Please fill in the required fields: Title, Author, and Genre.");
+        return;
+      }
+
+      const bookId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      const firstChapFile = "ch01-the-awakening.md";
+      const firstChapId = "ch01-the-awakening";
+
+      const newBookObj = {
+        id: bookId,
+        title: title,
+        author: author,
+        genre: genre,
+        blurb: blurb,
+        chapters: [
+          { id: firstChapId, title: "Chapter 1: The Awakening", file: firstChapFile }
+        ]
+      };
+
+      state.booksData.books.push(newBookObj);
+
+      toggleNewBookModal();
+      renderBookDropdown();
+      switchBook(bookId);
+
+      // Commit changes to GitHub if token exists
+      if (state.settings.ghToken && state.settings.ghOwner && state.settings.ghRepo) {
+        // 1. Commit meta.json
+        const metaContent = JSON.stringify({ id: bookId, title, author, genre, blurb }, null, 2);
+        await commitGitHubFile(`books/${bookId}/meta.json`, metaContent, `Create meta.json for ${title}`);
+
+        // 2. Commit initial chapter markdown
+        const initialChapMarkdown = `# Chapter 1: The Awakening\n\nStart writing your new manuscript chapter here...`;
+        await commitGitHubFile(`books/${bookId}/chapters/${firstChapFile}`, initialChapMarkdown, `Create initial chapter for ${title}`);
+
+        // 3. Commit updated books.json
+        await commitGitHubFile("books.json", JSON.stringify(state.booksData, null, 2), `Add '${title}' to books.json index`);
       }
     }
 
@@ -987,42 +1049,7 @@
       loadChapter(chapId);
 
       if (state.settings.ghToken && state.settings.ghOwner && state.settings.ghRepo) {
-        try {
-          const path = "books.json";
-          const url = `https://api.github.com/repos/${state.settings.ghOwner}/${state.settings.ghRepo}/contents/${path}`;
-
-          let sha = null;
-          const getRes = await fetch(url, {
-            headers: { 
-              "Authorization": `token ${state.settings.ghToken}`,
-              "Accept": "application/vnd.github.v3+json"
-            }
-          });
-
-          if (getRes.ok) {
-            const existingData = await getRes.json();
-            sha = existingData.sha;
-          }
-
-          const jsonContent = JSON.stringify(state.booksData, null, 2);
-          const contentEncoded = btoa(unescape(encodeURIComponent(jsonContent)));
-
-          await fetch(url, {
-            method: "PUT",
-            headers: {
-              "Authorization": `token ${state.settings.ghToken}`,
-              "Content-Type": "application/json",
-              "Accept": "application/vnd.github.v3+json"
-            },
-            body: JSON.stringify({
-              message: `Add new chapter '${title}' to books.json index`,
-              content: contentEncoded,
-              sha: sha || undefined
-            })
-          });
-        } catch (err) {
-          console.error("Error committing books.json to GitHub:", err);
-        }
+        await commitGitHubFile("books.json", JSON.stringify(state.booksData, null, 2), `Add new chapter '${title}' to books.json index`);
       }
     }
   </script>
