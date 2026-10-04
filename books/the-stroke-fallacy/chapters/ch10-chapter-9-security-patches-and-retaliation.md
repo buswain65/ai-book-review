@@ -12,7 +12,7 @@ He tapped his charcoal stick against the paper, filling the page with neat, comp
 
 > *System Architecture Notes — Mark Vance*
 > *Log 02: Macro Compilation & Cognitive Caching*
-> *Theory: Directing raw Aether in real time requires too much conscious calculation. Solution: Compile physical movements and breath patterns into pre-built subroutines. Like a martial arts drill, a specific physical trigger (e.g., heel-drop + exhalation) should automatically fire a grounding pass without requiring manual mental evaluation.*
+> *Theory: Directing raw Aether in real time requires too much conscious calculation. Solution: Compile physical movements and breath patterns into pre-built subroutines. Like a Kung Fu form, a specific physical trigger (e.g., heel-drop + stance sink) should automatically fire a grounding pass without requiring manual mental evaluation.*
 
 <br/>
 
@@ -92,12 +92,12 @@ Garek took a slow step forward, his boots crunching on the gravel. He squinted a
 
 <br/>
 
-Mark didn't reach for a weapon. He didn't shift into a dramatic stance. He simply set his feet shoulder-width apart, dropping his center of gravity two inches, and began his diaphragmatic breathwork.
+Mark didn't reach for a weapon. He didn't tense up. He simply stepped into a low, relaxed horse stance, sinking his weight into his thighs and dropping his center of gravity, initiating his diaphragmatic breathwork.
 
 <br/>
 
 *Inhale: four counts. Pull ambient Aether into the chest.*
-*Exhale: four counts. Route energy down through the legs, establishing a passive ground with the damp earth beneath the gravel.*
+*Exhale: four counts. Route energy down through the legs, establishing a passive root into the damp earth.*
 
 <br/>
 
@@ -109,11 +109,11 @@ Garek’s eyes flashed with anger. "Get him!" he barked to the wiry thug beside 
 
 <br/>
 
-The wiry man lunged forward with a dirty, sweeping tackle, aiming to take Mark’s legs out.
+The wiry man lunged forward with a wild, telegraphed right hook, putting all his momentum behind the punch.
 
 <br/>
 
-Mark didn't flinch. As the man closed in, Mark stepped smoothly to the side—a basic Kung Fu evasive pivot. But as his lead foot planted, Mark executed his first pre-compiled macro: he released a sharp, silent pulse of grounded Aether directly into the damp earth beneath the thug's lead boot.
+Mark didn't flinch. As the fist shot forward, Mark executed a classic Kung Fu deflecting palm—a sweeping *Pak Sau*—catching the thug's forearm from the inside and guiding the strike harmlessly past his ear. But as he redirected the blow, Mark executed his first pre-compiled macro: he released a sharp, silent pulse of grounded Aether directly into the damp earth beneath the thug's lead boot.
 
 <br/>
 
@@ -125,11 +125,11 @@ A tiny, localized burst of thermal energy flash-boiled the moisture in the dirt 
 
 <br/>
 
-A small pocket of mud liquefied instantly. The wiry thug’s foot skidded out from under him as if he had stepped on grease. He went flying sideways, crashing shoulder-first into the timber stack with a loud, wooden clatter.
+A small pocket of mud liquefied instantly. Coupled with his off-balance punch, the wiry thug skidded out as if he had stepped on wet ice, falling heavily onto his hip in the rutted dirt.
 
 <br/>
 
-Garek blinked, startled by the sudden slip, but his instincts kicked in. He stepped in with a brutal, descending strike of his iron-shod truncheon, aimed straight for Mark’s collarbone.
+Garek blinked, startled by the sudden slip, but his instincts kicked in. He charged forward, bringing his heavy iron-shod truncheon down in a savage overhead arc aimed straight for Mark’s shoulder.
 
 <br/>
 
@@ -137,11 +137,7 @@ The wooden club came down fast, backed by two hundred pounds of muscle.
 
 <br/>
 
-Mark didn't try to block it with his bare hands. He slid the hardwood stake from his sleeve into his right grip, stepping *inside* the arc of the swing—closing the distance just as he would when smothering a punch in Jiu-Jitsu.
-
-<br/>
-
-He caught Garek’s forearm with his left hand to kill the momentum, bringing his right hand up to cross-block the wooden shaft of the truncheon with his hardwood stake.
+Mark didn't try to dodge backward. Instead, he stepped *forward* into a low Bow stance, entering the space inside the weapon's effective reach. He brought both forearms up in an intersecting cross-block—a high *Tan Sau* structure reinforced by the hardwood stake tucked inside his right sleeve.
 
 <br/>
 
@@ -149,23 +145,23 @@ He caught Garek’s forearm with his left hand to kill the momentum, bringing hi
 
 <br/>
 
-The impact rattled Mark’s bones, but he didn't absorb the force in his arm. The moment the woods collided, Mark dropped his right heel hard into the dirt, executing his grounding subroutine.
+The impact shook the air, but Mark didn't absorb the force in his arms. The moment the wooden club struck his defense, Mark dropped his rear heel hard into the dirt, sinking deeper into his stance to execute his grounding subroutine.
 
 <br/>
 
-The kinetic energy of Garek’s massive blow surged down through the hardwood stake, through Mark’s braced arm, down his spine, and directly into the earth. The ground beneath Mark's feet cracked faintly, absorbing the shock wave.
+The kinetic force of Garek’s blow surged down through the hardwood stake, through Mark’s aligned skeletal structure, and straight down his legs into the earth. The dirt beneath Mark's boots cracked faintly, absorbing the shock wave without bending his frame.
 
 <br/>
 
-Garek’s eyes went wide as his heavy strike was stopped dead in its tracks by a boy half his size.
+Garek’s eyes went wide as his heavy strike bounced off the boy's rigid, rooted frame.
 
 <br/>
 
-"Structure," Mark whispered.
+"Root," Mark whispered.
 
 <br/>
 
-Before Garek could pull back, Mark reached into his pocket with his left hand, grabbed a small pinch of the iron filings, and slapped his palm directly against the bare skin of Garek’s right wrist, wrapping his fingers around the joint in a tight BJJ wrist-lock.
+Before Garek could pull the truncheon back, Mark swept his hands downward, snapping his palms across Garek's lead wrist in a sharp, double-handed redirection. He caught Garek’s wrist with his left hand and pressed his right palm flat against the bare skin of the enforcer's joint, throwing a handful of iron filings between his hand and Garek's skin.
 
 <br/>
 
@@ -173,7 +169,7 @@ Now came the second macro: *Thermal Output.*
 
 <br/>
 
-Mark didn't try to summon a fireball. He focused a tiny, concentrated needle of Aether straight through the iron filings on Garek's skin—using the metal dust as a conductive bridge to target the sensitive nerve cluster right above the wrist tendon.
+Instead of an open flame, Mark executed his heat subroutine through the conductive iron dust, targeting the sensitive nerve clusters running along Garek's forearm.
 
 <br/>
 
@@ -181,19 +177,19 @@ Mark didn't try to summon a fireball. He focused a tiny, concentrated needle of 
 
 <br/>
 
-A sharp, searing spike of localized heat hit Garek's wrist like a hot needle driven into the nerve.
+A sharp, searing spike of localized heat shot straight into Garek's wrist tendon.
 
 <br/>
 
-"Aagh!" Garek roared, his fingers instantly snapping open. The iron-shod truncheon clattered uselessly to the cobblestones.
+"Aagh!" Garek roared, his fingers reflexively snapping open. The heavy iron-shod truncheon clattered uselessly onto the cobblestones.
 
 <br/>
 
-Mark didn't break the joint. He simply applied a gentle, precise twist, leveraging Garek’s own weight to force the towering enforcer down to one knee in the dirt.
+Without breaking motion, Mark stepped past Garek's lead foot, using a swift Kung Fu foot-sweep behind the enforcer's heel while thrusting his palm lightly against Garek's chest. Deprived of his weapon and offset by the thermal shock, Garek’s heavy frame tipped backward, crashing onto his back in the dirt.
 
 <br/>
 
-Garek panted, sweat pouring down his face, his wrist burning from the invisible heat and locked in painful leverage. He looked up at Mark, his eyes filled with absolute, terrified bewilderment.
+In three fluid, economy-of-motion seconds, the enforcer was on the ground and his crew was neutralized.
 
 <br/>
 
@@ -201,23 +197,23 @@ Behind them, Jax turned white as a sheet, backing away until his heels hit the t
 
 <br/>
 
-Mark stood over the syndicate enforcer, completely unbothered, his breathing steady, his stance perfectly balanced.
+Mark stood over the syndicate enforcer, settling back into a calm, upright stance. His breathing was steady, his posture relaxed, his hands held loosely at his sides.
 
 <br/>
 
-"Here is the post-mortem on this encounter," Mark said, his voice cool and measured in the evening quiet. "Your team’s footwork was terrible, your strike was telegraphed, and your escalation path failed completely. I am a laborer trying to earn enough copper to buy parchment. I am not a threat to your syndicate unless you make me one."
+"Here is the post-mortem on this encounter," Mark said, his voice cool and measured in the evening quiet. "Your strike was telegraphed, your root was weak, and your escalation path failed completely. I am a laborer trying to earn enough copper to buy parchment. I am not a threat to your syndicate unless you make me one."
 
 <br/>
 
-Mark released Garek’s wrist and stepped back two paces, hands returning casually to his pockets.
+Mark stepped back two paces, hands returning casually to his pockets.
 
 <br/>
 
-Garek cradled his scorched, aching wrist, staring at the dirt where Mark’s heel had planted. There was a tiny, faint scorch mark in the mud.
+Garek sat up slowly, cradling his scorched, aching wrist and staring at the dirt where Mark’s boots had rooted. There was a tiny, faint scorch mark in the mud where the grounded Aether had discharged.
 
 <br/>
 
-"What are you?" Garek rasped, his voice trembling slightly. "You're no farm boy. You're... a battle-mage?"
+"What are you?" Garek rasped, his voice trembling slightly. "You're no farm boy. You move like a Master from the East... or a battle-mage."
 
 <br/>
 
@@ -225,7 +221,7 @@ Garek cradled his scorched, aching wrist, staring at the dirt where Mark’s hee
 
 <br/>
 
-Garek pushed himself up slowly, glaring at Jax with sudden, furious irritation. He grabbed his younger brother by the collar of his shirt, shoving him down the alley toward the main road without looking back.
+Garek pushed himself up, glaring at Jax with sudden, furious irritation. He grabbed his younger brother by the collar of his shirt, dragging him down the alley toward the main road without looking back.
 
 <br/>
 
@@ -233,7 +229,7 @@ Mark watched them vanish into the blue light of the streetlamps.
 
 <br/>
 
-He looked down at his right hand, wiping the remaining iron dust off his palm onto his trousers. There was a faint, satisfying tingle in his forearm, but no headache, no burning nerves, and no cognitive hangover.
+He looked down at his hands, wiping the remaining iron dust off his palm onto his trousers. There was a faint, satisfying tingle in his forearm, but no headache, no burning nerves, and no cognitive hangover.
 
 <br/>
 
@@ -241,7 +237,7 @@ He pulled his leather notebook from his tunic, flipped to his latest entry, and 
 
 <br/>
 
-> *Log 02 (Update): Macro execution successful. Subroutine 'Ground-and-Sting' deployed with minimal cognitive overhead. System performance: optimal.*
+> *Log 02 (Update): Macro execution successful. Root-and-Deflect subroutine deployed with minimal cognitive overhead. System performance: optimal.*
 
 <br/>
 
