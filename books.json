@@ -36,6 +36,11 @@
           "id": "ch06-chapter-5-hello-world",
           "title": "Chapter 5: Hello World",
           "file": "ch06-chapter-5-hello-world.md"
+        },
+        {
+          "id": "ch07-chapter-6-deconstructing-the-hardware-and-the-syntax",
+          "title": "Chapter 6: Deconstructing the Hardware and the Syntax",
+          "file": "ch07-chapter-6-deconstructing-the-hardware-and-the-syntax.md"
         }
       ]
     },
