@@ -145,6 +145,17 @@
           </div>
         </div>
 
+        <!-- DEMOGRAPHIC ANALYSIS BADGE BAR -->
+        <div id="demographicBar" class="bg-slate-900/60 border-b border-slate-800/80 px-4 py-2 flex items-center justify-between text-xs text-slate-300 shrink-0">
+          <div class="flex items-center space-x-3">
+            <span class="font-semibold text-slate-400 text-[11px] uppercase tracking-wider">Demographic Analysis:</span>
+            <div id="demographicBadges" class="flex items-center space-x-2">
+              <span class="bg-slate-800 border border-slate-700 px-2 py-0.5 rounded text-[11px] text-slate-400 italic">Save chapter to generate age estimate...</span>
+            </div>
+          </div>
+          <span id="demographicRationale" class="text-[11px] text-slate-400 truncate max-w-sm hidden" title=""></span>
+        </div>
+
         <div class="flex-1 relative overflow-hidden">
           <!-- Reader View (View Mode) -->
           <div id="chapterViewer" class="absolute inset-0 p-8 overflow-y-auto prose prose-invert prose-slate max-w-3xl mx-auto leading-relaxed text-slate-200">
@@ -369,6 +380,7 @@
       selectedAgentKey: 'publisher',
       reviews: {},
       reviewErrors: {},
+      demographicData: null,
       settings: {
         ghToken: '',
         ghOwner: '',
@@ -666,7 +678,88 @@
       statusEl.innerText = "Saved";
       statusEl.className = "text-slate-500 text-[11px]";
 
+      loadChapterDemographics();
       loadChapterReviews();
+    }
+
+    async function loadChapterDemographics() {
+      state.demographicData = null;
+      renderDemographicUI();
+
+      if (state.settings.ghOwner && state.settings.ghRepo) {
+        try {
+          const path = `books/${state.currentBookId}/demographics/${state.currentChapterId}.json`;
+          const url = `https://raw.githubusercontent.com/${state.settings.ghOwner}/${state.settings.ghRepo}/main/${path}`;
+          const res = await fetch(url, { cache: "no-store" });
+          if (res.ok) {
+            state.demographicData = await res.json();
+            renderDemographicUI();
+          }
+        } catch (e) {
+          // No demographic file saved yet
+        }
+      }
+    }
+
+    function renderDemographicUI() {
+      const badgeContainer = document.getElementById('demographicBadges');
+      const rationaleEl = document.getElementById('demographicRationale');
+
+      if (!state.demographicData) {
+        badgeContainer.innerHTML = `<span class="bg-slate-800 border border-slate-700 px-2 py-0.5 rounded text-[11px] text-slate-400 italic">Save chapter to generate age estimate...</span>`;
+        rationaleEl.classList.add('hidden');
+        return;
+      }
+
+      const d = state.demographicData;
+      badgeContainer.innerHTML = `
+        <span class="bg-brand-950/60 border border-brand-700/60 text-brand-300 font-medium px-2 py-0.5 rounded text-[11px]">🎯 ${d.target_age_group}</span>
+        <span class="bg-slate-800 border border-slate-700 text-slate-300 px-2 py-0.5 rounded text-[11px]">📖 ${d.reading_level}</span>
+        <span class="bg-slate-800 border border-slate-700 text-slate-300 px-2 py-0.5 rounded text-[11px]">🔥 Intensity: ${d.content_rating}</span>
+      `;
+
+      if (d.rationale) {
+        rationaleEl.innerText = d.rationale;
+        rationaleEl.title = d.rationale;
+        rationaleEl.classList.remove('hidden');
+      }
+    }
+
+    async function analyzeChapterDemographics(chapterText) {
+      if (!state.settings.geminiKey) return;
+
+      const prompt = `Analyze the following manuscript chapter and estimate its target reader age demographic, reading complexity, content intensity, and rationale.
+Return strictly a valid JSON object matching this schema (do not wrap in code blocks or extra text):
+{
+  "target_age_group": "Middle Grade (8-12) | Young Adult (12-18) | New Adult (18-25) | Adult (18+)",
+  "reading_level": "e.g. Grade 8-9 Level",
+  "content_rating": "Mild | Moderate | Explicit",
+  "rationale": "One-sentence explanation focusing on vocabulary, scene intensity, and thematic complexity."
+}
+
+Chapter Text:
+${chapterText.slice(0, 4000)}`;
+
+      try {
+        const apiKey = state.settings.geminiKey;
+        const model = state.settings.geminiModel || 'gemini-3.8-flash';
+        const rawResponse = await callGemini(apiKey, model, "You are an expert literary demographic and readability analyzer.", prompt);
+        
+        // Clean potential Markdown code wrappers
+        const cleanedJson = rawResponse.replace(/```json/g, '').replace(/```/g, '').trim();
+        const demoJson = JSON.parse(cleanedJson);
+
+        state.demographicData = demoJson;
+        renderDemographicUI();
+
+        // Save demographic analysis JSON to GitHub
+        if (state.settings.ghToken && state.settings.ghOwner && state.settings.ghRepo) {
+          const path = `books/${state.currentBookId}/demographics/${state.currentChapterId}.json`;
+          await commitGitHubFile(path, JSON.stringify(demoJson, null, 2), `Update demographic analysis for ${state.currentChapterId}`);
+        }
+      } catch (err) {
+        console.warn("Failed to generate demographic estimation:", err);
+      }
     }
 
     async function loadChapterReviews() {
@@ -975,6 +1068,10 @@
       if (ok) {
         statusEl.innerText = "✓ Committed to GitHub";
         statusEl.className = "text-emerald-400 text-[11px]";
+        
+        // Trigger automated demographic analysis on save
+        analyzeChapterDemographics(content);
+
         setTimeout(() => { 
           statusEl.innerText = "Saved"; 
           statusEl.className = "text-slate-500 text-[11px]";
