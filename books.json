@@ -1,0 +1,36 @@
+{
+  "books": [
+    {
+      "id": "the-stroke-fallacy",
+      "title": "The Stroke Fallacy",
+      "author": "McSloth",
+      "genre": "Fantasy / Isekai",
+      "blurb": "Just me playing around.",
+      "chapters": [
+        {
+          "id": "prologue",
+          "title": "Prologue: The Crunch Before the Dark",
+          "file": "prologue.md"
+        },
+        {
+          "id": "ch01-the-rollback",
+          "title": "Chapter 1: The Rollback",
+          "file": "ch01-the-rollback.md"
+        }
+      ]
+    },
+    {
+      "id": "default",
+      "title": "Default",
+      "author": "McSloth",
+      "genre": "Fantasy / Isekai",
+      "chapters": [
+        {
+          "id": "ch01-default",
+          "title": "Chapter 1: Default",
+          "file": "ch01-default.md"
+        }
+      ]
+    }
+  ]
+}
