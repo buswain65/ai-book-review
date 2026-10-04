@@ -408,38 +408,61 @@
       `).join('');
     }
 
-    async function loadChapter(chapterId) {
-      state.currentChapterId = chapterId;
+	async function loadChapter(chapterId) {
+	  state.currentChapterId = chapterId;
 
-      // Highlight active chapter
-      document.querySelectorAll('#chapterList button').forEach(b => b.classList.remove('bg-slate-800', 'text-white'));
-      const activeBtn = document.getElementById(`chap-btn-${chapterId}`);
-      if (activeBtn) activeBtn.classList.add('bg-slate-800', 'text-white');
+	  // Highlight active chapter in sidebar
+	  document.querySelectorAll('#chapterList button').forEach(b => b.classList.remove('bg-slate-800', 'text-white'));
+	  const activeBtn = document.getElementById(`chap-btn-${chapterId}`);
+	  if (activeBtn) activeBtn.classList.add('bg-slate-800', 'text-white');
 
-      const book = state.booksData.books.find(b => b.id === state.currentBookId);
-      const chap = book.chapters.find(c => c.id === chapterId);
-      document.getElementById('currentChapterTitle').innerText = `${book.title} — ${chap.title}`;
+	  const book = state.booksData.books.find(b => b.id === state.currentBookId);
+	  const chap = book.chapters.find(c => c.id === chapterId);
+	  document.getElementById('currentChapterTitle').innerText = `${book.title} — ${chap.title}`;
 
-      let content = "";
-      try {
-        if (state.settings.ghOwner && state.settings.ghRepo) {
-          const url = `https://raw.githubusercontent.com/${state.settings.ghOwner}/${state.settings.ghRepo}/main/books/${book.id}/chapters/${chap.file}`;
-          const res = await fetch(url);
-          if (res.ok) content = await res.text();
-        }
-      } catch (e) {
-        console.warn("Error fetching remote chapter text:", e);
-      }
+	  // Show loading indicator
+	  document.getElementById('chapterEditor').value = "Loading chapter from GitHub...";
+	  document.getElementById('chapterViewer').innerHTML = "<p class='text-slate-400 italic'>Loading chapter from GitHub...</p>";
 
-      if (!content) {
-        content = `# ${chap.title}\n\nThe wind howled through the high peaks...`;
-      }
+	  let content = "";
 
-      document.getElementById('chapterEditor').value = content;
-      document.getElementById('chapterViewer').innerHTML = marked.parse(content);
+	  if (state.settings.ghOwner && state.settings.ghRepo) {
+		const path = `books/${book.id}/chapters/${chap.file}`;
+		const url = `https://api.github.com/repos/${state.settings.ghOwner}/${state.settings.ghRepo}/contents/${path}`;
 
-      loadChapterReviews();
-    }
+		try {
+		  const headers = { "Accept": "application/vnd.github.v3+json" };
+		  if (state.settings.ghToken) {
+			headers["Authorization"] = `token ${state.settings.ghToken}`;
+		  }
+
+		  // Fetch file directly via GitHub REST API (Bypasses raw.githubusercontent CDN cache)
+		  const res = await fetch(url, { headers, cache: "no-store" });
+		  
+		  if (res.ok) {
+			const fileData = await res.json();
+			// Decode base64 content safely for UTF-8 / special characters
+			content = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, ''))));
+		  } else {
+			console.warn(`GitHub API returned status ${res.status} for path ${path}`);
+		  }
+		} catch (e) {
+		  console.error("Error fetching chapter from GitHub REST API:", e);
+		}
+	  }
+
+	  // Fallback if the file does not exist yet on GitHub
+	  if (!content) {
+		content = `# ${chap.title}\n\nStart writing your chapter content here...`;
+	  }
+
+	  // Update both Editor and Reader View
+	  document.getElementById('chapterEditor').value = content;
+	  document.getElementById('chapterViewer').innerHTML = marked.parse(content);
+
+	  // Load reviews for the newly loaded chapter
+	  loadChapterReviews();
+	}
 
     async function loadChapterReviews() {
       state.reviews = {};
