@@ -18,19 +18,19 @@
           "file": "ch01-the-rollback.md"
         },
         {
-          "id": "ch03-the-ground-truth-problem",
-          "title": "The Ground Truth Problem",
-          "file": "ch03-the-ground-truth-problem.md"
+          "id": "ch02-the-ground-truth-problem",
+          "title": "Chapter 2: The Ground Truth Problem",
+          "file": "ch02-the-ground-truth-problem.md"
         },
         {
-          "id": "ch04-chapter-3-the-first-signal",
+          "id": "ch03-the-first-signal",
           "title": "Chapter 3: The First Signal",
-          "file": "ch04-chapter-3-the-first-signal.md"
+          "file": "ch03-the-first-signal.md"
         },
         {
-          "id": "ch05-chapter-4-the-lever-and-the-code",
+          "id": "ch04-the-lever-and-the-code",
           "title": "Chapter 4: The Lever and the Code",
-          "file": "ch05-chapter-4-the-lever-and-the-code.md"
+          "file": "ch04-the-lever-and-the-code.md"
         }
       ]
     },
