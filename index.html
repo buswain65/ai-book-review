@@ -329,6 +329,7 @@
       currentChapterId: null,
       selectedAgentKey: 'publisher',
       reviews: {},
+      reviewErrors: {},
       settings: {
         ghToken: '',
         ghOwner: '',
@@ -624,6 +625,7 @@
 
     async function loadChapterReviews() {
       state.reviews = {};
+      state.reviewErrors = {};
       const bookId = state.currentBookId;
       const chapId = state.currentChapterId;
 
@@ -665,11 +667,20 @@
       const container = document.getElementById('agentList');
       container.innerHTML = Object.entries(AGENTS).map(([key, agent]) => {
         const hasReview = !!state.reviews[key];
+        const hasError = !!state.reviewErrors[key];
         const provider = state.settings.agentProviders[key] || agent.provider;
+
+        let statusBadge = `<span class="text-slate-600">○ Pending</span>`;
+        if (hasError) {
+          statusBadge = `<span class="text-amber-400 font-medium" title="${state.reviewErrors[key]}">⚠️ Warning</span>`;
+        } else if (hasReview) {
+          statusBadge = `<span class="text-emerald-400 font-medium">● Ready</span>`;
+        }
+
         return `
           <div class="flex items-center justify-between text-slate-300">
             <span class="truncate">${agent.icon} ${agent.name} <span class="text-[10px] text-slate-500">(${provider})</span></span>
-            <span class="${hasReview ? 'text-emerald-400' : 'text-slate-600'}">${hasReview ? '● Ready' : '○ Pending'}</span>
+            ${statusBadge}
           </div>
         `;
       }).join('');
@@ -678,10 +689,28 @@
     function renderReviewContent() {
       const container = document.getElementById('reviewContent');
       const content = state.reviews[state.selectedAgentKey];
+      const error = state.reviewErrors[state.selectedAgentKey];
       const agent = AGENTS[state.selectedAgentKey];
       const provider = state.settings.agentProviders[state.selectedAgentKey] || agent.provider;
 
-      if (content) {
+      if (error) {
+        container.innerHTML = `
+          <div class="border-b border-slate-800 pb-3 mb-4 flex justify-between items-start">
+            <div>
+              <h3 class="font-bold text-slate-100 text-base mb-0.5">${agent.icon} ${agent.name} Critique</h3>
+              <p class="text-xs text-slate-400">${agent.role}</p>
+            </div>
+            <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 bg-amber-900/30 border border-amber-700/50 rounded text-amber-300">${provider}</span>
+          </div>
+          <div class="bg-amber-950/40 border border-amber-800/60 rounded-lg p-4 text-xs text-amber-200 space-y-2">
+            <div class="font-semibold text-amber-400 flex items-center space-x-1.5">
+              <span>⚠️ API Execution Failed</span>
+            </div>
+            <p class="leading-relaxed">${error}</p>
+            <p class="text-[11px] text-amber-400/80 italic">Check your API key in Settings (⚙) or verify that the selected model endpoint is currently available.</p>
+          </div>
+        `;
+      } else if (content) {
         container.innerHTML = `
           <div class="border-b border-slate-800 pb-3 mb-4 flex justify-between items-start">
             <div>
@@ -725,6 +754,7 @@
       const systemPrompt = `${agent.prompt}\n\nBook Context:\nTitle: ${book.title}\nGenre: ${book.genre}\nBlurb: ${book.blurb}`;
       const userPrompt = `Please review the following manuscript chapter:\n\n${chapterText}`;
 
+      delete state.reviewErrors[agentKey];
       state.reviews[agentKey] = "*Generating critique...*";
       renderAgentStatus();
       renderReviewContent();
@@ -752,7 +782,8 @@
         await saveReviewToGitHub(agentKey, feedback, provider);
 
       } catch (err) {
-        state.reviews[agentKey] = `**Error generating review:** ${err.message}`;
+        delete state.reviews[agentKey];
+        state.reviewErrors[agentKey] = err.message;
       }
 
       renderAgentStatus();
