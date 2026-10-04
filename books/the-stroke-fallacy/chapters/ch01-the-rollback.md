@@ -30,7 +30,7 @@ He picked up a nearby fist-sized river rock, feeling its weight, texture, and gr
 <br/>
 <br/>
 
-*"Fascinating render,"* Mark said to the empty air, smiling faintly. *"If I’m going out, at least my subconscious built a nice river for it. Way better than dying with Slack open."*
+*"These are some amazing graphics,"* Mark said to the empty air, smiling faintly. *"If I’m going out, at least my subconscious built a nice river for it. Way better than dying with Slack open."*
 <br/>
 <br/>
 
