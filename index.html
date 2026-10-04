@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StoryForge Studio - Multi-Agent Review Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                            950: '#0f172a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome & Marked.js for Icons and Markdown Parsing -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        /* Custom Scrollbars and Typography Improvements */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+        ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.5); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.8); }
+        .prose pre { background-color: #0f172a !important; padding: 1rem; border-radius: 0.5rem; }
+        .prose blockquote { border-left-color: #3b82f6; padding-left: 1rem; font-style: italic; }
+        .tab-active { border-bottom: 2px solid #3b82f6; color: #3b82f6; font-weight: 600; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Top Navigation Header -->
+    <header class="h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur-md px-4 flex items-center justify-between sticky top-0 z-30">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand-500/20">
+                <i class="fa-solid me-0 fa-feather-pointed"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-2">
+                    StoryForge Studio
+                    <span id="repoBadge" class="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700 font-mono">Demo Mode</span>
+                </h1>
+                <p class="text-xs text-slate-400 hidden sm:block">Multi-Perspective AI Feedback for Writers</p>
+            </div>
+        </div>
+
+        <!-- Book Selector & Controls -->
+        <div class="flex items-center space-x-3">
+            <!-- Book Selection Dropdown -->
+            <div class="relative">
+                <select id="bookSelect" onchange="switchBook(this.value)" class="bg-slate-800 border border-slate-700 text-slate-200 text-sm rounded-lg px-3 py-1.5 pr-8 focus:ring-2 focus:ring-brand-500 focus:outline-none appearance-none cursor-pointer">
+                    <!-- Dynamic Options Populated JS -->
+                </select>
+                <i class="fa-solid fa-chevron-down absolute right-2.5 top-2.5 text-xs text-slate-400 pointer-events-none"></i>
+            </div>
+
+            <!-- Mode Switcher Toggle (View / Author) -->
+            <div class="bg-slate-800 p-1 rounded-lg border border-slate-700 flex items-center">
+                <button id="btnModeView" onclick="setMode('view')" class="px-3 py-1 text-xs rounded-md font-medium transition-colors bg-brand-600 text-white shadow-sm">
+                    <i class="fa-solid fa-eye mr-1"></i> View Mode
+                </button>
+                <button id="btnModeAuthor" onclick="setMode('author')" class="px-3 py-1 text-xs rounded-md font-medium transition-colors text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-pen-nib mr-1"></i> Author Mode
+                </button>
+            </div>
+
+            <!-- Settings Button -->
+            <button onclick="openSettingsModal()" class="p-2 text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg transition-colors" title="Settings & API Keys">
+                <i class="fa-solid fa-sliders"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="flex-1 flex overflow-hidden">
+        <!-- Left Sidebar: Chapter List & Book Manager -->
+        <aside class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0">
+            <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+                <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Chapters</span>
+                <button id="btnAddChapter" onclick="openNewChapterModal()" class="hidden text-xs bg-brand-600 hover:bg-brand-500 text-white px-2 py-1 rounded transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-plus"></i> New
+                </button>
+            </div>
+
+            <div id="chapterList" class="flex-1 overflow-y-auto p-2 space-y-1">
+                <!-- Chapter items populated via JS -->
+            </div>
+
+            <!-- Author Controls Footer -->
+            <div id="authorSidebarFooter" class="hidden p-3 border-t border-slate-800 bg-slate-900/50">
+                <button onclick="openNewBookModal()" class="w-full text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 py-2 rounded-lg flex items-center justify-center gap-2 transition-colors">
+                    <i class="fa-solid fa-book-medical text-brand-500"></i> Add New Book
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Workspace: Split-Screen Layout -->
+        <main class="flex-1 flex flex-col lg:flex-row overflow-hidden bg-slate-950">
+            
+            <!-- LEFT PANE: MANUSCRIPT EDITOR & READER -->
+            <section class="flex-1 flex flex-col border-b lg:border-b-0 lg:border-r border-slate-800 h-1/2 lg:h-full overflow-hidden">
+                <!-- Pane Header & Controls -->
+                <div class="h-12 border-b border-slate-800 bg-slate-900/60 px-4 flex items-center justify-between shrink-0">
+                    <div class="flex items-center space-x-2">
+                        <button id="tabReader" onclick="setManuscriptTab('reader')" class="text-xs py-3 px-2 font-medium tab-active transition-colors">
+                            <i class="fa-solid fa-book-open mr-1"></i> Reader View
+                        </button>
+                        <button id="tabEditor" onclick="setManuscriptTab('editor')" class="hidden text-xs py-3 px-2 font-medium text-slate-400 hover:text-slate-200 transition-colors">
+                            <i class="fa-solid fa-code mr-1"></i> Markdown Editor
+                        </button>
+                    </div>
+
+                    <div class="flex items-center space-x-3 text-xs text-slate-400">
+                        <span id="wordCountBadge"><i class="fa-solid fa-file-lines mr-1"></i> 0 words</span>
+                        <button id="btnSaveChapter" onclick="saveCurrentChapter()" class="hidden bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1 rounded transition-colors font-medium flex items-center gap-1">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Save Chapter
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pane Content Body -->
+                <div class="flex-1 overflow-y-auto p-6 relative">
+                    <!-- Reader View -->
+                    <div id="viewReader" class="max-w-3xl mx-auto prose prose-invert prose-slate">
+                        <!-- Rendered Markdown goes here -->
+                    </div>
+
+                    <!-- Editor View -->
+                    <div id="viewEditor" class="hidden h-full flex flex-col">
+                        <textarea id="markdownInput" oninput="updateWordCount()" class="w-full h-full bg-slate-900 text-slate-100 p-4 font-mono text-sm border border-slate-800 rounded-lg focus:ring-2 focus:ring-brand-500 focus:outline-none resize-none" placeholder="# Chapter Title&#10;&#10;Write or paste your chapter markdown here..."></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RIGHT PANE: AGENT CRITIQUE DASHBOARD -->
+            <section class="flex-1 flex flex-col h-1/2 lg:h-full overflow-hidden bg-slate-900/30">
+                <!-- Pane Header & Tab Switcher -->
+                <div class="h-12 border-b border-slate-800 bg-slate-900/60 px-4 flex items-center justify-between shrink-0">
+                    <div class="flex items-center space-x-2">
+                        <button id="tabAgentGrid" onclick="setAgentTab('grid')" class="text-xs py-3 px-2 font-medium tab-active transition-colors">
+                            <i class="fa-solid fa-grip-vertical mr-1"></i> Critiques Overview
+                        </button>
+                        <button id="tabAgentDetail" onclick="setAgentTab('detail')" class="text-xs py-3 px-2 font-medium text-slate-400 hover:text-slate-200 transition-colors">
+                            <i class="fa-solid fa-comment-dots mr-1"></i> Detailed Perspective
+                        </button>
+                    </div>
+
+                    <div id="authorAgentRunControls" class="hidden flex items-center space-x-2">
+                        <button onclick="triggerAgents(true)" class="bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white text-xs px-3 py-1.5 rounded-lg shadow font-medium flex items-center gap-1.5 transition-all">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Run All 5 Agents
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Agent Cards / Grid View -->
+                <div id="viewAgentGrid" class="flex-1 overflow-y-auto p-4 space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="agentCardGrid">
+                        <!-- 5 Agent Cards Populated JS -->
+                    </div>
+                </div>
+
+                <!-- Agent Detailed View Tab -->
+                <div id="viewAgentDetail" class="hidden flex-1 flex flex-col overflow-hidden p-4">
+                    <div class="flex items-center space-x-2 mb-3 overflow-x-auto pb-2 shrink-0" id="agentSelectorTabs">
+                        <!-- Agent selection mini buttons generated via JS -->
+                    </div>
+                    <div class="flex-1 bg-slate-900 border border-slate-800 rounded-xl p-5 overflow-y-auto prose prose-invert max-w-none" id="detailedAgentContent">
+                        <!-- Detailed review rendered here -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- SETTINGS & CONFIGURATION MODAL -->
+    <div id="settingsModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl">
+            <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+                <h3 class="font-bold text-lg flex items-center gap-2">
+                    <i class="fa-solid fa-gear text-brand-500"></i> Settings & Provider Configuration
+                </h3>
+                <button onclick="closeSettingsModal()" class="text-slate-400 hover:text-white p-1">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-6 flex-1 text-xs">
+                <!-- GitHub Repository Credentials -->
+                <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800 space-y-3">
+                    <h4 class="font-semibold text-slate-200 text-sm flex items-center gap-2">
+                        <i class="fa-brands fa-github"></i> GitHub Persistence Settings
+                    </h4>
+                    <p class="text-slate-400">Provide your repository detail and Personal Access Token (PAT) with <code class="text-brand-400">repo</code> contents permission to save books, chapters, and agent feedback.</p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-slate-400 mb-1">Repo Owner</label>
+                            <input type="text" id="cfgGithubOwner" placeholder="e.g. username" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-slate-200 focus:ring-1 focus:ring-brand-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1">Repo Name</label>
+                            <input type="text" id="cfgGithubRepo" placeholder="e.g. storyforge-books" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-slate-200 focus:ring-1 focus:ring-brand-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1">Branch</label>
+                            <input type="text" id="cfgGithubBranch" value="main" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-slate-200 focus:ring-1 focus:ring-brand-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-1">GitHub Personal Access Token (PAT)</label>
+                        <input type="password" id="cfgGithubToken" placeholder="ghp_xxxxxxxxxxxxxxxxx" class="w-full bg-slate-900 border border-slate-700 rounded p-2 font-mono text-slate-200 focus:ring-1 focus:ring-brand-500">
+                    </div>
+                </div>
+
+                <!-- AI Provider Keys -->
+                <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800 space-y-3">
+                    <h4 class="font-semibold text-slate-200 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-key text-amber-500"></i> AI Provider API Keys
+                    </h4>
+                    <p class="text-slate-400">Keys are stored locally in your browser's <code class="text-brand-400">localStorage</code> and never sent to external third parties.</p>
+
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-slate-400 mb-1">Groq API Key</label>
+                            <input type="password" id="keyGroq" placeholder="gsk_..." class="w-full bg-slate-900 border border-slate-700 rounded p-2 font-mono text-slate-200">
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1">OpenAI API Key</label>
+                            <input type="password" id="keyOpenAI" placeholder="sk-..." class="w-full bg-slate-900 border border-slate-700 rounded p-2 font-mono text-slate-200">
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1">Anthropic Claude API Key</label>
+                            <input type="password" id="keyAnthropic" placeholder="sk-ant-..." class="w-full bg-slate-900 border border-slate-700 rounded p-2 font-mono text-slate-200">
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1">Google Gemini API Key</label>
+                            <input type="password" id="keyGemini" placeholder="AIzaSy..." class="w-full bg-slate-900 border border-slate-700 rounded p-2 font-mono text-slate-200">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Persona Model Mappings -->
+                <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800 space-y-3">
+                    <h4 class="font-semibold text-slate-200 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-robot text-purple-400"></i> Agent Model Mappings
+                    </h4>
+                    <div class="space-y-2" id="agentModelConfigList">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-4 border-t border-slate-800 flex justify-end space-x-2">
+                <button onclick="closeSettingsModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium">Cancel</button>
+                <button onclick="saveSettings()" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white rounded-lg text-xs font-medium">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW CHAPTER MODAL -->
+    <div id="newChapterModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-xl w-full max-w-md p-5 space-y-4">
+            <h3 class="font-bold text-base text-slate-100"><i class="fa-solid fa-file-circle-plus text-brand-500 mr-2"></i>Create New Chapter</h3>
+            <div>
+                <label class="block text-xs text-slate-400 mb-1">Chapter Title</label>
+                <input type="text" id="newChapterTitleInput" placeholder="Chapter 2: The Crossing" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-sm text-slate-100">
+            </div>
+            <div class="flex justify-end space-x-2 text-xs">
+                <button onclick="closeNewChapterModal()" class="px-3 py-1.5 bg-slate-800 text-slate-300 rounded">Cancel</button>
+                <button onclick="createNewChapter()" class="px-3 py-1.5 bg-brand-600 text-white rounded font-medium">Create Chapter</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW BOOK MODAL -->
+    <div id="newBookModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-xl w-full max-w-md p-5 space-y-4">
+            <h3 class="font-bold text-base text-slate-100"><i class="fa-solid fa-book-medical text-brand-500 mr-2"></i>Add New Book Project</h3>
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-400 mb-1">Book Title</label>
+                    <input type="text" id="newBookTitle" placeholder="The Starfarer's Legacy" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-100">
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1">Primary Genre</label>
+                    <input type="text" id="newBookGenre" placeholder="Sci-Fi / Space Opera" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-100">
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1">Brief Blurb / Summary</label>
+                    <textarea id="newBookBlurb" placeholder="A disgraced pilot uncovers an ancient alien starship..." class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-100 h-20 resize-none"></textarea>
+                </div>
+            </div>
+            <div class="flex justify-end space-x-2 text-xs">
+                <button onclick="closeNewBookModal()" class="px-3 py-1.5 bg-slate-800 text-slate-300 rounded">Cancel</button>
+                <button onclick="createNewBook()" class="px-3 py-1.5 bg-brand-600 text-white rounded font-medium">Create Book</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. PERSONAS DEFINITION & PROMPTS ---
+        const AGENT_PERSONAS = {
+            publisher: {
+                id: 'publisher',
+                name: 'The Publisher',
+                badge: 'Acquisitions',
+                color: 'amber',
+                icon: 'fa-briefcase',
+                defaultProvider: 'groq',
+                defaultModel: 'llama-3.3-70b-versatile',
+                systemPrompt: `You are a veteran commercial book publisher and acquisitions director. Evaluate the chapter for market viability, demographic target fit, opening hook impact (first 500 words), genre positioning, pacing, and long-term commercial potential. Structure your critique into:
+1. Executive Commercial Rating (1-10)
+2. Hook & Retention Analysis
+3. Market Fit & Genre Positioning
+4. Key Recommendations for Publishing Success`
+            },
+            editor: {
+                id: 'editor',
+                name: 'Developmental Editor',
+                badge: 'Structure & Craft',
+                color: 'blue',
+                icon: 'fa-layer-group',
+                defaultProvider: 'anthropic',
+                defaultModel: 'claude-3-5-sonnet-20241022',
+                systemPrompt: `You are a meticulous Developmental Editor. Analyze the story structure, plot internal logic, character motivations and arcs, world-building consistency, pacing spikes or drag points, and setup/payoff continuity. Structure your response into:
+1. Structural Integrity & Plot Logic
+2. Character Arc & Motivation Consistency
+3. Pacing & Scene Balance
+4. Actionable Revision Steps`
+            },
+            writer: {
+                id: 'writer',
+                name: 'Fellow Writer',
+                badge: 'Prose & Style',
+                color: 'emerald',
+                icon: 'fa-feather',
+                defaultProvider: 'openai',
+                defaultModel: 'gpt-4o',
+                systemPrompt: `You are a supportive, experienced fellow fiction writer. Critique the prose craft, sentence rhythm, dialogue naturalness, sensory details, showing vs. telling, and overall voice. Structure your response into:
+1. Prose Rhythm & Voice
+2. Dialogue Subtext & Flow
+3. Sensory Depth & Atmosphere
+4. Line-Level Craft Tips`
+            },
+            genre_fan: {
+                id: 'genre_fan',
+                name: 'Core Genre Fan',
+                badge: 'Target Reader',
+                color: 'purple',
+                icon: 'fa-heart',
+                defaultProvider: 'groq',
+                defaultModel: 'llama-3.3-70b-versatile',
+                systemPrompt: `You are an avid, enthusiastic core fan of this genre who reads 50+ books in this niche per year. Evaluate trope execution, reader satisfaction, emotional attachment to characters, bingeability, and wish-fulfillment catharsis. Structure your feedback into:
+1. Fan Satisfaction Score (1-10)
+2. Favorite Tropes & High Points
+3. Emotional Connection & Bingeability
+4. What I Want More Of`
+            },
+            genre_skeptic: {
+                id: 'genre_skeptic',
+                name: 'Genre Skeptic',
+                badge: 'Newcomer',
+                color: 'rose',
+                icon: 'fa-user-astronaut',
+                defaultProvider: 'gemini',
+                defaultModel: 'gemini-1.5-pro',
+                systemPrompt: `You are an open-minded reader who does NOT usually read this genre. Critique the chapter for accessibility, alienating jargon or lore density, relatable human emotion, cognitive friction, and whether it succeeds in drawing in a non-traditional reader. Structure your critique into:
+1. Accessibility & Initial Confusion Points
+2. Human Core & Relatability
+3. World-Building Clarity
+4. Newcomer Verdict`
+            }
+        };
+
+        // --- 2. GLOBAL APP STATE & DEMO DATA ---
+        let appState = {
+            mode: 'view', // 'view' or 'author'
+            currentBookId: 'dragon-rising',
+            currentChapterId: 'ch01',
+            activeManuscriptTab: 'reader', // 'reader' or 'editor'
+            activeAgentTab: 'grid', // 'grid' or 'detail'
+            activeDetailAgentId: 'publisher',
+            config: {
+                githubOwner: '',
+                githubRepo: '',
+                githubBranch: 'main',
+                githubToken: '',
+                keys: { groq: '', openai: '', anthropic: '', gemini: '' },
+                agentModels: {
+                    publisher: { provider: 'groq', model: 'llama-3.3-70b-versatile' },
+                    editor: { provider: 'anthropic', model: 'claude-3-5-sonnet-20241022' },
+                    writer: { provider: 'openai', model: 'gpt-4o' },
+                    genre_fan: { provider: 'groq', model: 'llama-3.3-70b-versatile' },
+                    genre_skeptic: { provider: 'gemini', model: 'gemini-1.5-pro' }
+                }
+            },
+            books: [
+                {
+                    id: 'dragon-rising',
+                    title: 'Dragon Rising',
+                    genre: 'Epic Fantasy',
+                    blurb: 'An ancient magic reawakens in the northern wastes.',
+                    chapters: [
+                        { id: 'ch01', title: 'Chapter 1: The Awakening', filename: 'ch01-awakening.md' },
+                        { id: 'ch02', title: 'Chapter 2: Whispers in Frost', filename: 'ch02-whispers.md' }
+                    ]
+                }
+            ],
+            // In-memory cache for loaded chapter markdown & reviews
+            cache: {
+                chapters: {
+                    'ch01': `# Chapter 1: The Awakening\n\nThe wind howled through the high spires of Oakhaven, carrying with it the bitter scent of ozone and burnt pine. Kaelen tightened his furs against the chill, his hands trembling—not from the frost, but from the glowing sigil newly etched into his left palm.\n\n"It shouldn't be possible," Master Corvus whispered, leaning over the ancient leather tome. The candle flickered violently as Kaelen took a step closer.\n\n"The seals were supposed to last a thousand years," Kaelen said, his voice echoing in the stone chamber. "What happens when the dragons return?"`,
+                    'ch02': `# Chapter 2: Whispers in Frost\n\nBy dawn, the mountain path was blanketed in fresh snow. Kaelen and Corvus rode in silence, the horses' breath forming thick clouds in the frigid air.\n\n"Where are we heading?" Kaelen asked, looking back at the shrinking towers of Oakhaven.\n\n"To the Vault of Shadows," Corvus replied without turning. "Where answers—or our demise—await."`
+                },
+                reviews: {
+                    'ch01': {
+                        publisher: {
+                            score_summary: "Strong hook, clear genre appeal (8.5/10)",
+                            feedback_markdown: "## Publisher Critique\n\n### 1. Executive Commercial Rating\n**8.5/10** - Strong opening with immediate tension.\n\n### 2. Hook & Retention Analysis\nThe opening lines establish tone and stakes immediately. The sigil on the palm creates an instant narrative question."
+                        },
+                        editor: {
+                            score_summary: "Solid pacing; deepen character motivation",
+                            feedback_markdown: "## Developmental Editor Critique\n\n### 1. Structural Integrity\nThe scene transition from setting description to dialogue is smooth. \n\n### 2. Actionable Revision Steps\nShow more of Kaelen's internal visceral reaction to the burning sigil."
+                        }
+                    }
+                }
+            }
+        };
+
+        // --- 3. LIFECYCLE & INITIALIZATION ---
+        window.onload = function() {
+            loadConfigFromLocalStorage();
+            renderBookSelector();
+            renderChapterList();
+            renderAgentCards();
+            renderAgentModelConfigList();
+            loadCurrentChapterContent();
+            updateUIState();
+        };
+
+        function loadConfigFromLocalStorage() {
+            const saved = localStorage.getItem('storyforge_config');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    appState.config = { ...appState.config, ...parsed };
+                } catch(e) { console.error("Error parsing config", e); }
+            }
+            // Populate inputs
+            document.getElementById('cfgGithubOwner').value = appState.config.githubOwner || '';
+            document.getElementById('cfgGithubRepo').value = appState.config.githubRepo || '';
+            document.getElementById('cfgGithubBranch').value = appState.config.githubBranch || 'main';
+            document.getElementById('cfgGithubToken').value = appState.config.githubToken || '';
+            
+            document.getElementById('keyGroq').value = appState.config.keys.groq || '';
+            document.getElementById('keyOpenAI').value = appState.config.keys.openai || '';
+            document.getElementById('keyAnthropic').value = appState.config.keys.anthropic || '';
+            document.getElementById('keyGemini').value = appState.config.keys.gemini || '';
+
+            updateRepoBadge();
+        }
+
+        function saveSettings() {
+            appState.config.githubOwner = document.getElementById('cfgGithubOwner').value.trim();
+            appState.config.githubRepo = document.getElementById('cfgGithubRepo').value.trim();
+            appState.config.githubBranch = document.getElementById('cfgGithubBranch').value.trim() || 'main';
+            appState.config.githubToken = document.getElementById('cfgGithubToken').value.trim();
+
+            appState.config.keys.groq = document.getElementById('keyGroq').value.trim();
+            appState.config.keys.openai = document.getElementById('keyOpenAI').value.trim();
+            appState.config.keys.anthropic = document.getElementById('keyAnthropic').value.trim();
+            appState.config.keys.gemini = document.getElementById('keyGemini').value.trim();
+
+            // Collect Agent Model Mappings
+            Object.keys(AGENT_PERSONAS).forEach(agentId => {
+                const provSel = document.getElementById(`cfg_prov_${agentId}`);
+                const modSel = document.getElementById(`cfg_mod_${agentId}`);
+                if (provSel && modSel) {
+                    appState.config.agentModels[agentId] = {
+                        provider: provSel.value,
+                        model: modSel.value
+                    };
+                }
+            });
+
+            localStorage.setItem('storyforge_config', JSON.stringify(appState.config));
+            updateRepoBadge();
+            closeSettingsModal();
+            alert('Settings successfully updated!');
+        }
+
+        function updateRepoBadge() {
+            const badge = document.getElementById('repoBadge');
+            if (appState.config.githubOwner && appState.config.githubRepo) {
+                badge.innerText = `${appState.config.githubOwner}/${appState.config.githubRepo}`;
+                badge.className = "text-xs px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 font-mono";
+            } else {
+                badge.innerText = "Demo Mode";
+                badge.className = "text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700 font-mono";
+            }
+        }
+
+        // --- 4. NAVIGATION & UI CONTROLS ---
+        function setMode(mode) {
+            appState.mode = mode;
+            const btnView = document.getElementById('btnModeView');
+            const btnAuthor = document.getElementById('btnModeAuthor');
+            const authorFooter = document.getElementById('authorSidebarFooter');
+            const addChBtn = document.getElementById('btnAddChapter');
+            const tabEditor = document.getElementById('tabEditor');
+            const btnSave = document.getElementById('btnSaveChapter');
+            const agentRunCtrls = document.getElementById('authorAgentRunControls');
+
+            if (mode === 'author') {
+                btnAuthor.className = "px-3 py-1 text-xs rounded-md font-medium transition-colors bg-brand-600 text-white shadow-sm";
+                btnView.className = "px-3 py-1 text-xs rounded-md font-medium transition-colors text-slate-400 hover:text-white";
+                
+                authorFooter.classList.remove('hidden');
+                addChBtn.classList.remove('hidden');
+                tabEditor.classList.remove('hidden');
+                btnSave.classList.remove('hidden');
+                agentRunCtrls.classList.remove('hidden');
+            } else {
+                btnView.className = "px-3 py-1 text-xs rounded-md font-medium transition-colors bg-brand-600 text-white shadow-sm";
+                btnAuthor.className = "px-3 py-1 text-xs rounded-md font-medium transition-colors text-slate-400 hover:text-white";
+                
+                authorFooter.classList.add('hidden');
+                addChBtn.classList.add('hidden');
+                tabEditor.classList.add('hidden');
+                btnSave.classList.add('hidden');
+                agentRunCtrls.classList.add('hidden');
+                setManuscriptTab('reader');
+            }
+        }
+
+        function setManuscriptTab(tab) {
+            appState.activeManuscriptTab = tab;
+            const tReader = document.getElementById('tabReader');
+            const tEditor = document.getElementById('tabEditor');
+            const vReader = document.getElementById('viewReader');
+            const vEditor = document.getElementById('viewEditor');
+
+            if (tab === 'reader') {
+                tReader.className = "text-xs py-3 px-2 font-medium tab-active transition-colors";
+                tEditor.className = "text-xs py-3 px-2 font-medium text-slate-400 hover:text-slate-200 transition-colors";
+                vReader.classList.remove('hidden');
+                vEditor.classList.add('hidden');
+                // Sync markdown from editor to reader view
+                const mdText = document.getElementById('markdownInput').value;
+                vReader.innerHTML = marked.parse(mdText || '*No content*');
+            } else {
+                tEditor.className = "text-xs py-3 px-2 font-medium tab-active transition-colors";
+                tReader.className = "text-xs py-3 px-2 font-medium text-slate-400 hover:text-slate-200 transition-colors";
+                vEditor.classList.remove('hidden');
+                vReader.classList.add('hidden');
+            }
+        }
+
+        function setAgentTab(tab) {
+            appState.activeAgentTab = tab;
+            const tGrid = document.getElementById('tabAgentGrid');
+            const tDetail = document.getElementById('tabAgentDetail');
+            const vGrid = document.getElementById('viewAgentGrid');
+            const vDetail = document.getElementById('viewAgentDetail');
+
+            if (tab === 'grid') {
+                tGrid.className = "text-xs py-3 px-2 font-medium tab-active transition-colors";
+                tDetail.className = "text-xs py-3 px-2 font-medium text-slate-400 hover:text-slate-200 transition-colors";
+                vGrid.classList.remove('hidden');
+                vDetail.classList.add('hidden');
+            } else {
+                tDetail.className = "text-xs py-3 px-2 font-medium tab-active transition-colors";
+                tGrid.className = "text-xs py-3 px-2 font-medium text-slate-400 hover:text-slate-200 transition-colors";
+                vDetail.classList.remove('hidden');
+                vGrid.classList.add('hidden');
+                renderDetailedAgentView();
+            }
+        }
+
+        // --- 5. DATA RENDERING FUNCTIONS ---
+        function renderBookSelector() {
+            const select = document.getElementById('bookSelect');
+            select.innerHTML = appState.books.map(b => `<option value="${b.id}" ${b.id === appState.currentBookId ? 'selected' : ''}>📖 ${b.title}</option>`).join('');
+        }
+
+        function switchBook(bookId) {
+            appState.currentBookId = bookId;
+            const book = appState.books.find(b => b.id === bookId);
+            if (book && book.chapters.length > 0) {
+                appState.currentChapterId = book.chapters[0].id;
+            }
+            renderChapterList();
+            loadCurrentChapterContent();
+        }
+
+        function renderChapterList() {
+            const book = appState.books.find(b => b.id === appState.currentBookId);
+            const container = document.getElementById('chapterList');
+            if (!book || !book.chapters) {
+                container.innerHTML = '<p class="text-xs text-slate-500 p-2">No chapters found.</p>';
+                return;
+            }
+
+            container.innerHTML = book.chapters.map((ch, idx) => {
+                const isActive = ch.id === appState.currentChapterId;
+                return `
+                    <button onclick="selectChapter('${ch.id}')" class="w-full text-left px-3 py-2 rounded-lg text-xs font-medium flex items-center justify-between transition-colors ${isActive ? 'bg-brand-600/20 text-brand-400 border border-brand-500/30' : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'}">
+                        <span class="truncate"><i class="fa-regular fa-file-lines mr-2 text-slate-500"></i>${ch.title}</span>
+                        ${isActive ? '<i class="fa-solid fa-chevron-right text-[10px]"></i>' : ''}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function selectChapter(chId) {
+            appState.currentChapterId = chId;
+            renderChapterList();
+            loadCurrentChapterContent();
+        }
+
+        function loadCurrentChapterContent() {
+            const md = appState.cache.chapters[appState.currentChapterId] || `# New Chapter\n\nWrite story here...`;
+            document.getElementById('markdownInput').value = md;
+            document.getElementById('viewReader').innerHTML = marked.parse(md);
+            updateWordCount();
+            renderAgentCards();
+        }
+
+        function updateWordCount() {
+            const text = document.getElementById('markdownInput').value || '';
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            document.getElementById('wordCountBadge').innerHTML = `<i class="fa-solid fa-file-lines mr-1"></i> ${words} words`;
+        }
+
+        function renderAgentCards() {
+            const container = document.getElementById('agentCardGrid');
+            const reviews = appState.cache.reviews[appState.currentChapterId] || {};
+
+            container.innerHTML = Object.values(AGENT_PERSONAS).map(agent => {
+                const rev = reviews[agent.id];
+                const hasReview = !!rev;
+
+                return `
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-7 h-7 rounded-lg bg-${agent.color}-500/10 text-${agent.color}-400 border border-${agent.color}-500/20 flex items-center justify-center text-xs">
+                                        <i class="fa-solid ${agent.icon}"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-xs text-slate-200">${agent.name}</h4>
+                                        <span class="text-[10px] text-slate-400">${agent.badge}</span>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">${appState.config.agentModels[agent.id]?.provider || agent.defaultProvider}</span>
+                            </div>
+                            
+                            <div class="my-3 text-xs text-slate-300 min-h-[60px] bg-slate-950/50 p-2.5 rounded-lg border border-slate-800/80">
+                                ${hasReview ? `<p class="font-medium text-slate-200 mb-1">${rev.score_summary || 'Review Completed'}</p><p class="text-[11px] text-slate-400 line-clamp-2">${rev.feedback_markdown.replace(/#+/g, '')}</p>` : '<p class="text-slate-500 italic text-center py-3">No critique generated for this chapter yet.</p>'}
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between pt-2 border-t border-slate-800/60 mt-2">
+                            <button onclick="openAgentDetail('${agent.id}')" class="text-[11px] text-brand-400 hover:text-brand-300 flex items-center gap-1 font-medium">
+                                <i class="fa-solid fa-eye"></i> View Detail
+                            </button>
+                            <button onclick="runSingleAgent('${agent.id}')" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-200 px-2 py-1 rounded border border-slate-700 transition-colors flex items-center gap-1">
+                                <i class="fa-solid fa-play text-emerald-400 text-[9px]"></i> Run Agent
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openAgentDetail(agentId) {
+            appState.activeDetailAgentId = agentId;
+            setAgentTab('detail');
+        }
+
+        function renderDetailedAgentView() {
+            const tabsContainer = document.getElementById('agentSelectorTabs');
+            tabsContainer.innerHTML = Object.values(AGENT_PERSONAS).map(agent => {
+                const isActive = agent.id === appState.activeDetailAgentId;
+                return `
+                    <button onclick="openAgentDetail('${agent.id}')" class="px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors flex items-center gap-1.5 ${isActive ? 'bg-brand-600 text-white shadow' : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-slate-200'}">
+                        <i class="fa-solid ${agent.icon}"></i> ${agent.name}
+                    </button>
+                `;
+            }).join('');
+
+            const contentContainer = document.getElementById('detailedAgentContent');
+            const reviews = appState.cache.reviews[appState.currentChapterId] || {};
+            const rev = reviews[appState.activeDetailAgentId];
+
+            if (rev) {
+                contentContainer.innerHTML = marked.parse(rev.feedback_markdown);
+            } else {
+                contentContainer.innerHTML = `
+                    <div class="text-center py-12 text-slate-500">
+                        <i class="fa-solid fa-robot text-4xl mb-3 block"></i>
+                        <p class="text-sm font-medium">No critique available for ${AGENT_PERSONAS[appState.activeDetailAgentId].name}.</p>
+                        <button onclick="runSingleAgent('${appState.activeDetailAgentId}')" class="mt-4 bg-brand-600 hover:bg-brand-500 text-white text-xs px-4 py-2 rounded-lg font-medium transition-colors">
+                            Run Critique Now
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function renderAgentModelConfigList() {
+            const container = document.getElementById('agentModelConfigList');
+            container.innerHTML = Object.values(AGENT_PERSONAS).map(agent => {
+                const current = appState.config.agentModels[agent.id] || { provider: agent.defaultProvider, model: agent.defaultModel };
+                return `
+                    <div class="flex items-center justify-between bg-slate-900 p-2 rounded border border-slate-800">
+                        <span class="font-medium text-slate-300 w-1/3">${agent.name}</span>
+                        <select id="cfg_prov_${agent.id}" onchange="updateModelDropdown('${agent.id}')" class="bg-slate-950 border border-slate-700 text-slate-200 rounded p-1 text-xs">
+                            <option value="groq" ${current.provider==='groq'?'selected':''}>Groq</option>
+                            <option value="openai" ${current.provider==='openai'?'selected':''}>OpenAI</option>
+                            <option value="anthropic" ${current.provider==='anthropic'?'selected':''}>Anthropic</option>
+                            <option value="gemini" ${current.provider==='gemini'?'selected':''}>Gemini</option>
+                        </select>
+                        <select id="cfg_mod_${agent.id}" class="bg-slate-950 border border-slate-700 text-slate-200 rounded p-1 text-xs w-1/3">
+                            <!-- Populated JS -->
+                        </select>
+                    </div>
+                `;
+            }).join('');
+
+            Object.keys(AGENT_PERSONAS).forEach(agentId => updateModelDropdown(agentId));
+        }
+
+        function updateModelDropdown(agentId) {
+            const provSel = document.getElementById(`cfg_prov_${agentId}`);
+            const modSel = document.getElementById(`cfg_mod_${agentId}`);
+            if (!provSel || !modSel) return;
+
+            const provider = provSel.value;
+            let options = [];
+            if (provider === 'groq') options = ['llama-3.3-70b-versatile', 'mixtral-8x7b-32768'];
+            else if (provider === 'openai') options = ['gpt-4o', 'gpt-4o-mini'];
+            else if (provider === 'anthropic') options = ['claude-3-5-sonnet-20241022', 'claude-3-5-haiku-20241022'];
+            else if (provider === 'gemini') options = ['gemini-1.5-pro', 'gemini-1.5-flash'];
+
+            modSel.innerHTML = options.map(m => `<option value="${m}">${m}</option>`).join('');
+        }
+
+        // --- 6. AI AGENT EXECUTION ENGINE ---
+        async function runSingleAgent(agentId) {
+            const chapterText = document.getElementById('markdownInput').value;
+            if (!chapterText.trim()) {
+                alert('Chapter content is empty.');
+                return;
+            }
+
+            const persona = AGENT_PERSONAS[agentId];
+            const cfg = appState.config.agentModels[agentId] || { provider: persona.defaultProvider, model: persona.defaultModel };
+            const apiKey = appState.config.keys[cfg.provider];
+
+            // If no API key configured, run simulated fallback review
+            if (!apiKey) {
+                runSimulatedAgentReview(agentId, chapterText);
+                return;
+            }
+
+            try {
+                let critiqueText = '';
+                if (cfg.provider === 'openai' || cfg.provider === 'groq') {
+                    const endpoint = cfg.provider === 'groq' ? 'https://api.groq.com/openai/v1/chat/completions' : 'https://api.openai.com/v1/chat/completions';
+                    const res = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
+                        body: JSON.stringify({
+                            model: cfg.model,
+                            messages: [
+                                { role: 'system', content: persona.systemPrompt },
+                                { role: 'user', content: `Please review the following manuscript chapter:\n\n${chapterText}` }
+                            ]
+                        })
+                    });
+                    const data = await res.json();
+                    critiqueText = data.choices[0].message.content;
+                } else if (cfg.provider === 'anthropic') {
+                    const res = await fetch('https://api.anthropic.com/v1/messages', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-api-key': apiKey,
+                            'anthropic-version': '2023-06-01',
+                            'anthropic-dangerous-direct-browser-access': 'true'
+                        },
+                        body: JSON.stringify({
+                            model: cfg.model,
+                            max_tokens: 2000,
+                            system: persona.systemPrompt,
+                            messages: [{ role: 'user', content: `Please review the following manuscript chapter:\n\n${chapterText}` }]
+                        })
+                    });
+                    const data = await res.json();
+                    critiqueText = data.content[0].text;
+                } else if (cfg.provider === 'gemini') {
+                    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${cfg.model}:generateContent?key=${apiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{
+                                parts: [{ text: `${persona.systemPrompt}\n\nPlease review the following manuscript chapter:\n\n${chapterText}` }]
+                            }]
+                        })
+                    });
+                    const data = await res.json();
+                    critiqueText = data.candidates[0].content.parts[0].text;
+                }
+
+                saveReviewToCacheAndGitHub(agentId, cfg.provider, cfg.model, critiqueText);
+            } catch(e) {
+                console.error("AI Request Failed", e);
+                alert(`Error calling ${cfg.provider}: ${e.message}. Falling back to demo mode.`);
+                runSimulatedAgentReview(agentId, chapterText);
+            }
+        }
+
+        function runSimulatedAgentReview(agentId, chapterText) {
+            const persona = AGENT_PERSONAS[agentId];
+            const sampleText = `## ${persona.name} Critique (Demo Mode)\n\n### Overview\nReviewed manuscript excerpt (${chapterText.slice(0, 100)}...).\n\n### Key Analysis\n- **Strength:** Engaging pacing and distinct scene setup.\n- **Improvement:** Consider expanding the sensory details in key emotional moments.\n\n*Note: Configure live API keys in Settings to get real-time multi-model AI responses.*`;
+            
+            saveReviewToCacheAndGitHub(agentId, 'demo', 'simulated', sampleText);
+        }
+
+        async function triggerAgents(all = true) {
+            if (all) {
+                for (const agentId of Object.keys(AGENT_PERSONAS)) {
+                    await runSingleAgent(agentId);
+                }
+            }
+        }
+
+        function saveReviewToCacheAndGitHub(agentId, provider, model, feedbackMarkdown) {
+            if (!appState.cache.reviews[appState.currentChapterId]) {
+                appState.cache.reviews[appState.currentChapterId] = {};
+            }
+
+            const record = {
+                agent: agentId,
+                provider: provider,
+                model: model,
+                timestamp: new Date().toISOString(),
+                score_summary: `${AGENT_PERSONAS[agentId].name} Review Complete`,
+                feedback_markdown: feedbackMarkdown
+            };
+
+            appState.cache.reviews[appState.currentChapterId][agentId] = record;
+            renderAgentCards();
+            if (appState.activeAgentTab === 'detail') renderDetailedAgentView();
+
+            // Commit to GitHub if PAT configured
+            if (appState.config.githubToken && appState.config.githubOwner && appState.config.githubRepo) {
+                commitFileToGitHub(
+                    `books/${appState.currentBookId}/reviews/${appState.currentChapterId}/${agentId}.json`,
+                    JSON.stringify(record, null, 2),
+                    `Add ${agentId} critique for ${appState.currentChapterId}`
+                );
+            }
+        }
+
+        // --- 7. GITHUB API INTEGRATION ---
+        async function commitFileToGitHub(path, content, commitMessage) {
+            const owner = appState.config.githubOwner;
+            const repo = appState.config.githubRepo;
+            const branch = appState.config.githubBranch || 'main';
+            const token = appState.config.githubToken;
+
+            if (!owner || !repo || !token) return;
+
+            try {
+                // Get file SHA if updating existing file
+                let sha = null;
+                const getRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`, {
+                    headers: { 'Authorization': `token ${token}` }
+                });
+                if (getRes.ok) {
+                    const fileData = await getRes.json();
+                    sha = fileData.sha;
+                }
+
+                // Base64 encode content safely
+                const encoder = new TextEncoder();
+                const data = encoder.encode(content);
+                let binary = '';
+                for (let i = 0; i < data.length; i++) binary += String.fromCharCode(data[i]);
+                const base64Content = btoa(binary);
+
+                const body = {
+                    message: commitMessage,
+                    content: base64Content,
+                    branch: branch
+                };
+                if (sha) body.sha = sha;
+
+                const putRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                if (putRes.ok) {
+                    console.log(`Successfully committed ${path} to GitHub`);
+                } else {
+                    console.error("GitHub Commit Failed", await putRes.json());
+                }
+            } catch(e) {
+                console.error("GitHub API Error", e);
+            }
+        }
+
+        function saveCurrentChapter() {
+            const text = document.getElementById('markdownInput').value;
+            appState.cache.chapters[appState.currentChapterId] = text;
+            
+            const book = appState.books.find(b => b.id === appState.currentBookId);
+            const ch = book?.chapters.find(c => c.id === appState.currentChapterId);
+            const filename = ch ? ch.filename : `${appState.currentChapterId}.md`;
+
+            if (appState.config.githubToken) {
+                commitFileToGitHub(
+                    `books/${appState.currentBookId}/chapters/${filename}`,
+                    text,
+                    `Update chapter content: ${ch?.title || appState.currentChapterId}`
+                );
+            }
+            alert('Chapter saved to memory and queued for GitHub push!');
+        }
+
+        // --- 8. MODAL HANDLERS & HELPERS ---
+        function openSettingsModal() { document.getElementById('settingsModal').classList.remove('hidden'); }
+        function closeSettingsModal() { document.getElementById('settingsModal').classList.add('hidden'); }
+        
+        function openNewChapterModal() { document.getElementById('newChapterModal').classList.remove('hidden'); }
+        function closeNewChapterModal() { document.getElementById('newChapterModal').classList.add('hidden'); }
+        
+        function createNewChapter() {
+            const title = document.getElementById('newChapterTitleInput').value.trim();
+            if (!title) return;
+
+            const book = appState.books.find(b => b.id === appState.currentBookId);
+            const newId = `ch0${book.chapters.length + 1}`;
+            const filename = `${newId}-${title.toLowerCase().replace(/[^a-z0-9]/g, '-')}.md`;
+
+            book.chapters.push({ id: newId, title: title, filename: filename });
+            appState.cache.chapters[newId] = `# ${title}\n\nStart writing here...`;
+            
+            closeNewChapterModal();
+            renderChapterList();
+            selectChapter(newId);
+        }
+
+        function openNewBookModal() { document.getElementById('newBookModal').classList.remove('hidden'); }
+        function closeNewBookModal() { document.getElementById('newBookModal').classList.add('hidden'); }
+
+        function createNewBook() {
+            const title = document.getElementById('newBookTitle').value.trim();
+            const genre = document.getElementById('newBookGenre').value.trim();
+            const blurb = document.getElementById('newBookBlurb').value.trim();
+            if (!title) return;
+
+            const newBookId = title.toLowerCase().replace(/[^a-z0-9]/g, '-');
+            const newBook = {
+                id: newBookId,
+                title: title,
+                genre: genre,
+                blurb: blurb,
+                chapters: [{ id: 'ch01', title: 'Chapter 1: The Beginning', filename: 'ch01-beginning.md' }]
+            };
+
+            appState.books.push(newBook);
+            appState.cache.chapters['ch01'] = `# Chapter 1: The Beginning\n\nWrite your story...`;
+
+            closeNewBookModal();
+            renderBookSelector();
+            switchBook(newBookId);
+        }
+    </script>
+</body>
+</html>
