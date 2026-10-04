@@ -27,7 +27,7 @@
     }
   </script>
   <style>
-  /* Explicit List Styling for Markdown Preview & Reader View */
+    /* Explicit List Styling for Markdown Preview & Reader View */
     .prose ol {
       list-style-type: decimal;
       padding-left: 1.5rem;
@@ -55,6 +55,7 @@
     .prose ul ul {
       list-style-type: circle;
     }
+
     /* Blockquote & Markdown Formatting Styles */
     .prose blockquote {
       border-left: 4px solid #22c55e;
@@ -69,6 +70,7 @@
       border-top-right-radius: 0.375rem;
       border-bottom-right-radius: 0.375rem;
     }
+
     .prose hr {
       border: none;
       border-top: 1px solid #334155;
@@ -86,11 +88,17 @@
         <h1 class="font-bold text-lg tracking-wide text-white">AI Critic Forge</h1>
       </div>
 
-      <!-- Book Selector Dropdown & New Book Trigger -->
+      <!-- Book Selector Dropdown, Word Count Badge & New Book Trigger -->
       <div class="flex items-center space-x-2">
         <select id="bookSelect" onchange="switchBook(this.value)" class="bg-slate-800 border border-slate-700 text-slate-200 text-sm rounded-lg focus:ring-brand-500 focus:border-brand-500 px-3 py-1.5 pr-8 cursor-pointer">
           <option value="">Loading books...</option>
         </select>
+
+        <!-- Total Book Word Count Badge -->
+        <span id="bookWordCountBadge" class="bg-slate-800/80 border border-slate-700/80 text-slate-300 text-xs px-2.5 py-1 rounded-lg font-medium flex items-center space-x-1" title="Total Word Count for Selected Book">
+          <span>📝</span>
+          <span id="bookWordCountValue">0 words</span>
+        </span>
 
         <!-- New Book Button (Visible strictly in Author Mode) -->
         <button id="newBookBtn" onclick="toggleNewBookModal()" class="hidden text-xs bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 hover:text-white px-2.5 py-1.5 rounded-lg font-medium transition-colors">
@@ -159,7 +167,7 @@
             <!-- Edit / Preview Mode Toggle -->
             <div class="flex items-center bg-slate-800 border border-slate-700 rounded p-0.5 text-[11px]">
               <button id="editSubTabBtn" onclick="setEditorTab('edit')" class="px-2.5 py-0.5 rounded font-medium bg-slate-700 text-white">
-                ✏️️ Edit
+                ✏ Edit
               </button>
               <button id="previewSubTabBtn" onclick="setEditorTab('preview')" class="px-2.5 py-0.5 rounded font-medium text-slate-400 hover:text-white">
                 👁️ Preview
@@ -412,6 +420,7 @@
       reviews: {},
       reviewErrors: {},
       demographicData: null,
+      bookWordCounts: {},
       settings: {
         ghToken: '',
         ghOwner: '',
@@ -638,15 +647,55 @@
 
     function renderBookDropdown() {
       const select = document.getElementById('bookSelect');
-      select.innerHTML = state.booksData.books.map(b => 
-        `<option value="${b.id}">${b.title}</option>`
-      ).join('');
+      select.innerHTML = state.booksData.books.map(b => {
+        const count = state.bookWordCounts[b.id];
+        const countStr = count !== undefined ? ` (${count.toLocaleString()} words)` : '';
+        return `<option value="${b.id}">${b.title}${countStr}</option>`;
+      }).join('');
+    }
+
+    async function calculateBookWordCount(book) {
+      if (!book) return 0;
+      let totalWords = 0;
+
+      for (const chap of book.chapters) {
+        let content = "";
+        if (state.settings.ghOwner && state.settings.ghRepo) {
+          const path = `books/${book.id}/chapters/${chap.file}`;
+          const url = `https://raw.githubusercontent.com/${state.settings.ghOwner}/${state.settings.ghRepo}/main/${path}`;
+          try {
+            const res = await fetch(url, { cache: "no-store" });
+            if (res.ok) content = await res.text();
+          } catch (e) {}
+        }
+        
+        if (content) {
+          const words = content.trim().split(/\s+/).filter(w => w.length > 0).length;
+          totalWords += words;
+        }
+      }
+
+      state.bookWordCounts[book.id] = totalWords;
+      return totalWords;
+    }
+
+    async function updateBookWordCountUI() {
+      const book = state.booksData.books.find(b => b.id === state.currentBookId);
+      if (!book) return;
+
+      document.getElementById('bookWordCountValue').innerText = "Calculating...";
+      const totalWords = await calculateBookWordCount(book);
+      
+      document.getElementById('bookWordCountValue').innerText = `${totalWords.toLocaleString()} words`;
+      renderBookDropdown();
+      document.getElementById('bookSelect').value = state.currentBookId;
     }
 
     function switchBook(bookId) {
       state.currentBookId = bookId;
       const book = state.booksData.books.find(b => b.id === bookId);
       renderChapterList(book);
+      updateBookWordCountUI();
       if (book && book.chapters.length > 0) {
         loadChapter(book.chapters[0].id);
       }
@@ -1114,6 +1163,7 @@ ${chapterText.slice(0, 4000)}`;
         statusEl.className = "text-emerald-400 text-[11px]";
         
         analyzeChapterDemographics(content);
+        updateBookWordCountUI();
 
         setTimeout(() => { 
           statusEl.innerText = "Saved"; 
