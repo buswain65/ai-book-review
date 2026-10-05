@@ -2,7 +2,35 @@
 
 <br/>
 
-Mark spent the early morning hours installing his modified regulator onto the armory forge’s main air-blower—a clunky, iron-and-leather beast that usually required two tired apprentices to hand-crank for four hours a day just to keep the hearth hot enough for smelting.
+Mark spent the early morning hours installing his modified regulator onto the armory forge's main air-blower—a clunky, iron-and-leather beast that usually required two tired apprentices to hand-crank for four hours a day just to keep the hearth hot enough for smelting.
+
+<br/>
+
+The two apprentices in question stood nearby, watching him work with the uneasy expressions of men observing their own replacement being bolted into place.
+
+<br/>
+
+"So," the taller one ventured, "if that thing works... what happens to us?"
+
+<br/>
+
+Mark tightened a fitting. "You get promoted."
+
+<br/>
+
+"To what?"
+
+<br/>
+
+Mark thought about it. "Forge supervision," he said. "You supervise the forge. From over there. In the shade."
+
+<br/>
+
+The apprentices looked at each other. Then they looked at the shade. Then they looked back at Mark with dawning, profound joy.
+
+<br/>
+
+*"Automation anxiety, resolved,"* Mark thought. *"If only the layoffs back home had been handled this well."*
 
 <br/>
 
@@ -10,19 +38,31 @@ He mounted the bronze housing directly to the intake pipe, running his thin copp
 
 <br/>
 
-When he tapped the copper actuator lever, the blower didn't roar or sputter. It hummed with a quiet, steady, rhythmic pulse. A draft of super-heated, clean air surged through the tuyere, turning the bed of black coal into a roaring, white-hot bed of coals in under thirty seconds.
+When he tapped the copper actuator lever, the blower didn't roar or sputter. It hummed with a quiet, steady, rhythmic pulse. A draft of super-heated, clean air surged through the tuyere, turning the black coal into a roaring, white-hot bed in under thirty seconds.
 
 <br/>
 
-Smith Master Torren stood by the hearth, holding an unlit pipe in his mouth, his jaw practically hitting his leather apron.
+Smith Master Torren stood by the hearth, holding an unlit pipe in his mouth. His jaw dropped. The pipe fell out, landed on the edge of the hearth, and burst into flame instantly.
 
 <br/>
 
-"By the Ancestors," Torren breathed, stepping closer to feel the intense, focused heat radiating from the hearth. "It's not even throwing sparks. The casing isn't even hot!"
+Torren looked down at it.
 
 <br/>
 
-"I re-routed the thermal backlash," Mark explained, wiping a speck of grease from his hand. "Instead of letting the excess energy build up inside the housing until the silver plate melts, the copper wire offloads the extra voltage straight into the ground. It’ll run like that for weeks without shorting."
+"Well," he said. "That's lit now."
+
+<br/>
+
+He fished the pipe out with his tongs, took a contemplative puff, and stepped closer to feel the intense, focused heat radiating from the hearth.
+
+<br/>
+
+"By the Ancestors," Torren breathed. "It's not even throwing sparks. The casing isn't even hot!"
+
+<br/>
+
+"I re-routed the thermal backlash," Mark explained, wiping a speck of grease from his hand. "Instead of letting the excess energy build up inside the housing until the silver plate melts, the copper wire offloads the extra voltage straight into the ground. It'll run like that for weeks without shorting."
 
 <br/>
 
@@ -32,9 +72,21 @@ Smith Master Torren stood by the hearth, holding an unlit pipe in his mouth, his
 
 "I'm an engineer," Mark corrected softly. "Big difference. A wizard thinks it's magic. An engineer just fixes the wiring."
 
+<br/>
+
+Torren considered this. "Which one gets paid more?"
+
+<br/>
+
+"Wizards," Mark admitted. "That's the other big difference."
+
 ---
 
-By mid-day, the armory yard was humming with unusual efficiency. Torren had already forged six spearheads in the time it usually took to shape two, and the forge yard was noticeably quieter without the apprentices groaning over the hand-crank.
+By mid-day, the armory yard was humming with unusual efficiency. Torren had already forged six spearheads in the time it usually took to shape two, and the yard was noticeably quieter without the apprentices groaning over the hand-crank. The apprentices themselves were lying in the shade, supervising the forge with enormous dedication and their eyes closed.
+
+<br/>
+
+Torren, meanwhile, had developed what could only be described as a relationship with the blower. Every time he passed it, he gave the bronze housing an affectionate pat. Around noon, Mark distinctly heard him call it "Bessie."
 
 <br/>
 
@@ -46,11 +98,19 @@ She stopped in her tracks, her sharp brown eyes locking onto the furnace. She di
 
 <br/>
 
-She walked straight past the iron racks, her wooden staff tapping firmly against the cobblestones, and stopped right in front of Mark's modified assembly.
+She walked straight past the iron racks, her wooden staff thudding firmly against the packed earth, and stopped right in front of Mark's modified assembly.
 
 <br/>
 
 She set her leather case down, reached out a gloved hand, and hovered her fingers an inch from the bronze regulator housing.
+
+<br/>
+
+"Careful," Torren called from the anvil. "Bessie doesn't like strangers."
+
+<br/>
+
+Vespera turned and gave him a long, flat look. Torren cleared his throat and went back to hammering.
 
 <br/>
 
@@ -78,15 +138,15 @@ Vespera turned to him, her expression shifting from amazement to sudden, severe 
 
 <br/>
 
-Mark didn't panic. He had dealt with proprietary software licenses, aggressive corporate patent lawyers, and vendor lock-in for forty years. This wasn't a sacred religious crisis; it was an enterprise IP dispute.
+Mark didn't panic. He had dealt with proprietary software licenses, aggressive corporate patent lawyers, and vendor lock-in for forty years. He had once spent eleven months in litigation over the color of a loading spinner. This wasn't a sacred religious crisis; it was an enterprise IP dispute.
 
 <br/>
 
-And Mark had zero interest in starting a war with a entrenched, powerful guild when he was a fourteen-year-old with three coppers in his pocket.
+And Mark had zero interest in starting a war with an entrenched, powerful guild when he was a fourteen-year-old with a handful of coppers in his pocket.
 
 <br/>
 
-"Then let's look at this from a business perspective, Vespera," Mark said smoothly, his tone adopting the polite, pragmatic cadence he used when negotiating vendor contracts in Raleigh. "I have no desire to piss off your Guild. I'm not selling these, and I'm not claiming I invented the runes. I'm performing basic field maintenance on discarded hardware."
+"Then let's look at this from a business perspective, Vespera," Mark said, his tone adopting the polite, pragmatic cadence he used when negotiating vendor contracts in Raleigh. "I have no desire to piss off your Guild. I'm not selling these, and I'm not claiming I invented the runes. I'm performing basic field maintenance on discarded hardware."
 
 <br/>
 
@@ -102,11 +162,23 @@ Mark smiled faintly. "Planned obsolescence. Classic."
 
 <br/>
 
-"Aether isn't volatile; your Guild's circuit architecture is just poorly grounded," Mark corrected gently, taking a small stick of charcoal and drawing a simple diagram on the wooden workbench between them. "Look at the schematic. The Guild's design traps the feedback inside the brass casing. It's designed like a sink with no drain. Eventually, the water overflows and ruins the floor. All I did was install a drain pipe."
+"That's exactly what the printer companies used to say," Mark said.
 
 <br/>
 
-Vespera looked at his clean, simple diagram. She opened her mouth to argue, to quote Academy dogma about sacred resistance and blood-attunement, but her analytical mind couldn't find a single flaw in his logic. The evidence was running two feet away from her, quiet, cool, and perfectly stable.
+"What is a printer?"
+
+<br/>
+
+"A machine that exists only to break down at the worst possible moment and charge you for the privilege," Mark said. "Your Guild would love them."
+
+<br/>
+
+"Aether isn't volatile," he went on, before she could ask a follow-up question he couldn't answer. "Your Guild's circuit architecture is just poorly grounded." He took a small stick of charcoal and drew a simple diagram on the wooden workbench between them. "Look at the schematic. The Guild's design traps the feedback inside the brass casing. It's designed like a sink with no drain. Eventually, the water overflows and ruins the floor. All I did was install a drain pipe."
+
+<br/>
+
+Vespera looked at his clean, simple diagram. She opened her mouth to argue, to quote Academy dogma about sacred resistance and blood-attunement, but her analytical mind couldn't find a single flaw in his logic. The evidence was running two feet away from her, quiet, cool, and perfectly stable. Torren gave it another affectionate pat as he walked by.
 
 <br/>
 
@@ -130,7 +202,7 @@ Vespera let out a long, shuddering breath, looking at Mark with a mixture of awe
 
 <br/>
 
-"I talk like a guy who wants to keep working without getting sued," Mark corrected.
+"I talk like a guy who wants to keep working without getting sued," Mark corrected. "Also, I've read a lot of terms of service. Something rubs off."
 
 <br/>
 
@@ -138,7 +210,7 @@ Torren walked over, wiping his greasy hands on a rag, looking between the two of
 
 <br/>
 
-Vespera looked at the glowing white-hot hearth, then at Mark’s calm, unbothered face. She closed her leather case and straightened her indigo cloak.
+Vespera looked at the glowing white-hot hearth, then at Mark's calm, unbothered face. She closed her leather case and straightened her indigo cloak.
 
 <br/>
 
@@ -146,21 +218,84 @@ Vespera looked at the glowing white-hot hearth, then at Mark’s calm, unbothere
 
 <br/>
 
-Torren grinned, slapping Mark on the back hard enough to rattle his teeth. "Hear that, kid? Guild approved! I've got three more broken blowers in the shed. I'll pay you three silver pieces if you can get 'em all running like this one by Friday."
-
----
-
-Late that evening, Mark sat at the heavy workbench inside his private storage shed, the cool blue light of his repaired Aether lamp illuminating the stone walls.
+Torren grinned, slapping Mark on the back hard enough to rattle his teeth. "Hear that, kid? Guild approved!"
 
 <br/>
 
-He opened his leather-bound ledger, dipped his charcoal stick, and wrote in neat, encrypted English cursive:
+"That is *not* what I—" Vespera began.
+
+<br/>
+
+But Torren had already turned toward the yard and was bellowing at full volume, "GUILD APPROVED, BOYS!" The apprentices in the shade raised their hands in sleepy celebration without opening their eyes.
+
+<br/>
+
+Vespera closed her eyes and pinched the bridge of her nose. Mark recognized the gesture instantly. It was exactly what he used to do whenever Brad announced a deadline on Slack.
+
+<br/>
+
+"Just in case," Mark said, turning to Torren, "if an Inspector ever asks about the wire, what do you tell them?"
+
+<br/>
+
+Torren puffed out his chest. "It's a static... dis... dish..." He frowned. "Static dishcharge... safety... noodle."
+
+<br/>
+
+"Cable."
+
+<br/>
+
+"Static dishcharge safety cable."
+
+<br/>
+
+"*Discharge*."
+
+<br/>
+
+"That's what I said."
+
+<br/>
+
+Mark looked at Vespera. Vespera looked at Mark.
+
+<br/>
+
+"We'll work on it," Mark said.
+
+<br/>
+
+"I've got three more broken blowers in the shed," Torren went on, completely unbothered. "I'll pay you three silver pieces if you can get 'em all running like Bessie by Friday."
+
+<br/>
+
+"I'm sorry," Vespera said faintly. "Who is Bessie?"
+
+---
+
+Late that evening, Mark sat at the heavy workbench inside his private storage shed by the light of a single tallow candle. His only working Aether lamp was now powering the forge blower. He had, in effect, donated his own desk lamp to production.
+
+<br/>
+
+*"Engineering always gets the hand-me-downs,"* he thought. *"Some things truly never change."*
+
+<br/>
+
+In the corner of the doorframe, Legacy the spider had extended her web another six inches during the day. Mark nodded to her. She did not nod back.
+
+<br/>
+
+He opened his leather-bound ledger, picked up his charcoal stick, and wrote in neat, encrypted English cursive:
 
 <br/>
 
 > *System Architecture Notes — Mark Vance*
 > *Log 04: Stakeholder Management & Enterprise Compliance*
 > *Strategy: Avoid direct conflict with the Mages' Guild. Frame all hardware optimizations as external safety patches rather than core refactors. Maintain a low profile while continuing system analysis.*
+> *Stakeholder Notes:*
+> *- Vespera: Alarmed but persuadable. Responds well to diagrams.*
+> *- Torren: Fully on board. Cannot pronounce 'discharge'. Has named the blower. Simplify cover story to 'safety wire'.*
 > *Next Development Cycle: Human Body Interface.*
 > *Problem: Biological tissue is an inefficient conductor for high-voltage Aether.*
 > *Solution: Design a wearable, low-profile copper-and-silver wrist conduit. A personal heatsink that lets me ground excess energy through my stance without burning my own nerves or relying on a staff.*
@@ -172,3 +307,11 @@ Mark set his charcoal stick down, looking out the small high window at the silve
 <br/>
 
 No corporate politics. No middle management. Just a clean, logical system waiting to be upgraded, one line of code at a time.
+
+<br/>
+
+Somewhere across the yard, faint but unmistakable, he heard Torren say, "Goodnight, Bessie."
+
+<br/>
+
+*"Mostly no corporate politics,"* Mark amended.
