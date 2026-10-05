@@ -116,6 +116,11 @@
           "id": "ch22-chapter-21-onboarding",
           "title": "Chapter 21: Onboarding",
           "file": "ch22-chapter-21-onboarding.md"
+        },
+        {
+          "id": "ch23-chapter-22-the-message-bus",
+          "title": "Chapter 22: The Message Bus",
+          "file": "ch23-chapter-22-the-message-bus.md"
         }
       ]
     },
