@@ -1,4 +1,4 @@
-### Chapter 17: Legacy Code in the Classroom
+## Chapter 17: Legacy Code in the Classroom
 
 <br/>
 
