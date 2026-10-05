@@ -1,4 +1,4 @@
-### Prologue: The Crunch Before the Dark
+## Prologue: The Crunch Before the Dark
 
 <br/>
 
