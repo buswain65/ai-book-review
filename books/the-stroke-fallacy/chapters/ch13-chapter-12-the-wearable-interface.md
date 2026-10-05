@@ -1,4 +1,4 @@
-### Chapter 12: The Wearable Interface
+## Chapter 12: The Wearable Interface
 
 <br/>
 
