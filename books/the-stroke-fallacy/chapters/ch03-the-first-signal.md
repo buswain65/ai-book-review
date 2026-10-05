@@ -18,7 +18,7 @@ Mark slowed his pace, staying low behind a cluster of slate boulders. Years of w
 
 <br/>
 
-In the clearing stood a wooden cart with a broken wheel, tilting heavily to one side. Beside it was a man in rough, mud-stained linen tunics, hammering futilely on the splintered wooden axle with an iron mallet.
+In the clearing stood a wooden cart with a broken wheel, tilting heavily to one side. Beside it was a man in rough, mud-stained linen tunics, cursing fluently at a splintered wooden axle while swinging an iron mallet with all the technique of an angry toddler hitting a bass drum.
 
 <br/>
 
@@ -26,11 +26,11 @@ Standing a few feet away, holding a tall, carved wooden staff, was a woman in a 
 
 <br/>
 
-Mark crouched behind a pine bush, narrowing his eyes. *"Right,"* he thought. *"Mercenary merchant, travelling sage. Classic fantasy archetypes."*
+Mark crouched behind a pine bush, narrowing his eyes. *"Right,"* he thought. *"Mercenary merchant, travelling sage. Classic fantasy archetypes. If a text box pops up asking me to collect six rat tails, I'm going to jump into the river."*
 
 <br/>
 
-The woman threw her hands up in visible frustration, spat an oath on the ground, and stepped toward the broken wheel.
+The woman threw her hands up in visible frustration, spat a surprisingly colorful oath on the ground, and stepped toward the broken wheel.
 
 <br/>
 
@@ -38,15 +38,15 @@ What happened next made Mark's breath catch in his throat.
 
 <br/>
 
-She didn't grab a spare plank or an iron wedge. She planted her staff into the dirt, closed her eyes, and spoke a short, sharp phrase: *"Verba-lignum, structura reparet."*
+She didn't grab a spare plank or an iron wedge. She planted her staff into the dirt, closed her eyes, and spoke a short, sharp phrase in a booming, dramatic theater-voice: *"Verba-lignum, structura reparet!"*
 
 <br/>
 
-At her feet, the ground flickered. A faint, soft glow—like a ring of blue LED strip lighting—rippled across the moss. She held her hand out toward the broken wooden axle. The splintered wood groaned, and then, impossibly, small fibrous tendrils grew out of the cracked timber, weaving together like a rapid 3D printer until the axle pulled itself straight and solid.
+At her feet, the ground flickered. A faint, soft glow—like cheap blue LED strip lighting glued to a dorm room baseboard—rippled across the moss. She held her hand out toward the broken wooden axle. The splintered wood groaned, and then, impossibly, small fibrous tendrils grew out of the cracked timber, weaving together like a rapid, budget 3D printer until the axle pulled itself straight and solid.
 
 <br/>
 
-The blue glow faded. The woman wiped sweat from her forehead, looking slightly winded.
+The blue glow faded. The woman wiped sweat from her forehead, looking like she’d just run a half-marathon, and leaned heavily on her staff, wheezing.
 
 <br/>
 
@@ -54,7 +54,7 @@ Mark sat back against the rock, staring at his own hands.
 
 <br/>
 
-*"Okay,"* he whispered, his brain grinding to a halt. *"Okay. That wasn't a trick. That wasn't a shadow or a bad angle."*
+*"Okay,"* he whispered, his brain grinding to a screeching halt. *"Okay. That wasn't a trick. That wasn't a shadow, a bad angle, or a gas-induced hallucination."*
 
 <br/>
 
@@ -66,11 +66,11 @@ His mind immediately scrambled for a logical baseline. He understood geology—r
 
 <br/>
 
-Mark leaned forward again, watching the woman closely as she leaned heavily on her staff.
+Mark leaned forward again, watching the woman closely as she panted.
 
 <br/>
 
-*"It wasn't creation,"* Mark analyzed silently, his software-architect brain taking over the problem. *"She didn't summon wood out of nowhere. The surrounding moss withered slightly when the light flashed. Energy transfer. She drew ambient thermal or biological energy, used a specific vocal frequency or mental intent as an execution trigger, and directed the structural repair of the cellulose."*
+*"It wasn't creation,"* Mark analyzed silently, his software-architect brain completely hijacking the scenario. *"She didn't summon wood out of thin air. The surrounding moss withered slightly when the light flashed! Energy transfer. She drew ambient thermal or biological energy, used a specific vocal frequency or mental intent as an execution trigger, and directed the structural repair of the cellulose."*
 
 <br/>
 
@@ -78,7 +78,7 @@ He blinked.
 
 <br/>
 
-*"It's an energy manipulation protocol. A system with inputs, energy conversion, and physical output. Or...magic?"*
+*"It's an energy manipulation protocol. A system with inputs, energy conversion, and physical output. It’s not magic—it's a poorly optimized runtime environment!"*
 
 <br/>
 
@@ -86,35 +86,39 @@ The realization hit him not with fear, but with the familiar, electric spark of 
 
 <br/>
 
-This wasn't a stroke. His dying brain couldn't invent a self-consistent, rule-based physics engine on the fly.
+This wasn't a stroke. His dying brain couldn't invent a self-consistent, rule-based physics engine on the fly—especially one that required a 40% energy tax from local lawn care.
 
 <br/>
 
-This world had a fundamental mechanics layer he didn't understand yet. And Mark Vance was a man who spent his entire life taking things apart to see how they worked.
+This world had a fundamental mechanics layer he didn't understand yet. And Mark Vance was a man who spent his entire life taking things apart to see how they worked—and then filing six tickets explaining why the original design was terrible.
 
 <br/>
 
-He took a deep breath, adjusted his posture, and stepped out from behind the boulders, making sure to step loudly on a dry branch so he wouldn't startle them.
+He took a deep breath, adjusted his posture, and stepped out from behind the boulders, making sure to step loudly on a dry branch so he wouldn't get impaled by an blue-glowing broomstick.
 
 <br/>
 
-The merchant whirled around, clutching his iron mallet. The cloaked woman raised her staff defensively, her sharp brown eyes locking onto the skinny, 14-year-old boy walking out of the woods.
+*SNAP.*
 
 <br/>
 
-Mark held up both hands, palms outward, keeping his stance relaxed and non-threatening—a universal gesture of peace.
+The merchant whirled around, clutching his iron mallet like a club and nearly tripping over his own boots. The cloaked woman raised her staff defensively, her sharp brown eyes locking onto the skinny, 14-year-old boy walking out of the woods.
 
 <br/>
 
-*"Hey there,"* Mark said, his youthful voice echoing through the clearing. *"Looks like you fixed the wood, but the whole frame is still leaning. Do you need a hand lifting it while you get the wheel back on?"*
+Mark held up both hands, palms outward, keeping his stance relaxed and non-threatening—a universal gesture of peace, or at least a gesture that said *Please don't shoot acid-snoot pig-bears at me.*
 
 <br/>
 
-The merchant blinked, lowering his hammer slightly, his expression shifting from defensive to utter confusion.
+*"Hey there,"* Mark said, his youthful, crackly teenager voice echoing through the clearing. *"Looks like you fixed the wood, but the whole frame is still listing about fifteen degrees to the port side. Do you need a hand lifting it while you get the wheel back on?"*
 
 <br/>
 
-*"Lifting it?"* the man asked, speaking in plain, perfectly understandable English—or whatever local language Mark's brain was automatically processing without a hitch. *"Boy, where'd you come from? You look like you fell out of a tree. You weigh a hundred pounds soaking wet."*
+The merchant blinked, lowering his hammer slightly, his expression shifting from defensive to utter, cross-eyed confusion.
+
+<br/>
+
+*"Lifting it?"* the man asked, speaking in plain, perfectly understandable English—or whatever local language Mark's brain was automatically processing without a hitch. *"Boy, where'd you come from? You look like you fell out of a pine tree. You weigh a hundred pounds soaking wet with rocks in your pockets."*
 
 <br/>
 
@@ -122,4 +126,12 @@ Mark smiled faintly, relieved that at least the local communication stack worked
 
 <br/>
 
-*"Weight doesn't matter as much as leverage,"* Mark said, stepping toward the cart with the relaxed confidence of a guy who had spent forty years troubleshooting problems. *"If we use a sturdy branch as a lever and put a rock under it for a fulcrum, the two of us can lift that side effortlessly."*
+*"Weight doesn't matter as much as mechanical advantage,"* Mark said, stepping toward the cart with the relaxed confidence of a guy who had spent forty years troubleshooting problems while junior devs panicked. *"If we use a sturdy branch as a class-one lever and put a rock under it for a fulcrum, the two of us can lift that side effortlessly without anyone blowing out a hamstring."*
+
+<br/>
+
+The merchant looked at the kid, then at his woman companion, then back at the cart. "What the hell is a class-one lever?"
+
+<br/>
+
+Mark sighed internally. *"Great. I'm in a world that has magic 3D-printing, but hasn't covered middle school physical science yet."*
