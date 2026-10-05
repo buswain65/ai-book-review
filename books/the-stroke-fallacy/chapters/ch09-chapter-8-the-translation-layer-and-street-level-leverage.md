@@ -1,4 +1,4 @@
-### Chapter 8: The Translation Layer and Street-Level Leverage
+## Chapter 8: The Translation Layer and Street-Level Leverage
 
 <br/>
 
