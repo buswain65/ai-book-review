@@ -1,4 +1,4 @@
-### Chapter 2: The Ground Truth Problem
+## Chapter 2: The Ground Truth Problem
 
 <br/>
 
