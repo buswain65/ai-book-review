@@ -1,4 +1,4 @@
-### Chapter 1: The Rollback
+## Chapter 1: The Rollback
 
 <br/>
 
