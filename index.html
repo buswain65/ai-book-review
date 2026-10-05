@@ -151,6 +151,24 @@
     </div>
 
     <div class="flex items-center space-x-3">
+      <!-- Export Book (EPUB / PDF) -->
+      <div class="relative" id="exportMenuWrap">
+        <button id="exportBtn" onclick="toggleExportMenu(event)" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 hover:text-white text-xs px-3 py-1.5 rounded-lg font-medium transition-colors" title="Download the whole book">
+          ⬇ <span id="exportBtnLabel">Export Book</span>
+        </button>
+        <div id="exportMenu" class="hidden absolute right-0 mt-1 w-56 bg-slate-900 border border-slate-700 rounded-lg shadow-2xl overflow-hidden z-50 text-xs">
+          <button onclick="exportBook('epub')" class="w-full text-left px-3 py-2 hover:bg-slate-800 text-slate-200">
+            📘 EPUB <span class="text-slate-500">— for e-readers</span>
+          </button>
+          <button onclick="exportBook('pdf')" class="w-full text-left px-3 py-2 hover:bg-slate-800 text-slate-200 border-t border-slate-800">
+            📄 PDF <span class="text-slate-500">— opens print, choose "Save as PDF"</span>
+          </button>
+          <button onclick="exportBook('md')" class="w-full text-left px-3 py-2 hover:bg-slate-800 text-slate-200 border-t border-slate-800">
+            📝 Markdown <span class="text-slate-500">— single .md file</span>
+          </button>
+        </div>
+      </div>
+
       <!-- Mode Switcher -->
       <div class="flex items-center bg-slate-800 border border-slate-700 rounded-lg p-1 text-xs">
         <button id="viewModeBtn" onclick="setMode('view')" class="px-3 py-1 rounded-md font-medium transition-colors bg-brand-600 text-white">
@@ -1126,20 +1144,16 @@ ${chapterText.slice(0, 4000)}`;
     }
 
     // --- AI EXECUTION ENGINE ---
-    // Assemble every chapter of the current book, in books.json order, into one manuscript.
+    // Load every chapter of a book, in books.json order.
     // The chapter open in the editor uses the editor's text, so unsaved edits are included.
-    async function buildManuscript(onProgress) {
-      const book = state.booksData.books.find(b => b.id === state.currentBookId);
+    async function loadBookChapters(book, onProgress) {
       if (!state.settings.ghOwner || !state.settings.ghRepo) {
-        throw new Error("Configure your GitHub Owner and Repository in Settings (⚙) so the agents can load the whole book.");
+        throw new Error("Configure your GitHub Owner and Repository in Settings (⚙) so the whole book can be loaded.");
       }
-
-      const parts = [];
-      const missing = [];
       let done = 0;
       const texts = await Promise.all(book.chapters.map(async chap => {
         let text;
-        if (chap.id === state.currentChapterId && state.mode === 'author') {
+        if (chap.id === state.currentChapterId && state.mode === 'author' && book.id === state.currentBookId) {
           text = document.getElementById('chapterEditor').value;
         } else {
           text = await fetchGitHubRaw(`books/${book.id}/chapters/${chap.file}`);
@@ -1149,23 +1163,23 @@ ${chapterText.slice(0, 4000)}`;
         return text;
       }));
 
-      book.chapters.forEach((chap, i) => {
-        const text = texts[i];
-        if (text === null || text === undefined) { missing.push(chap.file); return; }
-        if (!text.trim()) return; // empty placeholder chapter
-        parts.push(`=== ${chap.title} ===\n\n${text.trim()}`);
-      });
-
+      const missing = book.chapters.filter((c, i) => texts[i] === null || texts[i] === undefined).map(c => c.file);
       if (missing.length) {
         throw new Error(`Could not load ${missing.length} chapter file(s) from books/${book.id}/chapters/: ${missing.join(', ')}. Check that these files exist in GitHub (note the folder name is lowercase "books").`);
       }
-      if (!parts.length) throw new Error("This book has no chapter text to review yet.");
+      const chapters = book.chapters.map((chap, i) => ({ chap, text: texts[i] })).filter(c => c.text.trim());
+      if (!chapters.length) throw new Error("This book has no chapter text yet.");
+      return chapters;
+    }
 
-      const manuscript = parts.join('\n\n');
+    async function buildManuscript(onProgress) {
+      const book = state.booksData.books.find(b => b.id === state.currentBookId);
+      const chapters = await loadBookChapters(book, onProgress);
+      const manuscript = chapters.map(c => `=== ${c.chap.title} ===\n\n${c.text.trim()}`).join('\n\n');
       return {
         book,
         manuscript,
-        chapterCount: parts.length,
+        chapterCount: chapters.length,
         wordCount: manuscript.split(/\s+/).filter(w => w).length
       };
     }
@@ -1291,6 +1305,263 @@ ${manuscript}`;
         renderAgentStatus();
         renderReviewContent();
       }
+    }
+
+    // --- BOOK EXPORT (EPUB / PDF) ---
+    const loadedScripts = {};
+    function loadScript(src) {
+      if (!loadedScripts[src]) {
+        loadedScripts[src] = new Promise((resolve, reject) => {
+          const el = document.createElement('script');
+          el.src = src;
+          el.onload = resolve;
+          el.onerror = () => { delete loadedScripts[src]; reject(new Error(`Could not load ${src}`)); };
+          document.head.appendChild(el);
+        });
+      }
+      return loadedScripts[src];
+    }
+
+    function toggleExportMenu(e) {
+      if (e) e.stopPropagation();
+      document.getElementById('exportMenu').classList.toggle('hidden');
+    }
+    document.addEventListener('click', e => {
+      const wrap = document.getElementById('exportMenuWrap');
+      if (wrap && !wrap.contains(e.target)) document.getElementById('exportMenu').classList.add('hidden');
+    });
+
+    function escapeXml(str) {
+      return String(str ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+    }
+
+    function slugify(str) {
+      return String(str).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'book';
+    }
+
+    // Chapter markdown -> HTML body. The chapter's own leading heading is dropped (the export
+    // adds a consistent chapter title) and spacer-only <br/> lines are removed.
+    function chapterBodyHtml(markdown) {
+      const lines = markdown.replace(/\r\n/g, '\n').split('\n');
+      const first = lines.findIndex(l => l.trim());
+      if (first >= 0 && /^#{1,6}\s/.test(lines[first])) lines.splice(first, 1);
+      const cleaned = lines.filter(l => !/^\s*(<br\s*\/?>\s*)+$/i.test(l)).join('\n').trim();
+      return marked.parse(cleaned);
+    }
+
+    // HTML fragment -> well-formed XHTML fragment (required inside EPUB files).
+    function toXhtml(html) {
+      const doc = new DOMParser().parseFromString(`<!DOCTYPE html><html><body><div id="x">${html}</div></body></html>`, 'text/html');
+      doc.querySelectorAll('script, iframe, object, embed').forEach(n => n.remove());
+      const xml = new XMLSerializer().serializeToString(doc.getElementById('x'));
+      return xml.replace(/^<div[^>]*>/, '').replace(/<\/div>$/, '');
+    }
+
+    function downloadBlob(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    }
+
+    async function exportBook(format) {
+      document.getElementById('exportMenu').classList.add('hidden');
+      const book = state.booksData && state.booksData.books.find(b => b.id === state.currentBookId);
+      if (!book) return alert("Select a book to export.");
+
+      const btn = document.getElementById('exportBtn');
+      const label = document.getElementById('exportBtnLabel');
+      btn.disabled = true;
+      try {
+        label.innerText = "Loading chapters...";
+        const chapters = await loadBookChapters(book, (n, t) => { label.innerText = `Loading ${n}/${t}...`; });
+        label.innerText = format === 'epub' ? "Building EPUB..." : format === 'md' ? "Building Markdown..." : "Preparing PDF...";
+        if (format === 'epub') {
+          await exportEpub(book, chapters);
+        } else if (format === 'md') {
+          exportMarkdown(book, chapters);
+        } else {
+          await exportPdf(book, chapters);
+        }
+      } catch (err) {
+        console.error(err);
+        alert(`Export failed: ${err.message}`);
+      } finally {
+        btn.disabled = false;
+        label.innerText = "Export Book";
+      }
+    }
+
+    // Single Markdown file: title block, contents list, then every chapter's markdown verbatim
+    // (including its <br/> paragraph spacers), separated by horizontal rules.
+    function exportMarkdown(book, chapters) {
+      const out = [`# ${book.title}`, ''];
+      if (book.author) out.push(`**${book.author}**`, '');
+      out.push('<br/>', '', '## Contents', '');
+      chapters.forEach(c => out.push(`- ${c.chap.title}`));
+      chapters.forEach(c => {
+        let text = c.text.replace(/\r\n/g, '\n').trim();
+        const firstLine = text.split('\n').find(l => l.trim()) || '';
+        if (!/^#{1,6}\s/.test(firstLine)) text = `## ${c.chap.title}\n\n<br/>\n\n${text}`;
+        out.push('', '---', '', text);
+      });
+      const md = out.join('\n') + '\n';
+      downloadBlob(new Blob([md], { type: 'text/markdown;charset=utf-8' }), `${slugify(book.title)}.md`);
+    }
+
+    async function exportEpub(book, chapters) {
+      await loadScript("https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js");
+      const zip = new JSZip();
+      const addFile = zip.file.bind(zip);
+      zip.file = (name, data, opts = {}) => addFile(name, data, { createFolders: false, ...opts });
+      const title = escapeXml(book.title);
+      const author = escapeXml(book.author || '');
+      const uid = `urn:uuid:${crypto.randomUUID ? crypto.randomUUID() : Date.now()}`;
+      const modified = new Date().toISOString().replace(/\.\d+Z$/, 'Z');
+
+      const page = (pageTitle, body, extraNs = '') => `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"${extraNs} xml:lang="en" lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>${pageTitle}</title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+${body}
+</body>
+</html>`;
+
+      zip.file("mimetype", "application/epub+zip", { compression: "STORE", createFolders: false });
+      zip.file("META-INF/container.xml", `<?xml version="1.0" encoding="UTF-8"?>
+<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
+  <rootfiles>
+    <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
+  </rootfiles>
+</container>`);
+
+      zip.file("OEBPS/style.css", `body { font-family: Georgia, "Times New Roman", serif; line-height: 1.5; margin: 0 5%; }
+h1.chapter-title { text-align: center; margin: 3em 0 1.5em; font-size: 1.6em; page-break-before: always; }
+p { margin: 0; text-indent: 1.5em; text-align: justify; }
+h1 + p, hr + p, blockquote + p, .first { text-indent: 0; }
+hr { border: none; text-align: center; margin: 1.5em 0; }
+hr::after { content: "* * *"; }
+blockquote { margin: 1em 2em; font-style: italic; }
+.title-page { text-align: center; margin-top: 30%; }
+.title-page h1 { font-size: 2.2em; margin-bottom: 0.5em; }
+.title-page .author { font-size: 1.2em; }
+nav ol { list-style: none; padding: 0; }
+nav li { margin: 0.4em 0; }`);
+
+      zip.file("OEBPS/title.xhtml", page(title, `<section class="title-page" epub:type="titlepage">
+  <h1>${title}</h1>
+  ${author ? `<p class="author">${author}</p>` : ''}
+</section>`));
+
+      const items = chapters.map((c, i) => ({ id: `ch${String(i + 1).padStart(3, '0')}`, file: `ch${String(i + 1).padStart(3, '0')}.xhtml`, title: escapeXml(c.chap.title), text: c.text }));
+      items.forEach(it => {
+        zip.file(`OEBPS/${it.file}`, page(it.title, `<section epub:type="chapter">
+<h1 class="chapter-title">${it.title}</h1>
+${toXhtml(chapterBodyHtml(it.text))}
+</section>`));
+      });
+
+      zip.file("OEBPS/nav.xhtml", page("Contents", `<nav epub:type="toc" id="toc">
+  <h1>Contents</h1>
+  <ol>
+${items.map(it => `    <li><a href="${it.file}">${it.title}</a></li>`).join('\n')}
+  </ol>
+</nav>`));
+
+      zip.file("OEBPS/toc.ncx", `<?xml version="1.0" encoding="UTF-8"?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
+  <head><meta name="dtb:uid" content="${uid}"/></head>
+  <docTitle><text>${title}</text></docTitle>
+  <navMap>
+${items.map((it, i) => `    <navPoint id="np${i + 1}" playOrder="${i + 1}"><navLabel><text>${it.title}</text></navLabel><content src="${it.file}"/></navPoint>`).join('\n')}
+  </navMap>
+</ncx>`);
+
+      zip.file("OEBPS/content.opf", `<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="bookid" xml:lang="en">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:identifier id="bookid">${uid}</dc:identifier>
+    <dc:title>${title}</dc:title>
+    ${author ? `<dc:creator>${author}</dc:creator>` : ''}
+    <dc:language>en</dc:language>
+    ${book.blurb ? `<dc:description>${escapeXml(book.blurb)}</dc:description>` : ''}
+    ${book.genre ? `<dc:subject>${escapeXml(book.genre)}</dc:subject>` : ''}
+    <meta property="dcterms:modified">${modified}</meta>
+  </metadata>
+  <manifest>
+    <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
+    <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+    <item id="css" href="style.css" media-type="text/css"/>
+    <item id="title" href="title.xhtml" media-type="application/xhtml+xml"/>
+${items.map(it => `    <item id="${it.id}" href="${it.file}" media-type="application/xhtml+xml"/>`).join('\n')}
+  </manifest>
+  <spine toc="ncx">
+    <itemref idref="title"/>
+    <itemref idref="nav"/>
+${items.map(it => `    <itemref idref="${it.id}"/>`).join('\n')}
+  </spine>
+</package>`);
+
+      const blob = await zip.generateAsync({ type: "blob", mimeType: "application/epub+zip", compression: "DEFLATE" });
+      downloadBlob(blob, `${slugify(book.title)}.epub`);
+    }
+
+    // PDF uses the browser's own print engine (real, selectable text and proper page breaks).
+    // The print dialog opens with the formatted book; choose "Save as PDF" as the destination.
+    async function exportPdf(book, chapters) {
+      const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const toc = chapters.map((c, i) => `<li><a href="#ch${i + 1}">${esc(c.chap.title)}</a></li>`).join('');
+      const body = chapters.map((c, i) => `<section class="chapter" id="ch${i + 1}"><h1 class="chapter-title">${esc(c.chap.title)}</h1>${chapterBodyHtml(c.text)}</section>`).join('');
+      const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>${esc(book.title)}</title>
+<style>
+  @page { size: 6in 9in; margin: 0.8in 0.75in 0.9in; @bottom-center { content: counter(page); font: 10pt Georgia, serif; color: #444; } }
+  @page :first { @bottom-center { content: none; } }
+  html, body { margin: 0; padding: 0; background: #fff; color: #111; }
+  body { font-family: Georgia, "Times New Roman", serif; font-size: 11pt; line-height: 1.45; }
+  .title-page { height: 7in; display: flex; flex-direction: column; justify-content: center; text-align: center; break-after: page; }
+  .title-page h1 { font-size: 26pt; margin: 0 0 0.3in; }
+  .title-page .author { font-size: 14pt; }
+  .toc { break-after: page; }
+  .toc h2 { text-align: center; font-size: 16pt; margin: 0.5in 0 0.3in; }
+  .toc ol { list-style: none; padding: 0; }
+  .toc li { margin: 0.08in 0; }
+  .toc a { color: #111; text-decoration: none; }
+  .chapter { break-before: page; }
+  h1.chapter-title { text-align: center; font-size: 18pt; margin: 1in 0 0.4in; }
+  p { margin: 0; text-indent: 1.5em; text-align: justify; orphans: 2; widows: 2; }
+  h1 + p, hr + p, blockquote + p { text-indent: 0; }
+  hr { border: none; text-align: center; margin: 0.2in 0; }
+  hr::after { content: "* * *"; }
+  blockquote { margin: 0.15in 0.4in; font-style: italic; }
+  h2, h3, h4 { break-after: avoid; }
+</style></head><body>
+<section class="title-page"><h1>${esc(book.title)}</h1>${book.author ? `<div class="author">${esc(book.author)}</div>` : ''}</section>
+<nav class="toc"><h2>Contents</h2><ol>${toc}</ol></nav>
+${body}
+</body></html>`;
+
+      const old = document.getElementById('pdfPrintFrame');
+      if (old) old.remove();
+      const frame = document.createElement('iframe');
+      frame.id = 'pdfPrintFrame';
+      frame.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;visibility:hidden;';
+      document.body.appendChild(frame);
+      await new Promise(resolve => { frame.onload = resolve; frame.srcdoc = html; });
+      // Let the browser use the book title as the suggested PDF file name
+      const appTitle = document.title;
+      document.title = book.title;
+      frame.contentWindow.focus();
+      frame.contentWindow.print();
+      setTimeout(() => { document.title = appTitle; }, 1000);
     }
 
     // --- AI API CLIENTS ---

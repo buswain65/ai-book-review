@@ -1,0 +1,49 @@
+# Deploys the GitHub Pages site ONLY when index.html changes.
+# Chapter, review and books.json commits (made by the app or by you) do not trigger a deploy.
+# Requires: repo Settings -> Pages -> Build and deployment -> Source = "GitHub Actions".
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+  workflow_dispatch: # lets you run a deploy manually from the Actions tab
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      # The app loads chapters and reviews straight from the repo at runtime,
+      # so the published site only needs index.html.
+      - name: Stage site files
+        run: |
+          mkdir -p _site
+          cp index.html _site/
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
