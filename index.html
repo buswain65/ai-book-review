@@ -416,6 +416,7 @@
       booksData: null,
       currentBookId: null,
       currentChapterId: null,
+      loadingChapterId: null, // Tracks active chapter fetch to prevent race conditions
       selectedAgentKey: 'publisher',
       reviews: {},
       reviewErrors: {},
@@ -607,7 +608,6 @@
     }
 
     // --- GITHUB FETCH HELPERS ---
-    // Mode-aware header generator: Anonymous access for View mode, Authorized PAT for Author mode
     function getGitHubHeaders(requireAuth = false) {
       const headers = { "Accept": "application/vnd.github.v3+json" };
       if (state.mode === 'author' || requireAuth) {
@@ -620,7 +620,9 @@
 
     async function fetchGitHubRaw(path) {
       if (!state.settings.ghOwner || !state.settings.ghRepo) return null;
-      const url = `https://raw.githubusercontent.com/${state.settings.ghOwner}/${state.settings.ghRepo}/main/${path}`;
+      // Add cache-busting parameter to avoid stale responses after saving edits
+      const timestamp = new Date().getTime();
+      const url = `https://raw.githubusercontent.com/${state.settings.ghOwner}/${state.settings.ghRepo}/main/${path}?cb=${timestamp}`;
       const headers = getGitHubHeaders();
       const res = await fetch(url, { headers, cache: "no-store" });
       if (!res.ok) return null;
@@ -726,7 +728,9 @@
 
     async function loadChapter(chapterId) {
       state.currentChapterId = chapterId;
+      state.loadingChapterId = chapterId; // Set active loading request lock
 
+      // 1. Highlight Active Sidebar Button
       document.querySelectorAll('#chapterList button').forEach(b => b.classList.remove('bg-slate-800', 'text-white'));
       const activeBtn = document.getElementById(`chap-btn-${chapterId}`);
       if (activeBtn) activeBtn.classList.add('bg-slate-800', 'text-white');
@@ -735,43 +739,62 @@
       const chap = book.chapters.find(c => c.id === chapterId);
       document.getElementById('currentChapterTitle').innerText = `${book.title} — ${chap.title}`;
 
-      document.getElementById('chapterEditor').value = "Loading chapter from GitHub...";
-      document.getElementById('chapterViewer').innerHTML = "<p class='text-slate-400 italic'>Loading chapter from GitHub...</p>";
+      // 2. Clear out existing chapter state & show placeholder loaders
+      document.getElementById('chapterEditor').value = "Loading chapter content from GitHub...";
+      document.getElementById('chapterViewer').innerHTML = "<p class='text-slate-400 italic animate-pulse'>Loading chapter content from GitHub...</p>";
+      document.getElementById('authorPreviewPanel').innerHTML = "<p class='text-slate-400 italic animate-pulse'>Loading preview...</p>";
 
+      const statusEl = document.getElementById('saveStatus');
+      statusEl.innerText = "Loading...";
+      statusEl.className = "text-slate-500 text-[11px]";
+
+      // Clear demographic and review UI states for new chapter
+      state.demographicData = null;
+      state.reviews = {};
+      state.reviewErrors = {};
+      renderDemographicUI();
+      renderAgentStatus();
+      renderReviewContent();
+
+      // 3. Fetch chapter markdown content
       let content = "";
-
       if (state.settings.ghOwner && state.settings.ghRepo) {
         const path = `books/${book.id}/chapters/${chap.file}`;
         content = await fetchGitHubRaw(path);
       }
 
+      // Check if user switched to another chapter while fetching
+      if (state.loadingChapterId !== chapterId) return;
+
       if (!content) {
         content = `# ${chap.title}\n\nStart writing your chapter content here...`;
       }
 
+      // 4. Inject fetched content into Editor & Viewers
       document.getElementById('chapterEditor').value = content;
       document.getElementById('chapterViewer').innerHTML = marked.parse(content);
       if (state.editorTab === 'preview') {
         document.getElementById('authorPreviewPanel').innerHTML = marked.parse(content);
       }
 
-      const statusEl = document.getElementById('saveStatus');
       statusEl.innerText = "Saved";
       statusEl.className = "text-slate-500 text-[11px]";
 
+      // 5. Load associated chapter metadata & evaluations
       loadChapterDemographics();
       loadChapterReviews();
     }
 
     async function loadChapterDemographics() {
+      const targetChapId = state.currentChapterId;
       state.demographicData = null;
       renderDemographicUI();
 
       if (state.settings.ghOwner && state.settings.ghRepo) {
         try {
-          const path = `books/${state.currentBookId}/demographics/${state.currentChapterId}.json`;
+          const path = `books/${state.currentBookId}/demographics/${targetChapId}.json`;
           const rawData = await fetchGitHubRaw(path);
-          if (rawData) {
+          if (rawData && state.currentChapterId === targetChapId) {
             state.demographicData = JSON.parse(rawData);
             renderDemographicUI();
           }
@@ -853,17 +876,17 @@ ${chapterText.slice(0, 4000)}`;
     }
 
     async function loadChapterReviews() {
+      const targetChapId = state.currentChapterId;
       state.reviews = {};
       state.reviewErrors = {};
       const bookId = state.currentBookId;
-      const chapId = state.currentChapterId;
 
       for (const agentKey of Object.keys(AGENTS)) {
         try {
           if (state.settings.ghOwner && state.settings.ghRepo) {
-            const path = `books/${bookId}/reviews/${chapId}/${agentKey}.json`;
+            const path = `books/${bookId}/reviews/${targetChapId}/${agentKey}.json`;
             const rawJson = await fetchGitHubRaw(path);
-            if (rawJson) {
+            if (rawJson && state.currentChapterId === targetChapId) {
               const reviewData = JSON.parse(rawJson);
               state.reviews[agentKey] = reviewData.feedback_markdown;
             }
@@ -873,8 +896,10 @@ ${chapterText.slice(0, 4000)}`;
         }
       }
 
-      renderAgentStatus();
-      renderReviewContent();
+      if (state.currentChapterId === targetChapId) {
+        renderAgentStatus();
+        renderReviewContent();
+      }
     }
 
     function renderAgentTabs() {
@@ -1094,7 +1119,7 @@ ${chapterText.slice(0, 4000)}`;
       try {
         let sha = null;
         const headers = getGitHubHeaders(true);
-        const getRes = await fetch(url, { headers });
+        const getRes = await fetch(url, { headers, cache: "no-store" });
         if (getRes.ok) {
           const existing = await getRes.json();
           sha = existing.sha;
@@ -1163,8 +1188,10 @@ ${chapterText.slice(0, 4000)}`;
         updateBookWordCountUI();
 
         setTimeout(() => { 
-          statusEl.innerText = "Saved"; 
-          statusEl.className = "text-slate-500 text-[11px]";
+          if (statusEl.innerText === "✓ Committed to GitHub") {
+            statusEl.innerText = "Saved"; 
+            statusEl.className = "text-slate-500 text-[11px]";
+          }
         }, 3000);
       } else {
         statusEl.innerText = "❌ Commit failed";
