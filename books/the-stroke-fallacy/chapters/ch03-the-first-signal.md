@@ -1,4 +1,4 @@
-### Chapter 3: The First Signal
+## Chapter 3: The First Signal
 
 <br/>
 
