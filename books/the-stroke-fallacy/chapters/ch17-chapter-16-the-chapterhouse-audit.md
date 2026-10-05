@@ -1,4 +1,4 @@
-### Chapter 16: The Chapterhouse Audit
+## Chapter 16: The Chapterhouse Audit
 
 <br/>
 
