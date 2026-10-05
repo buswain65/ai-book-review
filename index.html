@@ -279,7 +279,7 @@
         <div>
           <label class="block font-medium text-slate-200 mb-1">GitHub Personal Access Token (PAT)</label>
           <input type="password" id="ghTokenInput" placeholder="ghp_..." class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500" />
-          <p class="text-xs text-slate-400 mt-1">Requires <code class="bg-slate-800 px-1 py-0.5 rounded">repo</code> or <code class="bg-slate-800 px-1 py-0.5 rounded">contents:write</code> scope to commit chapters and reviews.</p>
+          <p class="text-xs text-slate-400 mt-1">Requires <code class="bg-slate-800 px-1 py-0.5 rounded">repo</code> or <code class="bg-slate-800 px-1 py-0.5 rounded">contents:write</code> scope for Author Mode committing.</p>
         </div>
 
         <!-- GitHub Repo Info -->
@@ -606,16 +606,36 @@
       renderAgentStatus();
     }
 
+    // --- GITHUB FETCH HELPERS ---
+    // Mode-aware header generator: Anonymous access for View mode, Authorized PAT for Author mode
+    function getGitHubHeaders(requireAuth = false) {
+      const headers = { "Accept": "application/vnd.github.v3+json" };
+      if (state.mode === 'author' || requireAuth) {
+        if (state.settings.ghToken) {
+          headers["Authorization"] = `token ${state.settings.ghToken}`;
+        }
+      }
+      return headers;
+    }
+
+    async function fetchGitHubRaw(path) {
+      if (!state.settings.ghOwner || !state.settings.ghRepo) return null;
+      const url = `https://raw.githubusercontent.com/${state.settings.ghOwner}/${state.settings.ghRepo}/main/${path}`;
+      const headers = getGitHubHeaders();
+      const res = await fetch(url, { headers, cache: "no-store" });
+      if (!res.ok) return null;
+      return await res.text();
+    }
+
     async function initApp() {
       renderAgentTabs();
       renderAgentStatus();
 
       try {
         if (state.settings.ghOwner && state.settings.ghRepo) {
-          const url = `https://raw.githubusercontent.com/${state.settings.ghOwner}/${state.settings.ghRepo}/main/books.json`;
-          const res = await fetch(url, { cache: "no-store" });
-          if (res.ok) {
-            state.booksData = await res.json();
+          const rawJson = await fetchGitHubRaw("books.json");
+          if (rawJson) {
+            state.booksData = JSON.parse(rawJson);
           }
         }
       } catch (e) {
@@ -659,15 +679,8 @@
       let totalWords = 0;
 
       for (const chap of book.chapters) {
-        let content = "";
-        if (state.settings.ghOwner && state.settings.ghRepo) {
-          const path = `books/${book.id}/chapters/${chap.file}`;
-          const url = `https://raw.githubusercontent.com/${state.settings.ghOwner}/${state.settings.ghRepo}/main/${path}`;
-          try {
-            const res = await fetch(url, { cache: "no-store" });
-            if (res.ok) content = await res.text();
-          } catch (e) {}
-        }
+        const path = `books/${book.id}/chapters/${chap.file}`;
+        const content = await fetchGitHubRaw(path);
         
         if (content) {
           const words = content.trim().split(/\s+/).filter(w => w.length > 0).length;
@@ -729,22 +742,7 @@
 
       if (state.settings.ghOwner && state.settings.ghRepo) {
         const path = `books/${book.id}/chapters/${chap.file}`;
-        const url = `https://api.github.com/repos/${state.settings.ghOwner}/${state.settings.ghRepo}/contents/${path}`;
-
-        try {
-          const headers = { "Accept": "application/vnd.github.v3+json" };
-          if (state.settings.ghToken) {
-            headers["Authorization"] = `token ${state.settings.ghToken}`;
-          }
-
-          const res = await fetch(url, { headers, cache: "no-store" });
-          if (res.ok) {
-            const fileData = await res.json();
-            content = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, ''))));
-          }
-        } catch (e) {
-          console.error("Error fetching chapter from REST API:", e);
-        }
+        content = await fetchGitHubRaw(path);
       }
 
       if (!content) {
@@ -772,10 +770,9 @@
       if (state.settings.ghOwner && state.settings.ghRepo) {
         try {
           const path = `books/${state.currentBookId}/demographics/${state.currentChapterId}.json`;
-          const url = `https://raw.githubusercontent.com/${state.settings.ghOwner}/${state.settings.ghRepo}/main/${path}`;
-          const res = await fetch(url, { cache: "no-store" });
-          if (res.ok) {
-            state.demographicData = await res.json();
+          const rawData = await fetchGitHubRaw(path);
+          if (rawData) {
+            state.demographicData = JSON.parse(rawData);
             renderDemographicUI();
           }
         } catch (e) {
@@ -864,10 +861,10 @@ ${chapterText.slice(0, 4000)}`;
       for (const agentKey of Object.keys(AGENTS)) {
         try {
           if (state.settings.ghOwner && state.settings.ghRepo) {
-            const url = `https://raw.githubusercontent.com/${state.settings.ghOwner}/${state.settings.ghRepo}/main/books/${bookId}/reviews/${chapId}/${agentKey}.json`;
-            const res = await fetch(url, { cache: "no-store" });
-            if (res.ok) {
-              const reviewData = await res.json();
+            const path = `books/${bookId}/reviews/${chapId}/${agentKey}.json`;
+            const rawJson = await fetchGitHubRaw(path);
+            if (rawJson) {
+              const reviewData = JSON.parse(rawJson);
               state.reviews[agentKey] = reviewData.feedback_markdown;
             }
           }
@@ -1096,7 +1093,8 @@ ${chapterText.slice(0, 4000)}`;
 
       try {
         let sha = null;
-        const getRes = await fetch(url, { headers: { "Authorization": `token ${state.settings.ghToken}`, "Accept": "application/vnd.github.v3+json" } });
+        const headers = getGitHubHeaders(true);
+        const getRes = await fetch(url, { headers });
         if (getRes.ok) {
           const existing = await getRes.json();
           sha = existing.sha;
@@ -1106,9 +1104,8 @@ ${chapterText.slice(0, 4000)}`;
         const putRes = await fetch(url, {
           method: "PUT",
           headers: {
-            "Authorization": `token ${state.settings.ghToken}`,
-            "Content-Type": "application/json",
-            "Accept": "application/vnd.github.v3+json"
+            ...headers,
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
             message: commitMessage,
