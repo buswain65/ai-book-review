@@ -1,4 +1,4 @@
-### Chapter 4: The Lever and the Code
+## Chapter 4: The Lever and the Code
 
 <br/>
 
