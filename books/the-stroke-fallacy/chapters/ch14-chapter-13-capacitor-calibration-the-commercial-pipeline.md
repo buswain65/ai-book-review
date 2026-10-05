@@ -1,4 +1,4 @@
-### Chapter 13: Capacitor Calibration & The Commercial Pipeline
+## Chapter 13: Capacitor Calibration & The Commercial Pipeline
 
 <br/>
 
