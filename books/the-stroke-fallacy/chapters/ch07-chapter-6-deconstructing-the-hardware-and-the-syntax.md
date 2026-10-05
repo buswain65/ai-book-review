@@ -1,4 +1,4 @@
-### Chapter 6: Deconstructing the Hardware and the Syntax
+## Chapter 6: Deconstructing the Hardware and the Syntax
 
 <br/>
 
