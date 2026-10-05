@@ -1,4 +1,4 @@
-### Chapter 11: Rapid Prototyping & The Mages' Monopoly
+## Chapter 11: Rapid Prototyping & The Mages' Monopoly
 
 <br/>
 
