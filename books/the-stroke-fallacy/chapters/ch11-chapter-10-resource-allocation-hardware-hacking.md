@@ -1,4 +1,4 @@
-### Chapter 10: Resource Allocation & Hardware Hacking
+## Chapter 10: Resource Allocation & Hardware Hacking
 
 <br/>
 
