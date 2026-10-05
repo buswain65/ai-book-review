@@ -2,7 +2,7 @@
 
 <br/>
 
-The late-night air inside Mark’s private stone shed was thick with the smells of pine resin, hot metal, and oiled leather. A single tallow candle flickered on the edge of the oak workbench, casting long shadows against the granite walls.
+The late-night air inside Mark's private stone shed was thick with the smells of pine resin, hot metal, and oiled leather. A single tallow candle flickered on the edge of the oak workbench, casting long shadows against the granite walls.
 
 <br/>
 
@@ -10,15 +10,51 @@ Mark sat on his stool, his needle-file working with meticulous, rhythmic strokes
 
 <br/>
 
-He had spent two of his hard-earned silver coins at Torren’s supply bin for raw materials: four feet of fine silver wire offcuts, a flexible strip of thick pigskin leather, and two small brass rivets.
+Back in Raleigh, he had owned a three-hundred-dollar rotary power tool with forty-two interchangeable bits. He had used it exactly twice, both times to open blister packaging. Now he would have traded his left kidney for it.
 
 <br/>
 
-To an outsider, he was making a simple leather wrist guard—the kind an apprentice blacksmith wore to keep flying sparks from burning their forearms. But under Mark’s magnifying lens, it was an integrated circuit board.
+*"Hand tools,"* Mark thought, filing the same edge for the four-hundredth time. *"Character-building. Apparently I'm building a lot of character."*
+
+<br/>
+
+He had spent nearly an entire week's wages at Torren's supply bin for the materials the offcut bins couldn't provide: four feet of fine silver wire, a flexible strip of thick pigskin leather, and two small brass rivets. Torren had insisted on giving him a "family discount," which, as far as Mark could tell, was the regular price delivered with a wink.
+
+<br/>
+
+His entire research and development budget was now sitting on the workbench. If this didn't work, his next meal was going to be very small and very motivational.
+
+<br/>
+
+To an outsider, he was making a simple leather wrist guard—the kind an apprentice blacksmith wore to keep flying sparks from burning their forearms. But under Mark's magnifying lens, it was an integrated circuit board.
 
 <br/>
 
 Using his iron scribe, Mark traced razor-thin grooves along the inside of the leather strap. He took the fine silver wire and inlaid it directly into the grooves, laying down two parallel traces that mirrored the pulse point on his inner right wrist, right where his radial artery sat closest to the skin.
+
+<br/>
+
+Halfway through the second trace, something brushed the back of his neck.
+
+<br/>
+
+Mark went very still.
+
+<br/>
+
+Slowly, he turned his head. Legacy the spider had descended from the doorframe on a single silken thread and was now hanging six inches from his ear, rotating gently, apparently inspecting his work.
+
+<br/>
+
+"It's a first draft," Mark told her.
+
+<br/>
+
+Legacy hung there a moment longer, as if reserving judgment. Then she climbed back up her thread and returned to her corner.
+
+<br/>
+
+*"Code review,"* Mark thought. *"Even here. Even from a spider."*
 
 <br/>
 
@@ -34,6 +70,18 @@ He connected the inner silver traces to the outer copper plate using two tiny br
 
 <br/>
 
+It felt like it deserved a proper name. He considered it for a moment, then lit up. *Wrist-Assisted Thermal Transfer System.* W.A.T.T.S.
+
+<br/>
+
+Mark was extremely pleased with himself for approximately four seconds. Then he remembered that there was nobody in this entire universe who would understand the pun, and he sat in the quiet candlelight, feeling the specific loneliness of a man with no one to send a groan-worthy joke to.
+
+<br/>
+
+"Prototype 1.0 it is," he muttered.
+
+<br/>
+
 He slid the cuff over his right hand and buckled the brass clasp tight against his forearm. The pigskin leather was stiff, but the smooth silver wire rested flush against his skin, cool and unobtrusive. It didn't restrict his wrist movement or interfere with his grip.
 
 <br/>
@@ -43,6 +91,10 @@ He flexed his fingers, making a tight fist, then rotated his forearm.
 <br/>
 
 *"Low-profile personal heatsink,"* Mark noted mentally. *"No staff required. No conspicuous magical paraphernalia."*
+
+<br/>
+
+He realized, with some amusement, that he had essentially built himself a smartwatch. It had no screen, no clock, no apps, and no notifications. Which, honestly, made it the best smartwatch he had ever owned.
 
 ---
 
@@ -75,7 +127,7 @@ The copper cuff on his wrist gave off a faint, soft blue glow, radiating the the
 
 <br/>
 
-Mark opened his eyes, staring at his arm in awe.
+Mark opened his eyes and stared at his arm in awe. Sitting cross-legged on a dirt floor with a glowing blue band on his wrist, he looked, he realized, exactly like a teenager at a rave.
 
 <br/>
 
@@ -95,7 +147,7 @@ Mark slipped out the rear door of his shed and stepped into the deserted armory 
 
 <br/>
 
-The town was silent beneath the silver and green moons. A light fog hung over the cobblestones, catching the pale blue glow of the distant streetlamps. The heavy iron hearths stood dark and cold, and the stacks of raw timber sat undisturbed in the shadows.
+The town was silent beneath the silver and green moons. A light fog hung low over the packed earth of the yard, catching the pale blue glow of the distant streetlamps. The heavy iron hearths stood dark and cold, and the stacks of raw timber sat undisturbed in the shadows. Across the lane, the windows of Torren's house were dark.
 
 <br/>
 
@@ -118,11 +170,11 @@ He mapped the instruction block simultaneously:
 1. **Source:** Ambient Aether in a two-foot radius around his torso.
 2. **Conduit:** Route through right arm into the wristband.
 3. **Conversion:** Kinetic compression + localized thermal friction.
-4. **Target:** Oak post, six feet forward.
+4. **Target:** Oak post, six feet forward. *(Not a boot.)*
 
 <br/>
 
-Mark stepped into a low, crisp Bow stance, sinking his weight into his thighs and dropping his right heel hard onto the dirt floor—locking his root into the earth.
+Mark stepped into a low, crisp Bow stance, sinking his weight into his thighs and dropping his right heel hard onto the dirt—locking his root into the earth.
 
 <br/>
 
@@ -138,15 +190,63 @@ A sharp, compressed crack echoed through the quiet yard, sounding like a small w
 
 <br/>
 
-A invisible wave of compressed force slammed into the oak post, punching a two-inch-deep crater straight into the hard timber and scorching the surrounding grain black with a flash of heat.
+An invisible wave of compressed force slammed into the oak post, punching a two-inch-deep crater straight into the hard timber and scorching the surrounding grain black with a flash of heat.
 
 <br/>
 
-The copper cuff on Mark’s wrist flared with a brilliant, clear blue light for half a second as it dumped the residual thermal backlash, the heat dissipating into the night air with a soft *hiss*.
+The copper cuff on Mark's wrist flared with a brilliant, clear blue light for half a second as it dumped the residual thermal backlash, the heat dissipating into the night air with a soft *hiss*.
 
 <br/>
 
-Mark pulled his hand back, settling into an upright stance.
+Across the lane, a candle flared to life in Torren's window. The shutter banged open.
+
+<br/>
+
+"WHO'S THERE?" Torren roared into the fog.
+
+<br/>
+
+Mark froze mid-stance.
+
+<br/>
+
+"Just me, Torren!" he called back. "Sorry!"
+
+<br/>
+
+"What in the Ancestors' name was that bang?"
+
+<br/>
+
+Mark looked at the smoking crater in the post. He looked at the forge, where the blower sat silent in the dark. His mouth, operating several steps ahead of his judgment, said: "...Bessie."
+
+<br/>
+
+There was a horrified pause.
+
+<br/>
+
+"*Bessie?* Is she alright?!"
+
+<br/>
+
+"She's fine!" Mark called quickly. "Just a... little backfire. Normal. Very normal. I've checked her over. Go back to sleep."
+
+<br/>
+
+A long, suspicious silence. Then: "You tell her goodnight from me."
+
+<br/>
+
+"I will," Mark said.
+
+<br/>
+
+The shutter banged closed. The candle went out.
+
+<br/>
+
+Mark exhaled slowly. *"Lying to the stakeholder about the source of the incident,"* he thought. *"Forty years in tech really did prepare me for everything."*
 
 <br/>
 
@@ -194,7 +294,19 @@ The Aether was ambient—it came from the air around him. The wristband handled 
 
 <br/>
 
-Mark reached into his tunic pocket, pulled out a cold, leftover sausage he had saved from dinner, and devoured it in three ravenous bites. As the food hit his stomach, the intense dizziness began to fade, replaced by a dull, familiar fatigue.
+Mark reached into his tunic pocket and pulled out a cold, leftover sausage he had saved from dinner. It had spent several hours in his pocket and was now generously coated in lint, a fleck of charcoal, and what he sincerely hoped was a strand of his own hair.
+
+<br/>
+
+He looked at it. He considered his options. He considered his blood sugar.
+
+<br/>
+
+*"The five-second rule,"* Mark decided, *"has a much longer timeout in a survival situation."*
+
+<br/>
+
+He devoured it in three ravenous bites. As the food hit his stomach, the intense dizziness began to fade, replaced by a dull, familiar fatigue.
 
 <br/>
 
@@ -206,6 +318,10 @@ Mark stared at the scorched oak post, the realization hitting him like a cold sh
 
 <br/>
 
+He paused, then added, with some bitterness: *"And a cheap one. The kind that comes free in the box with a toy and dies on Christmas morning."*
+
+<br/>
+
 The wristband had solved his **hardware/thermal bug**, but it had instantly exposed his **power supply bottleneck**. High-voltage output required high-calorie input. If he tried to cast a high-level spell without proper physical fuel, his adolescent body would simply drain its own blood sugar and pass out cold.
 
 <br/>
@@ -214,7 +330,7 @@ Mark pushed himself up from the dirt, his legs feeling like lead, and walked slo
 
 <br/>
 
-He sat at his workbench, pulled his leather ledger toward himself, dipped his charcoal stick, and wrote in neat, precise English cursive:
+He sat at his workbench, pulled his leather ledger toward himself, picked up his charcoal stick, and wrote in neat, precise English cursive:
 
 <br/>
 
@@ -225,13 +341,21 @@ He sat at his workbench, pulled his leather ledger toward himself, dipped his ch
 > *2. Kinetic/Thermal macro executed silently at 6-foot range.*
 > *New Bottleneck Identified:*
 > *Power Supply / Battery Capacity. Biological metabolism acts as the primary ignition catalyst. High-voltage execution causes rapid glycemic crash and metabolic fatigue.*
+> *Operational Notes:*
+> *1. Carry more sausages.*
+> *2. Pocket sausage storage protocol requires improvement (lint contamination).*
+> *3. Torren believes Bessie backfired. Do not correct this.*
 > *Next Phase:*
 > *Explore external energy storage. Investigate mana-crystals as external capacitors to offload metabolic drain.*
 
 <br/>
 
-Mark closed the ledger, blew out the tallow candle, and lay down on his simple cot in the dark.
+Mark closed the ledger, blew out the tallow candle, and lay down on the straw-stuffed cot he had dragged over from the inn.
 
 <br/>
 
 His body was exhausted, his muscles ached, and his stomach was already growling for breakfast... but as he closed his eyes, Mark Vance slept with the deep, peaceful contentment of an engineer who had just solved his hardest bug of the week.
+
+<br/>
+
+Somewhere above him, Legacy began spinning a fresh strand of web across the doorframe. If spiders could hold opinions, hers would probably be that the boy needed to eat better.
