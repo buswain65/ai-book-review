@@ -2,15 +2,51 @@
 
 <br/>
 
-The autumn rain lashed against the small, high window of Mark’s shed, drum-rolling on the granite sill. Inside, the air smelled of tallow smoke, fresh pine resin, and the sharp, metallic tang of scraped brass.
+The autumn rain lashed against the small, high window of Mark's shed, drum-rolling on the granite sill. Inside, the air smelled of tallow smoke, fresh pine resin, and the sharp, metallic tang of scraped brass.
 
 <br/>
 
-Lyra sat on a low wooden three-legged stool opposite Mark, a small leather tool roll spread across her knees. On the oak workbench between them sat her delivery: a canvas pouch filled with scrap silver wire offcuts, three dull, slate-grey mana-crystals from the Chapterhouse waste chute, and two blank brass backing plates she had smuggled out in her apron pockets.
+Lyra sat on a low wooden three-legged stool opposite Mark, a small leather tool roll spread across her knees. She had arrived twenty minutes earlier, soaked to the skin, and had immediately begun unloading her apron pockets onto the workbench.
 
 <br/>
 
-"So," Lyra said, tracing a finger across a diagram Mark had drawn on a clean sheet of parchment. "You're saying if I connect the second crystal in line with the first, it doesn't double the heat—it doubles the flow?"
+It took a while.
+
+<br/>
+
+First came a canvas pouch filled with scrap silver wire offcuts. Then three dull, slate-grey mana-crystals from the Chapterhouse waste chute. Then two blank brass backing plates. Then a spare graver, a pot of jeweler's rouge, a coil of copper ribbon, a small brass funnel she claimed "might be useful," and, finally, half a wheel of cheese.
+
+<br/>
+
+Mark stared at the growing pile. "How many pockets does that apron have?"
+
+<br/>
+
+"Eleven," Lyra said. "Twelve if you count the secret one."
+
+<br/>
+
+"And nobody at the workshop searches you on the way out?"
+
+<br/>
+
+"Nobody searches the apprentices or the journeymen. They assume we're too tired to steal anything." She set the cheese down beside the crystals with great care. "They're usually right."
+
+<br/>
+
+"What's the cheese for?"
+
+<br/>
+
+"Your power budget," Lyra said, as if this were obvious. "I'm not watching you eat another pocket sausage. It's upsetting."
+
+<br/>
+
+From the corner of the doorframe, Legacy the spider observed the cheese with an interest she had never shown in any of Mark's engineering work.
+
+<br/>
+
+"So," Lyra said, tracing a finger across a diagram Mark had drawn on a clean sheet of parchment. In the lower corner, in her own blocky handwriting, she had added *L. — Credited*. "You're saying if I connect the second crystal in line with the first, it doesn't double the heat—it doubles the flow?"
 
 <br/>
 
@@ -18,23 +54,43 @@ Lyra sat on a low wooden three-legged stool opposite Mark, a small leather tool 
 
 <br/>
 
-Lyra squinted at the drawing, her grey eyes sharp under the flickering blue light of Mark’s desktop lamp. "In the workshop, Master Vane always said placing two stones in the same fitting creates 'aetheric dissonance.' He told us the spirits inside the glass would fight each other and shatter the casing."
+"What's a highway?"
 
 <br/>
 
-"Master Vane was looking at un-insulated copper traces," Mark replied smoothly, picking up his needle-file. "If you don't isolate the return paths, the current jumps between the sockets, creates a short, and blows the housing apart. It's not dissonance, Lyra. It's bad circuit board layout."
+Mark considered this. "A very wide road," he said, "where everyone is angry at the same time."
 
 <br/>
 
-Lyra let out a quiet, breathy laugh, shaking her head. "If my master heard you call two hundred years of Imperial casting 'bad layout,' he’d drop dead of a stroke."
+Lyra squinted at the drawing, her grey eyes sharp under the flickering blue light of Mark's desktop lamp. "In the workshop, Master Vane always said placing two stones in the same fitting creates 'aetheric dissonance.' He told us the spirits inside the glass would fight each other and shatter the casing."
 
 <br/>
 
-"Then let's make sure he doesn't hear us," Mark smiled. "Hand me that small silver wire."
+"Master Vane was looking at un-insulated copper traces," Mark replied, picking up his needle-file. "If you don't isolate the return paths, the current jumps between the sockets, creates a short, and blows the housing apart. It's not dissonance, Lyra. It's bad circuit board layout."
 
 <br/>
 
-For two hours, they worked side-by-side in quiet, focused synchronization.
+Lyra let out a quiet, breathy laugh, shaking her head. "If my master heard you call five hundred years of Imperial casting 'bad layout,' he'd drop dead of a stroke."
+
+<br/>
+
+"I'd advise against strokes," Mark said. "Speaking from personal experience."
+
+<br/>
+
+Lyra frowned. "You've had a *stroke*? You're fourteen."
+
+<br/>
+
+"It was a very busy childhood," Mark said. "Hand me that small silver wire."
+
+<br/>
+
+She handed it over, still frowning, and filed the comment under *Strange Things Mark Says*, which by now was a long and growing list.
+
+<br/>
+
+For two hours, they worked side-by-side in quiet, focused synchronization, interrupted only by Lyra correcting the depth of Mark's grooves with her calipers and Mark correcting the direction of Lyra's traces with his diagrams. It was, Mark reflected, the most productive pair-programming session he'd had in a decade, and the first in which his partner had actually brought snacks.
 
 <br/>
 
@@ -50,7 +106,7 @@ On the outer copper plate, he filed six angled heat-dissipation fins. But the re
 
 <br/>
 
-Mark crafted a tiny, spring-loaded silver sliding pin mounted right near his right palm. Operated by a subtle, invisible nudge of his thumb against the base of his index finger, the sliding pin allowed him to toggle execution modes on the fly:
+Mark crafted a tiny, spring-loaded silver sliding pin mounted near the heel of his right palm. Operated by a subtle nudge of his thumb, the sliding pin allowed him to toggle execution modes on the fly:
 
 <br/>
 
@@ -59,7 +115,31 @@ Mark crafted a tiny, spring-loaded silver sliding pin mounted right near his rig
 
 <br/>
 
-"Try it on," Lyra urged, leaning forward, resting her chin in her hands.
+Lyra read the labels upside down. "Why not just call them 'Left' and 'Right'?"
+
+<br/>
+
+"Because 'Alpha' and 'Beta' sound better in the documentation."
+
+<br/>
+
+"Who reads the documentation?"
+
+<br/>
+
+"Nobody," Mark said. "That's exactly why it has to sound good."
+
+<br/>
+
+Lyra opened her mouth, closed it again, and wrote something in the margin of her own notes. Mark had a strong suspicion it was going under *Strange Things Mark Says*.
+
+<br/>
+
+"Try it on," Lyra urged, leaning forward. "And if it explodes, I'm taking my name off the schematic."
+
+<br/>
+
+"Noted," Mark said.
 
 <br/>
 
@@ -79,7 +159,15 @@ Beside him, Lyra watched in open fascination as both grey stones pulsed simultan
 
 <br/>
 
-Mark unhooked the leads and seated both charged crystals firmly into the brass sockets on his wrist cuff, tightening the copper retaining clips over top.
+Mark unhooked the leads and seated both charged crystals firmly into the brass sockets on his wrist cuff, tightening the copper retaining clips over top. He checked both crystals. Then he checked them again.
+
+<br/>
+
+"Why do you always check them twice?" Lyra asked.
+
+<br/>
+
+"Historical reasons," Mark said. "We don't talk about it."
 
 <br/>
 
@@ -88,6 +176,10 @@ Mark unhooked the leads and seated both charged crystals firmly into the brass s
 <br/>
 
 The twin crystals pulsed in quiet harmony, their blue light reflecting off the copper fins on his arm.
+
+<br/>
+
+Lyra silently slid a wedge of cheese across the bench. Mark ate it.
 
 <br/>
 
@@ -103,11 +195,27 @@ Torren had provided the ideal test bed: a thick, hundred-pound rectangular block
 
 <br/>
 
+Torren had also, of course, named it.
+
+<br/>
+
+"His name is Gerald," Torren had said solemnly, rolling it in on a handcart. "He's been holding down the back of my wagon for twelve years. Treat him with respect."
+
+<br/>
+
+Lyra looked at the iron block. Then at Mark. "Your blacksmith names his ballast?"
+
+<br/>
+
+"He names everything," Mark said. "Don't get attached."
+
+<br/>
+
 "Stand behind me, Lyra," Mark instructed quietly, stepping to the center of the dirt floor. "Right near the door."
 
 <br/>
 
-Lyra didn't argue. She backed up against the heavy oak door, her hand resting on her tool roll, her eyes glued to Mark's right arm.
+Lyra didn't argue. She backed up against the heavy oak door, her hand resting on her tool roll, her eyes glued to Mark's right arm. She also took the cheese with her, which Mark felt was a reasonable risk-management decision.
 
 <br/>
 
@@ -120,7 +228,7 @@ Mark stood eight feet from the iron block. He took a slow, deep diaphragmatic br
 
 <br/>
 
-Using his thumb, Mark nudged the tiny silver sliding pin on his palm to **Position Beta**.
+Using his thumb, Mark nudged the tiny silver sliding pin to **Position Beta**.
 
 <br/>
 
@@ -138,8 +246,8 @@ In his mind, Mark called up his upgraded **Dual-Target Impact Macro**:
 
 1. **Power Supply:** Draw simultaneous ignition current from Sockets 1 and 2 (zero metabolic drain).
 2. **Logic Gate:** Split energy stream into two parallel vectors at 15-degree divergence.
-3. **Conduit:** Route through silver trace array + triple-finned copper heatsink.
-4. **Target:** Iron block—Point A (left face), Point B (right face).
+3. **Conduit:** Route through silver trace array + six-finned copper heatsink.
+4. **Target:** Iron block—Point A (left face), Point B (right face). *(Sorry, Gerald.)*
 
 <br/>
 
@@ -159,7 +267,11 @@ An invisible, double-pronged shockwave tore through the air of the shed. The hun
 
 <br/>
 
-The copper fins on Mark’s wristband flared with a blinding, ice-blue light as they dumped the thermal backlash.
+Gerald was no more.
+
+<br/>
+
+The copper fins on Mark's wristband flared with a blinding, ice-blue light as they dumped the thermal backlash.
 
 <br/>
 
@@ -175,11 +287,15 @@ Instead, the ambient Aether in the shed was instantly **sucked dry**.
 
 <br/>
 
-The warm air inside the small room dropped twenty degrees in a single heartbeat. Mark’s breath turned into a thick cloud of white mist in front of his face. A thin, crystalline layer of frost instantly bloomed across the workbench, creeping over the glass bottles, the iron files, and the leather ledger.
+The warm air inside the small room dropped twenty degrees in a single heartbeat. Mark's breath turned into a thick cloud of white mist in front of his face. A thin, crystalline layer of frost instantly bloomed across the workbench, creeping over the glass bottles, the iron files, the leather ledger, and the remaining half-wheel of cheese.
 
 <br/>
 
-Simultaneously, a sharp, metallic acoustic chime—a strange, crystalline tone vibrating at roughly fourteen kilohertz—echoed through the stone walls. It wasn't a physical sound in the air; it vibrated straight through Mark’s teeth and skull, ringing like a struck tuning fork.
+In the corner of the doorframe, Legacy's web glittered with sudden frost, every strand turned to white lace. The spider herself had gone completely, ominously still.
+
+<br/>
+
+Simultaneously, a sharp, metallic acoustic chime—a strange, crystalline tone vibrating at roughly fourteen kilohertz—echoed through the stone walls. It wasn't a physical sound in the air; it vibrated straight through Mark's teeth and skull, ringing like a struck tuning fork.
 
 <br/>
 
@@ -187,7 +303,7 @@ At the center of Mark's palm, a faint, pale-blue ring of geometric light pulsed 
 
 <br/>
 
-Silence fell over the shed, save for the patter of rain on the roof and the soft *hiss* of frost melting off the copper fins on Mark’s wrist.
+Silence fell over the shed, save for the patter of rain on the roof and the soft *hiss* of frost melting off the copper fins on Mark's wrist.
 
 <br/>
 
@@ -195,7 +311,7 @@ Mark stood frozen in his stance, staring at his arm.
 
 <br/>
 
-Beside the door, Lyra was trembling, her mouth wide open, her hands pressed tightly over her ears.
+Beside the door, Lyra was trembling, her mouth wide open, her hands pressed tightly over her ears. She was still, Mark noticed, somehow holding onto the cheese.
 
 <br/>
 
@@ -223,7 +339,7 @@ He touched the twin crystals on his cuff. They weren't hot. They were shockingly
 
 <br/>
 
-He looked at the two halves of the cracked iron block, then at the dirt floor where the geometric ring had passed through.
+He looked at the two halves of what had once been Gerald, then down at the dirt floor where the geometric ring had passed through.
 
 <br/>
 
@@ -245,13 +361,33 @@ He looked at her, his voice dropping into a quiet, dead-serious tone.
 
 "We just broadcast an un-encrypted data packet over a closed network."
 
+<br/>
+
+Lyra stared at him. "I understood maybe four of those words."
+
+<br/>
+
+"We sent a letter," Mark said quietly. "To someone we don't know. And we signed it with our address."
+
+<br/>
+
+That one, she understood. The color drained from her face.
+
 ---
 
 Late that night, after a thoroughly rattled Lyra had gathered her tool roll and slipped back out into the rainy avenues of Oakhaven, Mark sat alone at his bench under the steady blue light of his desktop capacitor.
 
 <br/>
 
-He wiped the remaining moisture off his leather notebook, opened to a fresh page, and dipped his charcoal stylus.
+She had left the cheese. Mark chose to interpret this as an act of solidarity rather than a sign that she had been too frightened to remember it.
+
+<br/>
+
+In the corner of the doorframe, the frost had melted from Legacy's web, and the spider had begun, with slow and pointed deliberation, to rebuild it from scratch. Every so often she paused and turned toward Mark, as if adding his name to a list.
+
+<br/>
+
+He wiped the remaining moisture off his leather notebook, opened to a fresh page, and picked up his charcoal stylus.
 
 <br/>
 
@@ -262,12 +398,15 @@ He wrote in swift, precise English cursive:
 > *System Architecture Notes — Mark Vance*
 > *Log 08: Dual-Crystal Logic Array (Prototype 2.0) Field-Tested*
 > *Hardware Configuration:*
-> *Parallel dual-socket wrist conduit with dynamic thumb-switch execution (Alpha/Beta modes). Dual silver-trace layout with triple-finned copper heat sink.*
+> *Parallel dual-socket wrist conduit with dynamic thumb-switch execution (Alpha/Beta modes). Dual silver-trace layout with six-finned copper heat sink. Co-designed with Lyra (Credited).*
 > *Test Results:*
 > *1. Kinetic output scaled by ~250%. Cracked 100lb cast-iron ballast at 8-foot range.*
 > *2. Zero metabolic fatigue recorded. Twin capacitors successfully provided 100% of ignition spark.*
+> *Casualties:*
+> *1. Gerald (ballast block, 12 years of service). Torren must be informed gently.*
+> *2. Legacy's web (total loss; owner is rebuilding and visibly upset).*
 > *Anomalous System Behavior:*
-> *1. Thermal Vacuum: Instant drop in local ambient temperature (-20°C). Circuit absorbed ambient heat to satisfy zero-impedance energy conversion.*
+> *1. Thermal Vacuum: Instant drop in local ambient temperature (approx. 20°F). Circuit absorbed ambient heat to satisfy zero-impedance energy conversion.*
 > *2. Carrier Wave / System Ping: High-frequency harmonic oscillation (~14 kHz) accompanied by an expanding geometric pulse.*
 > *Working Hypothesis:*
 > *The global Aether grid is not an unmanaged natural phenomenon. It behaves like a network governed by a low-level background daemon or firewall.*
@@ -282,7 +421,7 @@ Mark closed the ledger, unbuckled Prototype 2.0 from his wrist, and set it caref
 
 <br/>
 
-He lay back on his simple cot, staring up at the dark timber rafters as the rain continued to fall outside. For forty years in North Carolina, whenever an unauthorized administrative override was executed on a secure network, an alert was generated in a security log somewhere.
+He lay back on his cot, staring up at the dark timber rafters as the rain continued to fall outside. For forty years in North Carolina, whenever an unauthorized administrative override was executed on a secure network, an alert was generated in a security log somewhere.
 
 <br/>
 
