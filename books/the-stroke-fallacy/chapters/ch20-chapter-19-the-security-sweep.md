@@ -1,4 +1,4 @@
-### Chapter 19: The Security Sweep
+## Chapter 19: The Security Sweep
 
 <br/>
 
