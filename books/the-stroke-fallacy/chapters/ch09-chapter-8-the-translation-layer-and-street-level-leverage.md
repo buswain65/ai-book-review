@@ -10,11 +10,27 @@ It didn't take long for him to notice something obvious: almost no one was readi
 
 <br/>
 
-The shops didn't have written signs. The cobbler's storefront featured a large wooden boot carved into the lintel. The baker’s shop was marked by a painted sheaf of wheat. Even the tavern down the alley displayed a carved wooden mug dripping painted foam. In a society where the vast majority of the populace was illiterate, visual icons were the primary user interface.
+The shops didn't have written signs. The cobbler's storefront featured a large wooden boot carved into the lintel. The baker's shop was marked by a painted sheaf of wheat. Even the tavern down the alley displayed a carved wooden mug dripping painted foam. In a society where the vast majority of the populace was illiterate, visual icons were the primary user interface.
 
 <br/>
 
-It wasn't until Mark reached the stone plaza outside the Town Hall that he saw actual written text. Pinned to a heavy oak board was a royal tax decree, flanked by two town guards.
+*"Honestly,"* Mark thought, *"better UX than most enterprise software I've used."*
+
+<br/>
+
+Then he reached the shop next door to the apothecary. Above its door hung a carved wooden fish holding a hammer.
+
+<br/>
+
+Mark stopped and stared at it for a full minute. He could not work out whether the shop sold fish, built boats, repaired fishing gear, or was making some kind of threat.
+
+<br/>
+
+*"Icon design,"* he concluded, walking on. *"Still one of the three hardest problems in computer science. Right after naming things and cache invalidation."*
+
+<br/>
+
+It wasn't until Mark reached the stone plaza outside the Town Hall that he saw actual written text. Pinned to a heavy oak board was a royal tax decree, flanked by two town guards who looked like they had been standing there since the decree was nailed up and possibly before.
 
 <br/>
 
@@ -22,11 +38,15 @@ Mark stepped up to the board and began scanning the parchment.
 
 <br/>
 
-*“By order of the Regional Magistrate, all merchant caravans entering through the North Gate shall be subject to a three-percent tariff on raw ore, finished textiles, and refined spirits…”*
+*"By order of the Regional Magistrate, all merchant caravans entering through the North Gate shall be subject to a three-percent tariff on raw ore, finished textiles, and refined spirits, and a further levy of one copper per head on all goods arriving by goat…"*
 
 <br/>
 
-Mark stopped dead in his tracks.
+Mark read the last line twice. *"The goats again,"* he thought. *"This town clearly has a systemic goat problem, and nobody's willing to write it up."*
+
+<br/>
+
+Then he stopped dead in his tracks.
 
 <br/>
 
@@ -34,7 +54,7 @@ He stared at the page, blinked, and then consciously disengaged his focus. He di
 
 <br/>
 
-They weren't Latin letters. They weren't English, or C++, or even a language he had ever seen in a textbook. The characters were angular, stacked vertically, and filled with sharp, sweeping strokes resemble runic script. Yet the moment his eyes crossed them, his brain automatically decoded the symbols into fluid, effortless English without missing a beat.
+They weren't Latin letters. They weren't English, or C++, or even a language he had ever seen in a textbook. The characters were angular, stacked vertically, and filled with sharp, sweeping strokes resembling runic script. Yet the moment his eyes crossed them, his brain automatically decoded the symbols into fluid, effortless English without missing a beat.
 
 <br/>
 
@@ -42,7 +62,27 @@ They weren't Latin letters. They weren't English, or C++, or even a language he 
 
 <br/>
 
-A slow, calculating grin spread across his face.
+He paused. *"And it didn't even make me accept the terms and conditions."*
+
+<br/>
+
+Out of sheer professional curiosity, he concentrated hard on the decree and tried to mentally switch the output language to Spanish.
+
+<br/>
+
+Nothing happened. The goats remained stubbornly in English.
+
+<br/>
+
+*"No settings menu,"* Mark sighed. *"No documentation. No support line. Classic."*
+
+<br/>
+
+One of the guards was watching him now, with the wary expression of a man observing a teenager glaring at a tax notice as though it had personally insulted his mother.
+
+<br/>
+
+Mark gave him a polite nod and moved on, a slow, calculating grin spreading across his face.
 
 <br/>
 
@@ -50,7 +90,15 @@ If the local language was being translated *into* English inside his head, it me
 
 <br/>
 
-Ten minutes later, Mark was standing inside a small, quiet shop tucked behind the apothecary. The air smelled of dried parchment, linseed oil, and wood shavings. An elderly scribe sat behind a counter, trimming the quill of a feather.
+He had accidentally acquired the most secure encryption scheme on the planet. It was security through obscurity—the exact thing he'd spent forty years telling junior developers never, ever to rely on.
+
+<br/>
+
+*"Well,"* Mark thought, *"I won't tell them if you won't."*
+
+---
+
+Ten minutes later, Mark was standing inside a small, quiet shop tucked behind the apothecary. The air smelled of dried parchment, linseed oil, and wood shavings. An elderly scribe sat behind a counter, trimming the quill of a feather with the slow, sacred concentration of a surgeon.
 
 <br/>
 
@@ -62,7 +110,43 @@ Mark laid down three of his hard-earned copper coins.
 
 <br/>
 
-The scribe eyed the skinny, soot-stained fourteen-year-old with mild curiosity, but money was money. He reached under the counter and produced a palm-sized notebook bound in rough, dark leather, along with a sharpened stick of compressed charcoal.
+The scribe paused mid-trim. "Charcoal," he repeated, in the tone of a wine steward who had just been asked for a straw. "For a *ledger*."
+
+<br/>
+
+"Charcoal," Mark confirmed.
+
+<br/>
+
+"Ink is for scholars, young man. Charcoal is for children and carpenters."
+
+<br/>
+
+"I'm both," Mark said.
+
+<br/>
+
+The scribe sniffed, but money was money. Then his eyes took on a gleam Mark recognized instantly from forty years of software vendor meetings.
+
+<br/>
+
+"Of course," the scribe said smoothly, reaching under the counter, "a discerning young gentleman might prefer our *premium* edition." He produced a ledger bound in tooled calfskin with gilt-edged pages and a silk ribbon bookmark. "Comes with a matching quill set. Only nine coppers."
+
+<br/>
+
+"Does the ribbon make the pages better?" Mark asked.
+
+<br/>
+
+"It makes the *owner* better."
+
+<br/>
+
+"I'll take the base model," Mark said. *"And I'll pass on the extended warranty."*
+
+<br/>
+
+With visible disappointment, the scribe produced a palm-sized notebook bound in rough, dark leather, along with a sharpened stick of compressed charcoal.
 
 <br/>
 
@@ -76,7 +160,15 @@ Mark took the notebook, sat on a bench outside the shop, opened to the first bla
 
 <br/>
 
-He looked at the neat cursive script. To him, it was perfectly readable English. To anyone else in Oakhaven, it would look like an indecipherable, alien cipher written by a madman. His research notes were completely encrypted out of the box.
+He looked at the script and blinked in surprise. It was neat. Elegant, even.
+
+<br/>
+
+Forty years of keyboards had reduced his old handwriting to something resembling a seismograph during an earthquake. His doctor had once asked him to stop signing his own prescriptions because the pharmacy kept calling to ask if the patient was alright. These new hands had apparently never heard of any of that.
+
+<br/>
+
+To Mark, the writing was perfectly readable English. To anyone else in Oakhaven, it would look like an indecipherable, alien cipher written by a madman. His research notes were completely encrypted out of the box.
 
 ---
 
@@ -84,15 +176,15 @@ With the notebook safely tucked into his tunic, Mark spent the next two hours ma
 
 <br/>
 
-He passed the **Mages' Chapterhouse**—a imposing stone tower surrounded by a wrought-iron fence and pulsing with a subtle, high-frequency Aether barrier that made Mark’s teeth ache. High abstraction layer, extremely defensive, heavily guarded.
+He passed the **Mages' Chapterhouse**—an imposing stone tower surrounded by a wrought-iron fence and pulsing with a subtle, high-frequency Aether barrier that made Mark's teeth ache. It felt exactly like walking past a server room with a cheap power supply. High abstraction layer, extremely defensive, heavily guarded.
 
 <br/>
 
-He passed the **Merchants' Guild Hall**—a grand, three-story wooden lodge where well-dressed men in velvet cloaks argued over cargo manifests and guard contracts. The economic engine.
+He passed the **Merchants' Guild Hall**—a grand, three-story wooden lodge where well-dressed men in velvet cloaks argued over cargo manifests and guard contracts. The economic engine. Also, clearly, the sales department: everyone was talking at once, and nobody was writing anything down.
 
 <br/>
 
-Finally, he drifted toward the **Trades & Adventurers Guild**, watching the mercenary types coming and going. Sword-hires, scouts, and heavy-laborers. Raw martial power, bound by simple contracts.
+Finally, he drifted past the **Trades & Adventurers Guild**, watching the mercenary types coming and going. Sword-hires, scouts, and heavy-laborers. Raw martial power, bound by simple contracts. Through the window he could see Harlan, still stamping forms, with the same expression as yesterday. The line had not gotten shorter. Mark suspected the line had never once been shorter.
 
 <br/>
 
@@ -124,7 +216,7 @@ The boy leading the group was built like a young ox—maybe sixteen, thick-necke
 
 <br/>
 
-Mark sighed internally. Forty years in software development had taught him that stepping into a active incident without assessing the variables usually got you dragged into the post-mortem. But forty years of martial arts—and a lifetime of watching bigger people pick on smaller ones—meant he couldn't just walk away.
+Mark sighed internally. Forty years in software development had taught him that stepping into an active incident without assessing the variables usually got you dragged into the post-mortem. But forty years of martial arts—and a lifetime of watching bigger people pick on smaller ones—meant he couldn't just walk away.
 
 <br/>
 
@@ -152,11 +244,19 @@ The leader scoffed, taking a menacing step toward Mark. "The watch doesn't come 
 
 <br/>
 
+"Huh," Mark said. "That sounds like a coverage gap. Somebody should really file a complaint about that."
+
+<br/>
+
+The leader blinked, briefly derailed, as if he had walked into a fight and found a town council meeting.
+
+<br/>
+
 He was half a head taller than Mark and easily outweighed him by forty pounds. In his previous 62-year-old body, Mark would have dreaded the impact on his bad knees. In this light, agile 14-year-old frame, he just saw a massive, slow target with terrible center-of-gravity management.
 
 <br/>
 
-The big kid reached out with a thick, heavy hand, aiming to grab Mark by the collar and shove him into the mud.
+The big kid recovered and reached out with a thick, heavy hand, aiming to grab Mark by the collar and shove him into the mud.
 
 <br/>
 
@@ -164,7 +264,7 @@ Mark didn't flinch. He didn't drop into a flashy Kung Fu stance either.
 
 <br/>
 
-As the hand closed in, Mark stepped smoothly inside the arc of the reach. He caught the bully's wrist with his left hand, slipped his right arm under the boy's elbow, and pivoted his hips—a textbook Brazilian Jiu-Jitsu wrist-lock and arm-drag.
+As the hand closed in, Mark stepped inside the arc of the reach. He caught the bully's wrist with his left hand, slipped his right arm under the boy's elbow, and pivoted his hips—a textbook Brazilian Jiu-Jitsu wrist-lock and arm-drag.
 
 <br/>
 
@@ -184,11 +284,27 @@ The two cronies froze, their mouths agape. They looked at their leader—a local
 
 <br/>
 
+"Should we help him?" the shorter one whispered.
+
+<br/>
+
+"You help him," the taller one whispered back.
+
+<br/>
+
+"*You* help him."
+
+<br/>
+
+Neither of them moved. Mark had seen that exact dynamic play out in a hundred meetings where something had gone wrong and nobody wanted to be the one who volunteered to own it.
+
+<br/>
+
 "Let go of me, you little bastard!" the leader snarled, his face turning red as he squirmed, but the leverage was absolute.
 
 <br/>
 
-"Here's how this deployment goes," Mark said smoothly, his voice dropping into that quiet, cold tone he used when product managers tried to blame dev teams for missed deadlines. "You let the kid keep his bread money. You and your friends go find something productive to do. And nobody gets a dislocated shoulder today. Clear?"
+"Here's how this deployment goes," Mark said evenly, his voice dropping into that quiet, cold tone he used when product managers tried to blame dev teams for missed deadlines. "You let the kid keep his bread money. You and your friends go find something productive to do. And nobody gets a dislocated shoulder today. Clear?"
 
 <br/>
 
@@ -204,7 +320,7 @@ Mark stepped back and released the wrist instantly, dropping back into a solid, 
 
 <br/>
 
-The leader stumbled forward, clutching his sore wrist and glaring at Mark with pure, unadulterated hatred. His breathing was heavy, his face burning with humiliation in front of his crew and the younger kid.
+The leader stumbled forward, clutching his sore wrist and glaring at Mark with pure hatred. His breathing was heavy, his face burning with humiliation in front of his crew and the younger kid.
 
 <br/>
 
@@ -224,11 +340,27 @@ The leader swallowed his rage, stepping backward while pointing a trembling, dir
 
 <br/>
 
-"Noted," Mark said dryly. "Watch your step on the cobbles. They're slick."
+"You're right, I don't know who your brother is," Mark said. "Does he also have bad balance? Because that kind of thing runs in families."
 
 <br/>
 
-The three bullies backed out of the alley, the leader never taking his glaring, furious eyes off Mark until they vanished around the corner.
+The bully's face went from red to purple.
+
+<br/>
+
+"Noted on the legs, though," Mark added dryly. "Watch your step on the cobbles. They're slick."
+
+<br/>
+
+The three bullies backed out of the alley. Two steps later, the shorter crony's boot hit a patch of wet moss. He windmilled wildly, grabbed the leader's vest for balance, and very nearly took them both down into the mud before they caught themselves on the warehouse wall.
+
+<br/>
+
+"Told you," Mark called after them.
+
+<br/>
+
+The leader shot him one last venomous look, never taking his glaring, furious eyes off Mark until they vanished around the corner.
 
 <br/>
 
@@ -248,11 +380,47 @@ Mark turned to the younger kid, who was still trembling against the wooden crate
 
 <br/>
 
-Mark bent down, picked up his leather-bound notebook from the dry ledge where he'd set it, and tucked it securely into his tunic.
+"What's your name?"
 
 <br/>
 
-"Let him," Mark said, a faint, dry smile playing on his lips. "I've dealt with plenty of middle management before. They always threaten to break things when they don't get their way."
+"Pip."
+
+<br/>
+
+"Well, Pip," Mark said, "if Jax's brother starts asking around about me, I'd appreciate a heads-up."
+
+<br/>
+
+Pip frowned. "How would I know?"
+
+<br/>
+
+"You run errands all over town, right? Errand boys hear everything." Mark shrugged. "You're basically the town's message bus."
+
+<br/>
+
+Pip had no idea what a message bus was, but he puffed out his chest anyway, because it sounded important.
+
+<br/>
+
+Mark patted his tunic. The leather notebook was still tucked safely against his ribs. *"Data integrity confirmed."*
+
+<br/>
+
+"Let him come," Mark said, a faint, dry smile playing on his lips. "I've dealt with plenty of middle management before. They always threaten to break things when they don't get their way."
+
+<br/>
+
+"What's middle management?" Pip asked.
+
+<br/>
+
+Mark considered the question carefully.
+
+<br/>
+
+"Jax," he said. "But with a bigger office."
 
 <br/>
 
