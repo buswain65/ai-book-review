@@ -1,4 +1,4 @@
-### Chapter 7: The Bottleneck and the Guild
+## Chapter 7: The Bottleneck and the Guild
 
 <br/>
 
