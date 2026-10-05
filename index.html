@@ -94,10 +94,13 @@
           <option value="">Loading books...</option>
         </select>
 
-        <!-- Total Book Word Count Badge -->
-        <span id="bookWordCountBadge" class="bg-slate-800/80 border border-slate-700/80 text-slate-300 text-xs px-2.5 py-1 rounded-lg font-medium flex items-center space-x-1" title="Total Word Count for Selected Book">
+        <!-- Total Book Word Count Badge with Trigger Button -->
+        <span id="bookWordCountBadge" class="bg-slate-800/80 border border-slate-700/80 text-slate-300 text-xs px-2.5 py-1 rounded-lg font-medium flex items-center space-x-1.5" title="Total Word Count for Selected Book">
           <span>📝</span>
-          <span id="bookWordCountValue">0 words</span>
+          <span id="bookWordCountValue">-- words</span>
+          <button id="calcWordCountBtn" onclick="updateBookWordCountUI()" class="text-slate-400 hover:text-white ml-1 transition-colors text-[11px]" title="Recalculate Word Count">
+            🔄
+          </button>
         </span>
 
         <!-- New Book Button (Visible strictly in Author Mode) -->
@@ -155,11 +158,11 @@
       </div>
     </aside>
 
-    <!-- CENTER & RIGHT: SPLIT SCREEN WORKSPACE -->
-    <main class="flex-1 flex overflow-hidden">
+    <!-- CENTER & BOTTOM: VERTICALLY STACKED WORKSPACE -->
+    <main class="flex-1 flex flex-col overflow-hidden">
 
-      <!-- LEFT PANEL: MANUSCRIPT EDITOR / READER / PREVIEW -->
-      <section id="manuscriptPanel" class="flex-1 flex flex-col border-r border-slate-800 min-w-[300px] bg-slate-950">
+      <!-- TOP PANEL: MANUSCRIPT EDITOR / READER / PREVIEW (~67% HEIGHT) -->
+      <section id="manuscriptPanel" class="h-2/3 flex flex-col border-b border-slate-800 bg-slate-950 overflow-hidden">
         <div class="h-10 border-b border-slate-800 bg-slate-900/30 px-4 flex items-center justify-between text-xs text-slate-400 shrink-0">
           <span id="currentChapterTitle" class="font-medium text-slate-200">No chapter selected</span>
           
@@ -170,7 +173,7 @@
                 ✏ Edit
               </button>
               <button id="previewSubTabBtn" onclick="setEditorTab('preview')" class="px-2.5 py-0.5 rounded font-medium text-slate-400 hover:text-white">
-                👁️ Preview
+                👁 Preview
               </button>
             </div>
 
@@ -197,23 +200,23 @@
 
         <div class="flex-1 relative overflow-hidden">
           <!-- Reader View (View Mode) -->
-          <div id="chapterViewer" class="absolute inset-0 p-8 overflow-y-auto prose prose-invert prose-slate max-w-3xl mx-auto leading-relaxed text-slate-200">
+          <div id="chapterViewer" class="absolute inset-0 p-8 overflow-y-auto prose prose-invert prose-slate max-w-4xl mx-auto leading-relaxed text-slate-200">
             <p class="text-slate-500 italic">Select a chapter from the left menu to start reading.</p>
           </div>
 
           <!-- Markdown Editor (Author Mode) -->
-          <textarea id="chapterEditor" oninput="markUnsaved()" class="hidden absolute inset-0 w-full h-full p-6 bg-slate-950 text-slate-100 font-mono text-sm leading-relaxed border-none focus:ring-0 resize-none outline-none" placeholder="Write your chapter markdown here..."></textarea>
+          <textarea id="chapterEditor" oninput="markUnsaved()" class="hidden absolute inset-0 w-full h-full p-6 bg-slate-950 text-slate-100 font-mono text-sm leading-relaxed border-none focus:ring-0 resize-none outline-none max-w-4xl mx-auto" placeholder="Write your chapter markdown here..."></textarea>
 
           <!-- Markdown Live Preview Panel (Author Mode) -->
-          <div id="authorPreviewPanel" class="hidden absolute inset-0 p-8 overflow-y-auto prose prose-invert prose-slate max-w-3xl mx-auto leading-relaxed text-slate-200 bg-slate-950">
+          <div id="authorPreviewPanel" class="hidden absolute inset-0 p-8 overflow-y-auto prose prose-invert prose-slate max-w-4xl mx-auto leading-relaxed text-slate-200 bg-slate-950">
           </div>
         </div>
       </section>
 
-      <!-- RIGHT PANEL: MULTI-AGENT CRITIQUE DASHBOARD -->
-      <section id="reviewPanel" class="w-1/2 flex flex-col min-w-[350px] bg-slate-900/30">
+      <!-- BOTTOM PANEL: MULTI-AGENT CRITIQUE DASHBOARD (33% VERTICAL HEIGHT) -->
+      <section id="reviewPanel" class="h-1/3 flex flex-col bg-slate-900/30 overflow-hidden">
         <!-- Review Tabs Header -->
-        <div class="h-10 border-b border-slate-800 bg-slate-900/50 px-2 flex items-center justify-between shrink-0 overflow-x-auto">
+        <div class="h-10 border-b border-slate-800 bg-slate-900/60 px-3 flex items-center justify-between shrink-0 overflow-x-auto">
           <div id="agentTabs" class="flex space-x-1">
             <!-- Tabs generated dynamically -->
           </div>
@@ -223,7 +226,7 @@
         </div>
 
         <!-- Critique Display Area -->
-        <div id="reviewContent" class="flex-1 p-6 overflow-y-auto prose prose-invert prose-slate max-w-2xl text-slate-300 text-sm leading-relaxed">
+        <div id="reviewContent" class="flex-1 p-5 overflow-y-auto prose prose-invert prose-slate max-w-4xl mx-auto text-slate-300 text-sm leading-relaxed w-full">
           <div class="text-slate-500 italic">Select an agent tab to read their evaluation.</div>
         </div>
       </section>
@@ -620,7 +623,6 @@
 
     async function fetchGitHubRaw(path) {
       if (!state.settings.ghOwner || !state.settings.ghRepo) return null;
-      // Add cache-busting parameter to avoid stale responses after saving edits
       const timestamp = new Date().getTime();
       const url = `https://raw.githubusercontent.com/${state.settings.ghOwner}/${state.settings.ghRepo}/main/${path}?cb=${timestamp}`;
       const headers = getGitHubHeaders();
@@ -698,10 +700,15 @@
       const book = state.booksData.books.find(b => b.id === state.currentBookId);
       if (!book) return;
 
-      document.getElementById('bookWordCountValue').innerText = "Calculating...";
+      const valEl = document.getElementById('bookWordCountValue');
+      const calcBtn = document.getElementById('calcWordCountBtn');
+      valEl.innerText = "Calculating...";
+      calcBtn.classList.add('animate-spin');
+
       const totalWords = await calculateBookWordCount(book);
       
-      document.getElementById('bookWordCountValue').innerText = `${totalWords.toLocaleString()} words`;
+      valEl.innerText = `${totalWords.toLocaleString()} words`;
+      calcBtn.classList.remove('animate-spin');
       renderBookDropdown();
       document.getElementById('bookSelect').value = state.currentBookId;
     }
@@ -709,8 +716,11 @@
     function switchBook(bookId) {
       state.currentBookId = bookId;
       const book = state.booksData.books.find(b => b.id === bookId);
+      
+      const cached = state.bookWordCounts[bookId];
+      document.getElementById('bookWordCountValue').innerText = cached !== undefined ? `${cached.toLocaleString()} words` : "-- words";
+
       renderChapterList(book);
-      updateBookWordCountUI();
       if (book && book.chapters.length > 0) {
         loadChapter(book.chapters[0].id);
       }
@@ -977,11 +987,11 @@ ${chapterText.slice(0, 4000)}`;
         `;
       } else {
         container.innerHTML = `
-          <div class="text-center py-12">
-            <div class="text-3xl mb-2">${agent.icon}</div>
-            <h4 class="font-semibold text-slate-200 mb-1">${agent.name}</h4>
+          <div class="text-center py-6">
+            <div class="text-2xl mb-1">${agent.icon}</div>
+            <h4 class="font-semibold text-slate-200 mb-0.5">${agent.name}</h4>
             <p class="text-xs text-slate-400 max-w-xs mx-auto mb-2">${agent.role}</p>
-            <span class="inline-block text-[10px] uppercase tracking-wider px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-400 mb-4">Assigned Provider: ${provider}</span>
+            <span class="inline-block text-[10px] uppercase tracking-wider px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-400 mb-2">Assigned Provider: ${provider}</span>
             <p class="text-xs text-slate-500 italic block">No critique generated for this chapter yet.</p>
           </div>
         `;
@@ -1184,8 +1194,8 @@ ${chapterText.slice(0, 4000)}`;
         statusEl.innerText = "✓ Committed to GitHub";
         statusEl.className = "text-emerald-400 text-[11px]";
         
+        // Non-blocking background demographic analysis call
         analyzeChapterDemographics(content);
-        updateBookWordCountUI();
 
         setTimeout(() => { 
           if (statusEl.innerText === "✓ Committed to GitHub") {
