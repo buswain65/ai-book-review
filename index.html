@@ -664,10 +664,21 @@
 
     async function fetchGitHubRaw(path) {
       if (!state.settings.ghOwner || !state.settings.ghRepo) return null;
-      const timestamp = new Date().getTime();
-      const url = `https://raw.githubusercontent.com/${state.settings.ghOwner}/${state.settings.ghRepo}/main/${path}?cb=${timestamp}`;
-      const headers = getGitHubHeaders();
-      const res = await fetch(url, { headers, cache: "no-store" });
+      const { ghOwner, ghRepo, ghToken } = state.settings;
+      let res;
+      if (state.mode === 'author' && ghToken) {
+        // Authenticated reads go through api.github.com, which allows the Authorization
+        // header from a browser (raw.githubusercontent.com does not) and is never stale.
+        const url = `https://api.github.com/repos/${ghOwner}/${ghRepo}/contents/${path}?ref=main&t=${Date.now()}`;
+        res = await fetch(url, {
+          headers: { "Accept": "application/vnd.github.raw", "Authorization": `token ${ghToken}` },
+          cache: "no-store"
+        });
+      } else {
+        // Public reads: no custom headers, so the browser makes a simple CORS request.
+        const url = `https://raw.githubusercontent.com/${ghOwner}/${ghRepo}/main/${path}?cb=${Date.now()}`;
+        res = await fetch(url, { cache: "no-store" });
+      }
       if (!res.ok) return null;
       return await res.text();
     }
@@ -810,7 +821,19 @@
       let content = "";
       if (state.settings.ghOwner && state.settings.ghRepo) {
         const path = `books/${book.id}/chapters/${chap.file}`;
-        content = await fetchGitHubRaw(path);
+        try {
+          content = await fetchGitHubRaw(path);
+        } catch (err) {
+          console.error(`Failed to load ${path}:`, err);
+          if (state.loadingChapterId !== chapterId) return;
+          const msg = `Could not load this chapter from GitHub (${err.message}). Check your connection and GitHub settings, then select the chapter again.`;
+          document.getElementById('chapterEditor').value = msg;
+          document.getElementById('chapterViewer').innerHTML = `<p class='text-rose-400'>${msg}</p>`;
+          document.getElementById('authorPreviewPanel').innerHTML = `<p class='text-rose-400'>${msg}</p>`;
+          statusEl.innerText = "❌ Load failed";
+          statusEl.className = "text-rose-400 text-[11px]";
+          return;
+        }
       }
 
       if (state.loadingChapterId !== chapterId) return;
