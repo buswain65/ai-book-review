@@ -1,4 +1,4 @@
-### Chapter 15: Dual-Crystal Logic & The First Glitch
+## Chapter 15: Dual-Crystal Logic & The First Glitch
 
 <br/>
 
