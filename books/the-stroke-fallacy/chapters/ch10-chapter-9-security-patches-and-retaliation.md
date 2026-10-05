@@ -1,4 +1,4 @@
-### Chapter 9: Security Patches and Retaliation
+## Chapter 9: Security Patches and Retaliation
 
 <br/>
 
