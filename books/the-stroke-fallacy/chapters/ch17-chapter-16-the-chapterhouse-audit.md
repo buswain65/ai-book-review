@@ -228,27 +228,33 @@ After Torren left, Mark opened his leather-bound ledger under the light of his d
 
 > *System Architecture Notes — Mark Vance*
 > 
+> <br/>
 > 
 > *Log 09: Audit Survived & Promotion Executed*
 > 
+> <br/>
+>
 > *Stakeholder Action:*
 > 
+> <br/>
 > 
 > Successfully deployed regulatory compliance workaround (Statute 402) during unannounced Imperial audit by High Inspector Valerius. Hardware optimizations reframed as 'static safety patches' to satisfy Guild safety standards.
 > 
-> 
+> <br/>
+>
 > *Status:*
 > 
-> 
+> <br/>
+>
 > Transferred to Provincial Chapterhouse Academy (Advanced Artificer Track). Field laboratory relocated to institutional grounds.
-> 
+>
+> <br/>
 > 
 > *Next Phase:*
 > 
+> <br/>
 > 
 > Infiltrate Academy archives, analyze First Era rune templates, and identify why Prototype 2.0's zero-impedance execution triggered the red alert on the ancient Aether Anchor.
-> 
-> 
 
 <br/>
 

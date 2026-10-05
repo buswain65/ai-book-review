@@ -400,28 +400,35 @@ He opened his leather-bound ledger, dipped his charcoal stick, and wrote in neat
 
 > *System Architecture Notes — Mark Vance*
 > 
+> <br/>
+>
 > *Log 10: Academic Onboarding & Legacy Code Assessment*
 > 
+> <br/>
+>
 > *Key Observations:*
 > 
+> <br/>
 > 
 > 1. Chapterhouse curriculum is entirely built on high-resistance, lossy legacy syntax. Faculty actively preaches that thermal feedback and nerve damage are 'sacred features' rather than system inefficiencies.
 > 2. Practical demonstration executed successfully using Prototype 2.0 (Vector Levitation Macro). Zero thermal loss, zero noise, 100% parameter satisfaction.
 > 3. Institutional Resistance: Faculty (Archmage Ignis) rejected performance optimizations due to dogmatic threat to legacy authority.
 > 
+> <br/>
 > 
 > *Outcome:*
 > 
-> 
+> <br/>
+>
 > Assigned to mandatory late-night disciplinary duty in the restricted Subterranean Archival Vaults. Security clearance granted accidentally by management.
 > 
-> 
+> <br/>
+>
 > *Next Phase:*
 > 
-> 
+> <br/>
+>
 > Infiltrate First Era archives at 20:00 hours tomorrow. Inspect 1,000-year-old original rune templates under magnifying lens to locate the origin of the global rate-limiting firewall.
-> 
-> 
 
 <br/>
 
