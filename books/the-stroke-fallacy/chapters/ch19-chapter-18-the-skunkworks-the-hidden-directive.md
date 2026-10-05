@@ -1,4 +1,4 @@
-### Chapter 18: The Skunkworks & The Hidden Directive
+## Chapter 18: The Skunkworks & The Hidden Directive
 
 <br/>
 
