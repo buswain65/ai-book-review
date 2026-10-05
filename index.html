@@ -188,8 +188,8 @@
       <div id="agentStatusPanel" class="hidden border-t border-slate-800 p-3 bg-slate-900/80">
         <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 flex justify-between items-center">
           <span>AI Agents</span>
-          <button onclick="runAllAgents()" class="text-xs bg-brand-600 hover:bg-brand-500 text-white px-2 py-0.5 rounded transition-colors">
-            Run All
+          <button onclick="runAllAgents()" id="runAllBtn" title="Run every agent on the whole book" class="text-xs bg-brand-600 hover:bg-brand-500 text-white px-2 py-0.5 rounded transition-colors">
+            <span id="runAllLabel">Review Book (All)</span>
           </button>
         </div>
         <div id="agentList" class="space-y-1.5 text-xs">
@@ -257,11 +257,17 @@
       <section id="reviewPanel" class="h-1/3 flex flex-col bg-slate-900/30 overflow-hidden">
         <!-- Review Tabs Header -->
         <div class="h-10 border-b border-slate-800 bg-slate-900/50 px-3 flex items-center justify-between shrink-0 overflow-x-auto">
-          <div id="agentTabs" class="flex space-x-1">
-            <!-- Tabs generated dynamically -->
+          <div class="flex items-center space-x-3">
+            <div class="flex items-center bg-slate-800 border border-slate-700 rounded p-0.5 text-[11px] shrink-0" title="Choose what the agents review">
+              <button id="scopeBookBtn" onclick="setReviewScope('book')" class="px-2.5 py-0.5 rounded font-medium bg-slate-700 text-white">📘 Whole Book</button>
+              <button id="scopeChapterBtn" onclick="setReviewScope('chapter')" class="px-2.5 py-0.5 rounded font-medium text-slate-400 hover:text-white">📄 Chapter</button>
+            </div>
+            <div id="agentTabs" class="flex space-x-1">
+              <!-- Tabs generated dynamically -->
+            </div>
           </div>
           <button id="runCurrentAgentBtn" onclick="runCurrentSelectedAgent()" class="hidden text-xs bg-brand-600 hover:bg-brand-500 text-white px-2.5 py-1 rounded font-medium transition-colors shrink-0 ml-2">
-            ▶ Run Review
+            <span id="runOneLabel">▶ Review Book</span>
           </button>
         </div>
 
@@ -421,35 +427,40 @@
         role: "Acquisitions & Market Feasibility",
         icon: "💼",
         provider: "gemini",
-        prompt: `You are a senior acquisitions editor at a major publishing house. Analyze the submitted chapter for commercial potential, narrative hooks in the opening, target demographic alignment, pacing, and overall marketability. Provide direct, pragmatic advice.`
+        bookPrompt: `You are a senior acquisitions editor at a major publishing house. Analyze the complete manuscript for commercial potential, the strength of the opening hook, target demographic alignment, overall pacing across the book, comparable titles, and marketability. Provide direct, pragmatic advice on whether and how this book could sell.`,
+        chapterPrompt: `You are a senior acquisitions editor at a major publishing house. Analyze the submitted chapter for commercial potential, narrative hooks in the opening, target demographic alignment, pacing, and overall marketability. Provide direct, pragmatic advice.`
       },
       editor: {
         name: "Developmental Editor",
         role: "Structure & Narrative Mechanics",
         icon: "📐",
         provider: "anthropic",
-        prompt: `You are an expert developmental editor. Evaluate the chapter for structural continuity, character motivations, plot logic, world-building coherence, pacing drag points, and scene balance. Focus on actionable improvements to story mechanics.`
+        bookPrompt: `You are an expert developmental editor. Evaluate the complete manuscript for overall structure and story arc, continuity between chapters, character arcs and motivations, plot logic and setups/payoffs, world-building coherence, pacing drag points, and chapter balance. Focus on actionable improvements to story mechanics, citing specific chapters.`,
+        chapterPrompt: `You are an expert developmental editor. Evaluate the chapter for structural continuity, character motivations, plot logic, world-building coherence, pacing drag points, and scene balance. Focus on actionable improvements to story mechanics.`
       },
       writer: {
         name: "Fellow Writer",
         role: "Prose & Narrative Craft",
         icon: "✍️",
         provider: "openai",
-        prompt: `You are an experienced peer fiction author. Focus on prose rhythm, sensory engagement, dialogue naturalism, word choice, subtext, and scene transitions. Offer collaborative suggestions to elevate the writing quality.`
+        bookPrompt: `You are an experienced peer fiction author. Read the complete manuscript and focus on prose rhythm, voice consistency across chapters, sensory engagement, dialogue naturalism, word choice, subtext, and chapter/scene transitions. Offer collaborative suggestions to elevate the writing quality, citing specific chapters and passages.`,
+        chapterPrompt: `You are an experienced peer fiction author. Focus on prose rhythm, sensory engagement, dialogue naturalism, word choice, subtext, and scene transitions. Offer collaborative suggestions to elevate the writing quality.`
       },
       genre_fan: {
         name: "Core Genre Fan",
         role: "Target Audience Enthusiast",
         icon: "🔥",
-        provider: "groq",
-        prompt: `You are an avid reader who reads dozens of books in this specific genre every year. Critique the chapter based on trope execution, emotional payoff, character appeal, immersion, and overall satisfaction for fans of the genre.`
+        provider: "gemini",
+        bookPrompt: `You are an avid reader who reads dozens of books in this specific genre every year. Critique the complete manuscript based on trope execution, emotional payoff, character appeal, immersion, the strength of the ending, and overall satisfaction for fans of the genre.`,
+        chapterPrompt: `You are an avid reader who reads dozens of books in this specific genre every year. Critique the chapter based on trope execution, emotional payoff, character appeal, immersion, and overall satisfaction for fans of the genre.`
       },
       genre_skeptic: {
         name: "Genre Skeptic",
         role: "Newcomer Perspective",
         icon: "🧐",
         provider: "gemini",
-        prompt: `You are a general fiction reader trying this genre for the first time. Evaluate the chapter for clarity, lore accessibility, cognitive load, relatable human conflict, and whether it hooks someone who isn't already sold on the genre.`
+        bookPrompt: `You are a general fiction reader trying this genre for the first time. Evaluate the complete manuscript for clarity, lore accessibility, cognitive load, relatable human conflict, where you would have been tempted to stop reading, and whether the book hooks and holds someone who isn't already sold on the genre.`,
+        chapterPrompt: `You are a general fiction reader trying this genre for the first time. Evaluate the chapter for clarity, lore accessibility, cognitive load, relatable human conflict, and whether it hooks someone who isn't already sold on the genre.`
       }
     };
 
@@ -464,6 +475,8 @@
       selectedAgentKey: 'publisher',
       reviews: {},
       reviewErrors: {},
+      reviewMeta: {}, // per-agent saved review metadata
+      reviewScope: 'book', // 'book' (whole manuscript) or 'chapter' (current chapter)
       demographicData: null,
       bookWordCounts: {},
       settings: {
@@ -482,7 +495,7 @@
           publisher: 'gemini',
           editor: 'anthropic',
           writer: 'openai',
-          genre_fan: 'groq',
+          genre_fan: 'gemini',
           genre_skeptic: 'gemini'
         }
       }
@@ -498,6 +511,14 @@
       const saved = localStorage.getItem('storyforge_settings');
       if (saved) {
         state.settings = { ...state.settings, ...JSON.parse(saved) };
+      }
+      // One-time migration: whole-book reviews are too large for Groq's free tier
+      if (!state.settings.wholeBookMigrated) {
+        if (state.settings.agentProviders && state.settings.agentProviders.genre_fan === 'groq') {
+          state.settings.agentProviders.genre_fan = 'gemini';
+        }
+        state.settings.wholeBookMigrated = true;
+        try { localStorage.setItem('storyforge_settings', JSON.stringify(state.settings)); } catch (e) {}
       }
       
       document.getElementById('ghTokenInput').value = state.settings.ghToken || '';
@@ -684,6 +705,7 @@
     }
 
     async function initApp() {
+      renderScopeUI();
       renderAgentTabs();
       renderAgentStatus();
 
@@ -773,6 +795,7 @@
       document.getElementById('bookWordCountValue').innerText = cached !== undefined ? `${cached.toLocaleString()} words` : "-- words";
 
       renderChapterList(book);
+      if (state.reviewScope === 'book') loadReviews();
       if (book && book.chapters.length > 0) {
         loadChapter(book.chapters[0].id);
       }
@@ -811,11 +834,7 @@
       statusEl.className = "text-slate-500 text-[11px]";
 
       state.demographicData = null;
-      state.reviews = {};
-      state.reviewErrors = {};
       renderDemographicUI();
-      renderAgentStatus();
-      renderReviewContent();
 
       // Fetch chapter markdown content
       let content = "";
@@ -852,7 +871,7 @@
       statusEl.className = "text-slate-500 text-[11px]";
 
       loadChapterDemographics();
-      loadChapterReviews();
+      if (state.reviewScope === 'chapter') loadReviews();
     }
 
     async function loadChapterDemographics() {
@@ -945,28 +964,65 @@ ${chapterText.slice(0, 4000)}`;
       }
     }
 
-    async function loadChapterReviews() {
-      const targetChapId = state.currentChapterId;
+    // Saved reviews:
+    //   whole book -> books/<bookId>/reviews/_whole-book/<agentKey>.json
+    //   chapter    -> books/<bookId>/reviews/<chapterId>/<agentKey>.json
+    function reviewPath(target, agentKey) {
+      const folder = target.scope === 'book' ? '_whole-book' : target.chapterId;
+      return `books/${target.bookId}/reviews/${folder}/${agentKey}.json`;
+    }
+
+    // What the review panel is currently showing; used to ignore results that arrive late.
+    function currentReviewTarget() {
+      return { scope: state.reviewScope, bookId: state.currentBookId, chapterId: state.reviewScope === 'chapter' ? state.currentChapterId : null };
+    }
+    function isCurrentTarget(t) {
+      const c = currentReviewTarget();
+      return c.scope === t.scope && c.bookId === t.bookId && c.chapterId === t.chapterId;
+    }
+
+    function setReviewScope(scope) {
+      if (state.reviewScope === scope) return;
+      state.reviewScope = scope;
+      renderScopeUI();
+      loadReviews();
+    }
+
+    function renderScopeUI() {
+      const isBook = state.reviewScope === 'book';
+      const on = "px-2.5 py-0.5 rounded font-medium bg-slate-700 text-white";
+      const off = "px-2.5 py-0.5 rounded font-medium text-slate-400 hover:text-white";
+      document.getElementById('scopeBookBtn').className = isBook ? on : off;
+      document.getElementById('scopeChapterBtn').className = isBook ? off : on;
+      document.getElementById('runOneLabel').innerText = isBook ? '▶ Review Book' : '▶ Review Chapter';
+      document.getElementById('runAllLabel').innerText = isBook ? 'Review Book (All)' : 'Review Chapter (All)';
+      document.getElementById('runAllBtn').title = isBook ? 'Run every agent on the whole book' : 'Run every agent on the current chapter';
+    }
+
+    async function loadReviews() {
+      const target = currentReviewTarget();
       state.reviews = {};
       state.reviewErrors = {};
-      const bookId = state.currentBookId;
+      state.reviewMeta = {};
+      renderAgentStatus();
+      renderReviewContent();
+      if (!target.bookId || (target.scope === 'chapter' && !target.chapterId)) return;
+      if (!state.settings.ghOwner || !state.settings.ghRepo) return;
 
-      for (const agentKey of Object.keys(AGENTS)) {
+      await Promise.all(Object.keys(AGENTS).map(async agentKey => {
         try {
-          if (state.settings.ghOwner && state.settings.ghRepo) {
-            const path = `books/${bookId}/reviews/${targetChapId}/${agentKey}.json`;
-            const rawJson = await fetchGitHubRaw(path);
-            if (rawJson && state.currentChapterId === targetChapId) {
-              const reviewData = JSON.parse(rawJson);
-              state.reviews[agentKey] = reviewData.feedback_markdown;
-            }
+          const rawJson = await fetchGitHubRaw(reviewPath(target, agentKey));
+          if (rawJson && isCurrentTarget(target)) {
+            const reviewData = JSON.parse(rawJson);
+            state.reviews[agentKey] = reviewData.feedback_markdown;
+            state.reviewMeta[agentKey] = reviewData;
           }
         } catch (e) {
           // No review saved yet
         }
-      }
+      }));
 
-      if (state.currentChapterId === targetChapId) {
+      if (isCurrentTarget(target)) {
         renderAgentStatus();
         renderReviewContent();
       }
@@ -1016,6 +1072,17 @@ ${chapterText.slice(0, 4000)}`;
       const error = state.reviewErrors[state.selectedAgentKey];
       const agent = AGENTS[state.selectedAgentKey];
       const provider = state.settings.agentProviders[state.selectedAgentKey] || agent.provider;
+      const meta = state.reviewMeta[state.selectedAgentKey];
+      const isBook = state.reviewScope === 'book';
+      const book = state.booksData && state.booksData.books.find(b => b.id === state.currentBookId);
+      const chap = book && book.chapters.find(c => c.id === state.currentChapterId);
+      const scopeTitle = isBook ? 'Whole-Book Critique' : `Chapter Critique${chap ? ': ' + chap.title : ''}`;
+      let metaLine = '';
+      if (meta && meta.timestamp) {
+        const when = new Date(meta.timestamp).toLocaleString();
+        const size = meta.chapter_count ? ` · ${meta.chapter_count} chapters, ${(meta.word_count || 0).toLocaleString()} words` : '';
+        metaLine = ` · Reviewed ${when}${size}`;
+      }
 
       if (error) {
         container.innerHTML = `
@@ -1038,8 +1105,8 @@ ${chapterText.slice(0, 4000)}`;
         container.innerHTML = `
           <div class="border-b border-slate-800 pb-3 mb-4 flex justify-between items-start">
             <div>
-              <h3 class="font-bold text-slate-100 text-base mb-0.5">${agent.icon} ${agent.name} Critique</h3>
-              <p class="text-xs text-slate-400">${agent.role}</p>
+              <h3 class="font-bold text-slate-100 text-base mb-0.5">${agent.icon} ${agent.name} — ${scopeTitle}</h3>
+              <p class="text-xs text-slate-400">${agent.role}${metaLine}</p>
             </div>
             <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-400">${provider}</span>
           </div>
@@ -1052,34 +1119,136 @@ ${chapterText.slice(0, 4000)}`;
             <h4 class="font-semibold text-slate-200 mb-0.5">${agent.name}</h4>
             <p class="text-xs text-slate-400 max-w-xs mx-auto mb-2">${agent.role}</p>
             <span class="inline-block text-[10px] uppercase tracking-wider px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-400 mb-2">Assigned Provider: ${provider}</span>
-            <p class="text-xs text-slate-500 italic block">No critique generated for this chapter yet.</p>
+            <p class="text-xs text-slate-500 italic block">${isBook ? 'No whole-book critique generated for this book yet.' : 'No critique generated for this chapter yet.'}</p>
           </div>
         `;
       }
     }
 
     // --- AI EXECUTION ENGINE ---
-    async function runCurrentSelectedAgent() {
-      await runAgentReview(state.selectedAgentKey);
+    // Assemble every chapter of the current book, in books.json order, into one manuscript.
+    // The chapter open in the editor uses the editor's text, so unsaved edits are included.
+    async function buildManuscript(onProgress) {
+      const book = state.booksData.books.find(b => b.id === state.currentBookId);
+      if (!state.settings.ghOwner || !state.settings.ghRepo) {
+        throw new Error("Configure your GitHub Owner and Repository in Settings (⚙) so the agents can load the whole book.");
+      }
+
+      const parts = [];
+      const missing = [];
+      let done = 0;
+      const texts = await Promise.all(book.chapters.map(async chap => {
+        let text;
+        if (chap.id === state.currentChapterId && state.mode === 'author') {
+          text = document.getElementById('chapterEditor').value;
+        } else {
+          text = await fetchGitHubRaw(`books/${book.id}/chapters/${chap.file}`);
+        }
+        done++;
+        if (onProgress) onProgress(done, book.chapters.length);
+        return text;
+      }));
+
+      book.chapters.forEach((chap, i) => {
+        const text = texts[i];
+        if (text === null || text === undefined) { missing.push(chap.file); return; }
+        if (!text.trim()) return; // empty placeholder chapter
+        parts.push(`=== ${chap.title} ===\n\n${text.trim()}`);
+      });
+
+      if (missing.length) {
+        throw new Error(`Could not load ${missing.length} chapter file(s) from books/${book.id}/chapters/: ${missing.join(', ')}. Check that these files exist in GitHub (note the folder name is lowercase "books").`);
+      }
+      if (!parts.length) throw new Error("This book has no chapter text to review yet.");
+
+      const manuscript = parts.join('\n\n');
+      return {
+        book,
+        manuscript,
+        chapterCount: parts.length,
+        wordCount: manuscript.split(/\s+/).filter(w => w).length
+      };
     }
 
-    async function runAllAgents() {
-      for (const agentKey of Object.keys(AGENTS)) {
-        await runAgentReview(agentKey);
+    function setAllPending(keys, message) {
+      keys.forEach(k => { delete state.reviewErrors[k]; state.reviews[k] = message; });
+      renderAgentStatus();
+      renderReviewContent();
+    }
+
+    // Build the review input for the current scope: the whole book, or the current chapter.
+    function buildChapterInput() {
+      const book = state.booksData.books.find(b => b.id === state.currentBookId);
+      const chap = book && book.chapters.find(c => c.id === state.currentChapterId);
+      if (!chap) throw new Error("Select a chapter to review.");
+      const text = document.getElementById('chapterEditor').value;
+      if (!text.trim() || text.startsWith("Loading chapter content") || text.startsWith("Could not load this chapter")) {
+        throw new Error("The chapter text hasn't loaded yet. Wait for it to finish loading, then try again.");
+      }
+      return { book, chapter: chap, manuscript: text, chapterCount: 1, wordCount: text.split(/\s+/).filter(w => w).length };
+    }
+
+    async function prepareManuscript(keys) {
+      const target = currentReviewTarget();
+      try {
+        let input;
+        if (target.scope === 'chapter') {
+          input = buildChapterInput();
+        } else {
+          setAllPending(keys, "*Loading the full manuscript...*");
+          input = await buildManuscript((n, total) => setAllPending(keys, `*Loading the full manuscript (${n}/${total} chapters)...*`));
+        }
+        return { ...input, target };
+      } catch (err) {
+        keys.forEach(k => { delete state.reviews[k]; state.reviewErrors[k] = err.message; });
+        renderAgentStatus();
+        renderReviewContent();
+        return null;
       }
     }
 
-    async function runAgentReview(agentKey) {
+    async function runCurrentSelectedAgent() {
+      const key = state.selectedAgentKey;
+      const ms = await prepareManuscript([key]);
+      if (ms) await runAgentReview(key, ms);
+    }
+
+    async function runAllAgents() {
+      const keys = Object.keys(AGENTS);
+      const ms = await prepareManuscript(keys);
+      if (!ms) return;
+      setAllPending(keys, "*Queued — waiting for the previous agent to finish...*");
+      for (const agentKey of keys) {
+        await runAgentReview(agentKey, ms);
+      }
+    }
+
+    async function runAgentReview(agentKey, ms) {
       const agent = AGENTS[agentKey];
       const provider = state.settings.agentProviders[agentKey] || agent.provider;
-      const chapterText = document.getElementById('chapterEditor').value;
-      const book = state.booksData.books.find(b => b.id === state.currentBookId);
+      const { book, chapter, manuscript, chapterCount, wordCount, target } = ms;
+      const isBook = target.scope === 'book';
+      const stillCurrent = () => isCurrentTarget(target);
 
-      const systemPrompt = `${agent.prompt}\n\nBook Context:\nTitle: ${book.title}\nGenre: ${book.genre}\nBlurb: ${book.blurb}`;
-      const userPrompt = `Please review the following manuscript chapter:\n\n${chapterText}`;
+      const systemPrompt = `${isBook ? agent.bookPrompt : agent.chapterPrompt}\n\nBook Context:\nTitle: ${book.title}\nAuthor: ${book.author || ''}\nGenre: ${book.genre}\nBlurb: ${book.blurb}`;
+      const userPrompt = !isBook
+        ? `Please review the following manuscript chapter ("${chapter.title}"):\n\n${manuscript}`
+        : `Please review the following complete manuscript (${chapterCount} chapters, about ${wordCount.toLocaleString()} words). Chapters are separated by lines like "=== Chapter Title ===".
+
+Structure your critique as:
+1. Overall assessment (a short paragraph)
+2. Key strengths
+3. Most important problems, citing the chapters where they occur
+4. Prioritized recommendations for the next draft
+
+MANUSCRIPT:
+
+${manuscript}`;
 
       delete state.reviewErrors[agentKey];
-      state.reviews[agentKey] = "*Generating critique...*";
+      state.reviews[agentKey] = isBook
+        ? `*Generating whole-book critique (${chapterCount} chapters, ${wordCount.toLocaleString()} words) — this can take a minute or two...*`
+        : "*Generating chapter critique...*";
       renderAgentStatus();
       renderReviewContent();
 
@@ -1099,19 +1268,29 @@ ${chapterText.slice(0, 4000)}`;
           const model = state.settings.groqModel || 'llama-3.3-70b-versatile';
           feedback = await callGroq(state.settings.groqKey, model, systemPrompt, userPrompt);
         } else {
-          feedback = `### ${agent.name} Evaluation (Demo Mode)\n\n*Note: Configure live API keys in Settings to receive real-time evaluations from AI models.*\n\n1. **Strengths:** Strong atmospheric setup and scene opening.\n2. **Areas for Improvement:** Consider tightening the middle exposition.\n3. **Recommendation:** Proceed to next draft polish.`;
+          feedback = `### ${agent.name} Evaluation (Demo Mode)\n\n*Note: Configure live API keys in Settings to receive real-time evaluations from AI models.*\n\n1. **Strengths:** Strong atmospheric setup and a clear central premise.\n2. **Areas for Improvement:** Consider tightening the middle act.\n3. **Recommendation:** Proceed to next draft polish.`;
         }
 
-        state.reviews[agentKey] = feedback;
-        await saveReviewToGitHub(agentKey, feedback, provider);
+        const meta = isBook
+          ? { agent: agentKey, provider, scope: 'whole-book', timestamp: new Date().toISOString(), chapter_count: chapterCount, word_count: wordCount, feedback_markdown: feedback }
+          : { agent: agentKey, provider, scope: 'chapter', chapter_id: chapter.id, timestamp: new Date().toISOString(), word_count: wordCount, feedback_markdown: feedback };
+        if (stillCurrent()) {
+          state.reviews[agentKey] = feedback;
+          state.reviewMeta[agentKey] = meta;
+        }
+        await saveReviewToGitHub(target, agentKey, meta);
 
       } catch (err) {
-        delete state.reviews[agentKey];
-        state.reviewErrors[agentKey] = err.message;
+        if (stillCurrent()) {
+          delete state.reviews[agentKey];
+          state.reviewErrors[agentKey] = err.message;
+        }
       }
 
-      renderAgentStatus();
-      renderReviewContent();
+      if (stillCurrent()) {
+        renderAgentStatus();
+        renderReviewContent();
+      }
     }
 
     // --- AI API CLIENTS ---
@@ -1159,7 +1338,7 @@ ${chapterText.slice(0, 4000)}`;
         },
         body: JSON.stringify({
           model: model,
-          max_tokens: 2000,
+          max_tokens: 8000,
           system: systemPrompt,
           messages: [{ role: "user", content: userPrompt }]
         })
@@ -1218,15 +1397,9 @@ ${chapterText.slice(0, 4000)}`;
       }
     }
 
-    async function saveReviewToGitHub(agentKey, feedback, provider) {
-      const path = `books/${state.currentBookId}/reviews/${state.currentChapterId}/${agentKey}.json`;
-      const payloadData = {
-        agent: agentKey,
-        provider: provider,
-        timestamp: new Date().toISOString(),
-        feedback_markdown: feedback
-      };
-      await commitGitHubFile(path, JSON.stringify(payloadData, null, 2), `Update review: ${agentKey} for ${state.currentChapterId}`);
+    async function saveReviewToGitHub(target, agentKey, payloadData) {
+      const what = target.scope === 'book' ? `whole book ${target.bookId}` : target.chapterId;
+      await commitGitHubFile(reviewPath(target, agentKey), JSON.stringify(payloadData, null, 2), `Update review: ${agentKey} for ${what}`);
     }
 
     async function saveCurrentChapter() {
