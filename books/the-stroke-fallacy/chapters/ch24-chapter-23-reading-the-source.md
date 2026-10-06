@@ -36,11 +36,7 @@ Lyra, Vespera, and Torren looked at him.
 
 "Whoever installed it," Mark said darkly. "If I ever find them."
 
-<br/>
-
 ---
-
-<br/>
 
 The first obstacle was source material.
 
@@ -84,11 +80,7 @@ There was a long pause.
 
 "It's a rookie mistake," Mark said. "It's the kind of mistake I used to write *very* stern code review comments about." He closed the ledger. "Item two."
 
-<br/>
-
 ---
-
-<br/>
 
 Item two was Gerald.
 
@@ -200,11 +192,7 @@ A cold feeling began to creep slowly up Mark's spine.
 
 "Okay," he said quietly. "That's not great."
 
-<br/>
-
 ---
-
-<br/>
 
 Item three turned out to be the Academy's front gate.
 
@@ -268,11 +256,7 @@ He told them. Vespera frowned.
 
 "That's why I'm asking *you*."
 
-<br/>
-
 ---
-
-<br/>
 
 It took Lyra twenty minutes, perched on a ladder borrowed from an Academy groundskeeper who asked no questions after seeing the clipboard. She copied every glyph by hand with her finest stylus, stroke by stroke, the way she would copy a master template at the workshop. When she climbed down, she handed Mark the sheet.
 
@@ -364,11 +348,7 @@ Lyra looked at him for a long, thoughtful moment.
 
 "Give me two days," she said.
 
-<br/>
-
 ---
-
-<br/>
 
 Two days later, she handed him a small wooden box.
 
@@ -448,11 +428,7 @@ He wore them back across the Academy courtyard that afternoon. Corwin, lying on 
 
 "Mm," said Corwin, and closed both eyes again. "Bad bet."
 
-<br/>
-
 ---
-
-<br/>
 
 That evening, in the Fish & Hammer workshop, they triangulated.
 
@@ -632,11 +608,7 @@ Nobody said anything for a while.
 
 "Yes, Torren," Mark said. "That's bad."
 
-<br/>
-
 ---
-
-<br/>
 
 They turned to the three glyphs themselves.
 
@@ -740,11 +712,7 @@ Vespera put her hand over her mouth.
 
 "Five hundred years," Mark said, half to himself, "of commencement speeches. And nobody read the source."
 
-<br/>
-
 ---
-
-<br/>
 
 The third glyph came next, and it was Vespera again who cracked it.
 
@@ -816,11 +784,7 @@ Torren chalked a large question mark onto his board.
 
 "And the layer won't let me read it," Mark said. "At all."
 
-<br/>
-
 ---
-
-<br/>
 
 It was Mark who built the theory, late that evening, pacing the workshop with his clipboard while the others watched.
 
@@ -864,11 +828,7 @@ It was a good theory. It was reasonable. It fit the evidence.
 
 None of them noticed that every single place the missing glyphs appeared—on the gate, inside the construct, in the old graduation rite—they appeared right beside words about crossing, about passing through, about *coming in*.
 
-<br/>
-
 ---
-
-<br/>
 
 The Fish & Hammer Infirmary opened the next morning, entirely by accident.
 
@@ -932,11 +892,7 @@ By noon, there were nine of them.
 
 By the afternoon, there was a line.
 
-<br/>
-
 ---
-
-<br/>
 
 It stretched from the workshop's front door all the way back across the armory yard, past the four purring blowers, almost to the street. Enforcers. Dockhands. Two of Nan Brask's goat handlers. A tannery worker with a bad elbow. One of the formerly unconscious door guards from the Syndicate warehouse, who had a crick in his neck from being zapped by Duchess and had been unable to turn his head to the left for a week.
 
@@ -1016,11 +972,7 @@ Brann considered. "Hit a man with a chair."
 
 Mark wrote down *repetitive strain injury* and moved on.
 
-<br/>
-
 ---
-
-<br/>
 
 Vespera's role took a while to emerge.
 
@@ -1104,11 +1056,7 @@ By the end of the day, she was warming muscles without a flicker of hesitation: 
 
 *"That's it,"* he thought. *"Muscle memory. Five thousand repetitions. She's got it."*
 
-<br/>
-
 ---
-
-<br/>
 
 At the end of the day, Torren climbed onto a crate in the middle of the armory yard and called for everyone's attention.
 
@@ -1168,11 +1116,7 @@ Mark looked at the sign. He looked at Torren. He looked at the line of patients 
 
 He decided to let it go.
 
-<br/>
-
 ---
-
-<br/>
 
 The Thorne pressure, meanwhile, was getting closer.
 
@@ -1240,11 +1184,7 @@ The workshop was silent.
 
 "That's all," Corwin said. He pushed himself off the doorframe. "Now if you'll excuse me, I've been vertical for twenty minutes, and I need to go and lie down for about three days."
 
-<br/>
-
 ---
-
-<br/>
 
 Mark had one more vault shift that week, and that night, he brought the team.
 
@@ -1360,11 +1300,7 @@ When they left at midnight, Mott didn't look up. He didn't ask if they were new.
 
 That, somehow, was the most frightening thing of all.
 
-<br/>
-
 ---
-
-<br/>
 
 It was nearly two in the morning when Mark sat down at his desk in the West Wing, his back to the wall. He set the wire-rimmed spectacles on the desk beside his ledger.
 
