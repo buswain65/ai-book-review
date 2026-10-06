@@ -95,5 +95,5 @@ Mark tried to reach for his cell phone sitting on the desk to dial 911, but his 
 <br/>
 
 <p align="center">
-  <img src="images/Prologue-The%20Crunch%20Before%20the%20Dark.png" alt="Mark slumped over his keyboard between two glowing monitors">
+  <img src="books/nobody-trusts-a-brass-clipboard/images/Prologue-The%20Crunch%20Before%20the%20Dark.png" alt="Mark slumped over his keyboard between two glowing monitors">
 </p>
