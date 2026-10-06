@@ -797,7 +797,7 @@
         const content = await fetchGitHubRaw(path);
         
         if (content) {
-          const words = content.trim().split(/\s+/).filter(w => w.length > 0).length;
+          const words = countWords(content);
           totalWords += words;
         }
       }
@@ -1194,11 +1194,12 @@ ${chapterText.slice(0, 4000)}`;
       const book = state.booksData.books.find(b => b.id === state.currentBookId);
       const chapters = await loadBookChapters(book, onProgress);
       const manuscript = chapters.map(c => `=== ${c.chap.title} ===\n\n${c.text.trim()}`).join('\n\n');
+      const wordCount = chapters.reduce((sum, c) => sum + countWords(c.text), 0);
       return {
         book,
         manuscript,
         chapterCount: chapters.length,
-        wordCount: manuscript.split(/\s+/).filter(w => w).length
+        wordCount
       };
     }
 
@@ -1217,7 +1218,7 @@ ${chapterText.slice(0, 4000)}`;
       if (!text.trim() || text.startsWith("Loading chapter content") || text.startsWith("Could not load this chapter")) {
         throw new Error("The chapter text hasn't loaded yet. Wait for it to finish loading, then try again.");
       }
-      return { book, chapter: chap, manuscript: text, chapterCount: 1, wordCount: text.split(/\s+/).filter(w => w).length };
+      return { book, chapter: chap, manuscript: text, chapterCount: 1, wordCount: countWords(text) };
     }
 
     async function prepareManuscript(keys) {
@@ -1365,6 +1366,16 @@ ${manuscript}`;
       if (first >= 0 && /^#{1,6}\s/.test(lines[first])) lines.splice(first, 1);
       const cleaned = lines.filter(l => !/^\s*(<br\s*\/?>\s*)+$/i.test(l)).join('\n').trim();
       return marked.parse(cleaned);
+    }
+
+    // Word count of a chapter as a reader sees it: the markdown is rendered, the chapter's
+    // leading title heading and <br/> spacer lines are dropped, and only the visible text
+    // is counted (markdown symbols and HTML tags are not words).
+    function countWords(markdown) {
+      if (!markdown || !markdown.trim()) return 0;
+      const html = chapterBodyHtml(markdown).replace(/>/g, '> ');
+      const text = new DOMParser().parseFromString(html, 'text/html').body.textContent || '';
+      return text.split(/\s+/).filter(w => /[\p{L}\p{N}]/u.test(w)).length;
     }
 
     // HTML fragment -> well-formed XHTML fragment (required inside EPUB files).
