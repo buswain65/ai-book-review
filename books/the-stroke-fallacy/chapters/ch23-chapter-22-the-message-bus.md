@@ -104,11 +104,7 @@ The children absorbed this with grave respect.
 
 "Trust me," Mark said, "it'll make sense the first time you meet her."
 
-<br/>
-
 ---
-
-<br/>
 
 It took the message bus less than a day to start using "Gerald" for everything.
 
@@ -144,11 +140,7 @@ Pip, meanwhile, took his promotion more seriously than anyone had ever taken any
 
 He did this so many times that Torren, passing by the workshop door on his way to the forge, began saluting back without thinking, and then looked deeply confused about why he was doing it.
 
-<br/>
-
 ---
-
-<br/>
 
 The second recruit was harder to approach, mostly because he was asleep.
 
@@ -236,11 +228,7 @@ He walked back across the courtyard, took out his clipboard, and wrote, with con
 
 It was, he thought, the best hire he'd ever made.
 
-<br/>
-
 ---
-
-<br/>
 
 The meeting with the Ironhead Syndicate took place two nights later, in a warehouse at the edge of the timber yards.
 
@@ -280,11 +268,7 @@ The warehouse was huge, dim, and smelled strongly of sawdust and, unmistakably, 
 
 Vespera's shoulders sagged.
 
-<br/>
-
 ---
-
-<br/>
 
 Garek was waiting just inside.
 
@@ -316,11 +300,7 @@ Mark nodded to him politely. Jax glared back. His hand stayed on his forehead.
 
 "The boss is waiting," Garek said, and led them deeper into the warehouse.
 
-<br/>
-
 ---
-
-<br/>
 
 At the back of the building, between towering stacks of timber, sat a desk made from two barrels and a plank. Behind it, in a comfortable armchair that looked like it had been stolen from a much nicer house, sat the head of the Ironhead Syndicate.
 
@@ -396,11 +376,7 @@ Nan Brask smiled. It was a genuinely warm smile, and it was absolutely terrifyin
 
 "Oh," she said, "we'll get to the goat."
 
-<br/>
-
 ---
-
-<br/>
 
 But first, she wanted to talk about crystals.
 
@@ -444,11 +420,7 @@ Mark leaned forward. "You said you bring crystals in from outside the province. 
 
 Nan smiled again. "Ah," she said. "*Now* we get to the goat."
 
-<br/>
-
 ---
-
-<br/>
 
 The tariff, she explained, was the key.
 
@@ -504,11 +476,7 @@ She set down her knitting and looked at Garek.
 
 "Show them," she said.
 
-<br/>
-
 ---
-
-<br/>
 
 Garek led them to a pen at the far end of the warehouse, behind a wall of timber.
 
@@ -588,11 +556,7 @@ Mark turned back to the pen, his mind working.
 
 "It's not *great*," Mark admitted.
 
-<br/>
-
 ---
-
-<br/>
 
 He wanted to examine the goats more closely. He wanted to understand the charge distribution before trying anything. He opened his mouth to say so.
 
@@ -636,11 +600,7 @@ The goat rose another six inches off the ground.
 
 Then she charged.
 
-<br/>
-
 ---
-
-<br/>
 
 Later, nobody could agree on exactly how long the next four minutes lasted. Garek swore it was an hour. Lyra insisted it was closer to two. Mark, who had a professional interest in incident timelines, eventually reconstructed it to roughly four minutes, though he admitted it was hard to be precise while being pursued by a floating goat.
 
@@ -716,11 +676,7 @@ Garek glared at him.
 
 Then, very deliberately, still glaring, he held it for thirty seconds.
 
-<br/>
-
 ---
-
-<br/>
 
 The stretch had happened like this.
 
@@ -836,11 +792,7 @@ Now, behind the lumber, Garek finished his thirty seconds, flipped his palm down
 
 "*Shut up*," said Garek.
 
-<br/>
-
 ---
-
-<br/>
 
 Above them, Duchess sailed past with a crackle, trailing a comet-tail of blue sparks.
 
@@ -944,11 +896,7 @@ Torren thought about this. Then he looked at Duchess, still sailing joyfully aro
 
 "For Duchess," Mark agreed.
 
-<br/>
-
 ---
-
-<br/>
 
 It went almost exactly to plan, which in Mark's experience happened roughly once every forty years.
 
@@ -1028,11 +976,7 @@ Nan Brask had not moved from her armchair at the far end of the warehouse during
 
 "Well," she said. "That was efficient."
 
-<br/>
-
 ---
-
-<br/>
 
 "What," Nan asked, a short while later, "do I call that thing you put on her neck?"
 
@@ -1092,11 +1036,7 @@ Torren nodded slowly. Then he looked down at Duchess, who was now asleep with he
 
 Duchess snored.
 
-<br/>
-
 ---
-
-<br/>
 
 The negotiation took place at Nan's barrel desk, with Duchess grounded and dozing nearby.
 
@@ -1224,11 +1164,7 @@ Lyra looked straight ahead with tremendous composure, as if nothing remarkable h
 
 "I *know*," said Lyra.
 
-<br/>
-
 ---
-
-<br/>
 
 There was one more thing.
 
@@ -1292,11 +1228,7 @@ She sat in silence on her crate for a long moment. Then, quietly, she pulled her
 
 "Take two," said Nan. "Then have some stew."
 
-<br/>
-
 ---
-
-<br/>
 
 Nan insisted on stew.
 
@@ -1444,11 +1376,7 @@ Across the fire, Jax was staring at the two of them with an expression of total,
 
 "Too late," Mark said.
 
-<br/>
-
 ---
-
-<br/>
 
 They were leaving the warehouse a little before midnight when one of Nan's goat drivers caught up with them at the door.
 
@@ -1524,11 +1452,7 @@ Vespera's hand tightened on her staff.
 
 "They all had rings," the driver said. "Silver. Each with a little stone in it." He hesitated. "Funny thing. The stones were gold."
 
-<br/>
-
 ---
-
-<br/>
 
 It was nearly two in the morning when Mark finally sat down at his desk in the narrow dorm room in the West Wing, his back to the wall, his clipboard on the desk, his ledger open in front of him.
 
