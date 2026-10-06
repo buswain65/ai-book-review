@@ -127,6 +127,44 @@
     .reader-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: -0.25rem 0 1.75rem; font-family: ui-sans-serif, system-ui, sans-serif; }
     .reader-meta:empty { display: none; }
 
+    /* Chapter editor: proportional font, ~80 characters wide. A highlighted copy of the text sits
+       behind a transparent textarea so <br/> spacer lines can be shown faintly. Both layers must
+       share identical font, padding and wrapping. */
+    .editor-text {
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+      font-size: 1.0625rem;
+      line-height: 1.7;
+      letter-spacing: normal;
+      padding: 1.5rem max(1.25rem, calc((100% - 80ch) / 2)) 4rem;
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+      word-break: normal;
+      tab-size: 4;
+      box-sizing: border-box;
+      border: 0;
+      margin: 0;
+      scrollbar-gutter: stable;
+    }
+    #chapterEditor {
+      color: transparent;
+      caret-color: #f1f5f9;
+      background: transparent;
+      z-index: 1;
+      overflow-y: auto;
+    }
+    #chapterEditor::selection { background: rgba(34, 197, 94, 0.35); color: transparent; }
+    #chapterEditor::placeholder { color: #94a3b8; }
+    #editorBackdrop {
+      color: #f1f5f9;
+      background: #020617;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+    #chapterEditor.hidden ~ #editorBackdrop { display: none; }
+    #editorBackdrop .md-spacer { color: #475569; }  /* <br/> lines: deliberately faint */
+    #editorBackdrop .md-heading { color: #86efac; }
+
     .prose hr {
       border: none;
       border-top: 1px solid #334155;
@@ -217,12 +255,23 @@
     <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 -translate-x-full transition-transform duration-200 md:static md:z-auto md:w-64 md:translate-x-0 border-r border-slate-800 bg-slate-900 md:bg-slate-900/50 flex flex-col shrink-0">
       <div class="p-3 border-b border-slate-800 flex items-center justify-between">
         <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Chapters</span>
-        <button id="newChapterBtn" onclick="promptNewChapter()" class="hidden text-xs bg-brand-700 hover:bg-brand-600 text-white px-2 py-1 rounded font-medium transition-colors">
-          + New Chapter
+        <button id="newChapterBtn" onclick="promptNewChapter()" aria-label="Add a new chapter" title="Add a new chapter" class="hidden w-7 h-7 flex items-center justify-center rounded border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 text-base leading-none transition-colors">
+          +
         </button>
       </div>
 
-      <nav id="chapterList" class="flex-1 overflow-y-auto p-2 space-y-1">
+      <!-- Inline "new chapter" form (Author Mode) -->
+      <form id="newChapterForm" onsubmit="submitNewChapter(event)" class="hidden p-3 border-b border-slate-800 space-y-2">
+        <label for="newChapterTitle" class="block text-xs font-medium text-slate-300">New chapter title</label>
+        <input type="text" id="newChapterTitle" placeholder="e.g. Chapter 28: The Reckoning" onkeydown="if (event.key === 'Escape') { event.stopPropagation(); cancelNewChapter(); }" class="w-full bg-slate-800 border border-slate-700 rounded px-2 py-1.5 text-sm text-slate-100 focus:outline-none focus:border-brand-500" />
+        <p id="newChapterError" class="hidden text-xs text-rose-400"></p>
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="cancelNewChapter()" class="px-2.5 py-1 rounded text-xs bg-slate-800 text-slate-300 hover:bg-slate-700">Cancel</button>
+          <button type="submit" class="px-2.5 py-1 rounded text-xs bg-brand-700 text-white font-medium hover:bg-brand-600">Add Chapter</button>
+        </div>
+      </form>
+
+      <nav id="chapterList" class="flex-1 overflow-y-auto p-2 space-y-1" aria-label="Chapters">
         <!-- Chapter items injected dynamically -->
       </nav>
 
@@ -230,7 +279,7 @@
       <div id="agentStatusPanel" class="hidden border-t border-slate-800 p-3 bg-slate-900/80">
         <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 flex justify-between items-center">
           <span>AI Agents</span>
-          <button onclick="runAllAgents()" id="runAllBtn" title="Run every agent on the whole book" class="text-xs bg-brand-700 hover:bg-brand-600 text-white px-2 py-0.5 rounded transition-colors">
+          <button onclick="runAllAgents()" id="runAllBtn" title="Run every agent on the whole book" class="text-xs bg-transparent border border-brand-600 text-brand-300 hover:bg-brand-900/40 hover:text-white px-2 py-0.5 rounded transition-colors normal-case tracking-normal">
             <span id="runAllLabel">Review Book (All)</span>
           </button>
         </div>
@@ -287,7 +336,8 @@
           </div>
 
           <!-- Markdown Editor (Author Mode) -->
-          <textarea id="chapterEditor" oninput="markUnsaved()" class="hidden absolute inset-0 w-full h-full p-6 bg-slate-950 text-slate-100 font-mono text-sm leading-relaxed border-none focus:ring-0 resize-none outline-none" placeholder="Write your chapter markdown here..."></textarea>
+          <textarea id="chapterEditor" aria-label="Chapter text (Markdown)" spellcheck="true" oninput="markUnsaved(); syncEditorBackdrop();" onscroll="syncEditorScroll()" class="editor-text hidden absolute inset-0 w-full h-full resize-none outline-none focus:ring-0" placeholder="Write your chapter markdown here..."></textarea>
+          <div id="editorBackdrop" class="editor-text absolute inset-0" aria-hidden="true"></div>
 
           <!-- Markdown Live Preview Panel (Author Mode) -->
           <div id="authorPreviewPanel" class="reading hidden absolute inset-0 overflow-y-auto prose prose-invert prose-slate text-slate-200 bg-slate-950">
@@ -312,7 +362,7 @@
               <!-- Tabs generated dynamically -->
             </div>
           </div>
-          <button id="runCurrentAgentBtn" onclick="runCurrentSelectedAgent()" class="hidden text-xs bg-brand-700 hover:bg-brand-600 text-white px-2.5 py-1 rounded font-medium transition-colors shrink-0 ml-2">
+          <button id="runCurrentAgentBtn" onclick="runCurrentSelectedAgent()" class="hidden text-xs bg-transparent border border-brand-600 text-brand-300 hover:bg-brand-900/40 hover:text-white px-2.5 py-1 rounded font-medium transition-colors shrink-0 ml-2">
             <span id="runOneLabel">▶ Review Book</span>
           </button>
           </div>
@@ -329,27 +379,27 @@
 
   <!-- NEW BOOK MODAL (Author Mode Only) -->
   <div id="newBookModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col">
+    <div role="dialog" aria-modal="true" aria-labelledby="newBookModalTitle" class="bg-slate-900 border border-slate-800 rounded-xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col">
       <div class="p-4 border-b border-slate-800 flex justify-between items-center">
-        <h2 class="font-semibold text-white">Create New Book Project</h2>
-        <button onclick="toggleNewBookModal()" class="text-slate-400 hover:text-white">✕</button>
+        <h2 id="newBookModalTitle" class="font-semibold text-white">Create New Book Project</h2>
+        <button onclick="toggleNewBookModal()" aria-label="Close" class="text-slate-400 hover:text-white">✕</button>
       </div>
 
       <div class="p-6 space-y-4 text-sm">
         <div>
-          <label class="block font-medium text-slate-200 mb-1">Book Title *</label>
+          <label for="newBookTitle" class="block font-medium text-slate-200 mb-1">Book Title *</label>
           <input type="text" id="newBookTitle" placeholder="e.g. Dragon Rising" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500" />
         </div>
         <div>
-          <label class="block font-medium text-slate-200 mb-1">Author Name *</label>
+          <label for="newBookAuthor" class="block font-medium text-slate-200 mb-1">Author Name *</label>
           <input type="text" id="newBookAuthor" placeholder="e.g. J. R. Author" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500" />
         </div>
         <div>
-          <label class="block font-medium text-slate-200 mb-1">Genre *</label>
+          <label for="newBookGenre" class="block font-medium text-slate-200 mb-1">Genre *</label>
           <input type="text" id="newBookGenre" placeholder="e.g. Epic Fantasy" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500" />
         </div>
         <div>
-          <label class="block font-medium text-slate-200 mb-1">Blurb / Summary</label>
+          <label for="newBookBlurb" class="block font-medium text-slate-200 mb-1">Blurb / Summary</label>
           <textarea id="newBookBlurb" rows="3" placeholder="Brief summary of the story premises..." class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500 resize-none"></textarea>
         </div>
       </div>
@@ -363,17 +413,17 @@
 
   <!-- SETTINGS MODAL -->
   <div id="settingsModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+    <div role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle" class="bg-slate-900 border border-slate-800 rounded-xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
       <div class="p-4 border-b border-slate-800 flex justify-between items-center">
-        <h2 class="font-semibold text-white">Author Settings & Agent Assignment</h2>
-        <button onclick="toggleSettingsModal()" class="text-slate-400 hover:text-white">✕</button>
+        <h2 id="settingsModalTitle" class="font-semibold text-white">Author Settings & Agent Assignment</h2>
+        <button onclick="toggleSettingsModal()" aria-label="Close" class="text-slate-400 hover:text-white">✕</button>
       </div>
 
       <div class="p-6 overflow-y-auto space-y-6 text-sm">
         
         <!-- GitHub Token -->
         <div>
-          <label class="block font-medium text-slate-200 mb-1">GitHub Personal Access Token (PAT)</label>
+          <label for="ghTokenInput" class="block font-medium text-slate-200 mb-1">GitHub Personal Access Token (PAT)</label>
           <input type="password" id="ghTokenInput" placeholder="ghp_..." class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500" />
           <p class="text-xs text-slate-400 mt-1">Requires <code class="bg-slate-800 px-1 py-0.5 rounded">repo</code> or <code class="bg-slate-800 px-1 py-0.5 rounded">contents:write</code> scope for Author Mode committing.</p>
         </div>
@@ -381,11 +431,11 @@
         <!-- GitHub Repo Info -->
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block font-medium text-slate-200 mb-1">GitHub Owner / Username</label>
+            <label for="ghOwnerInput" class="block font-medium text-slate-200 mb-1">GitHub Owner / Username</label>
             <input type="text" id="ghOwnerInput" placeholder="username" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500" />
           </div>
           <div>
-            <label class="block font-medium text-slate-200 mb-1">GitHub Repository Name</label>
+            <label for="ghRepoInput" class="block font-medium text-slate-200 mb-1">GitHub Repository Name</label>
             <input type="text" id="ghRepoInput" placeholder="my-book-repo" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500" />
           </div>
         </div>
@@ -399,8 +449,8 @@
           <!-- Gemini -->
           <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-800 space-y-2">
             <div class="flex justify-between items-center">
-              <label class="text-xs font-semibold text-slate-200">Google Gemini API</label>
-              <select id="geminiModelInput" class="bg-slate-800 border border-slate-700 text-xs rounded px-2 py-1 text-slate-200">
+              <label for="geminiKeyInput" class="text-xs font-semibold text-slate-200">Google Gemini API</label>
+              <select id="geminiModelInput" aria-label="Google Gemini model" class="bg-slate-800 border border-slate-700 text-xs rounded px-2 py-1 text-slate-200">
                 <option value="gemini-3.8-flash">gemini-3.8-flash (Recommended)</option>
                 <option value="gemini-2.5-flash">gemini-2.5-flash</option>
                 <option value="gemini-2.5-pro">gemini-2.5-pro</option>
@@ -412,8 +462,8 @@
           <!-- OpenAI -->
           <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-800 space-y-2">
             <div class="flex justify-between items-center">
-              <label class="text-xs font-semibold text-slate-200">OpenAI API</label>
-              <select id="openaiModelInput" class="bg-slate-800 border border-slate-700 text-xs rounded px-2 py-1 text-slate-200">
+              <label for="openaiKeyInput" class="text-xs font-semibold text-slate-200">OpenAI API</label>
+              <select id="openaiModelInput" aria-label="OpenAI model" class="bg-slate-800 border border-slate-700 text-xs rounded px-2 py-1 text-slate-200">
                 <option value="gpt-4o">gpt-4o</option>
                 <option value="gpt-4o-mini">gpt-4o-mini</option>
               </select>
@@ -424,8 +474,8 @@
           <!-- Anthropic -->
           <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-800 space-y-2">
             <div class="flex justify-between items-center">
-              <label class="text-xs font-semibold text-slate-200">Anthropic Claude API</label>
-              <select id="anthropicModelInput" class="bg-slate-800 border border-slate-700 text-xs rounded px-2 py-1 text-slate-200">
+              <label for="anthropicKeyInput" class="text-xs font-semibold text-slate-200">Anthropic Claude API</label>
+              <select id="anthropicModelInput" aria-label="Anthropic Claude model" class="bg-slate-800 border border-slate-700 text-xs rounded px-2 py-1 text-slate-200">
                 <option value="claude-sonnet-5-5">claude-sonnet-5.5 (Recommended)</option>
                 <option value="claude-opus-5-5">claude-opus-5.5</option>
                 <option value="claude-haiku-4-5-20251001">claude-haiku-4.5</option>
@@ -437,8 +487,8 @@
           <!-- Groq -->
           <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-800 space-y-2">
             <div class="flex justify-between items-center">
-              <label class="text-xs font-semibold text-slate-200">Groq API</label>
-              <select id="groqModelInput" class="bg-slate-800 border border-slate-700 text-xs rounded px-2 py-1 text-slate-200">
+              <label for="groqKeyInput" class="text-xs font-semibold text-slate-200">Groq API</label>
+              <select id="groqModelInput" aria-label="Groq model" class="bg-slate-800 border border-slate-700 text-xs rounded px-2 py-1 text-slate-200">
                 <option value="llama-3.3-70b-versatile">llama-3.3-70b-versatile</option>
                 <option value="mixtral-8x7b-32768">mixtral-8x7b-32768</option>
               </select>
@@ -617,7 +667,7 @@
         return `
           <div class="flex items-center justify-between bg-slate-800/40 p-2.5 rounded-lg border border-slate-800 text-xs">
             <span class="font-medium text-slate-200">${agent.icon} ${agent.name}</span>
-            <select id="agent-provider-select-${key}" class="bg-slate-800 border border-slate-700 text-slate-200 rounded px-2 py-1 text-xs">
+            <select id="agent-provider-select-${key}" aria-label="Provider for ${agent.name}" class="bg-slate-800 border border-slate-700 text-slate-200 rounded px-2 py-1 text-xs">
               <option value="gemini" ${currentProvider === 'gemini' ? 'selected' : ''}>Google Gemini</option>
               <option value="openai" ${currentProvider === 'openai' ? 'selected' : ''}>OpenAI</option>
               <option value="anthropic" ${currentProvider === 'anthropic' ? 'selected' : ''}>Anthropic Claude</option>
@@ -698,13 +748,84 @@
       if (!allowed) document.getElementById('exportMenu').classList.add('hidden');
     }
 
+    // --- MODALS: open/close, Escape to close, focus kept inside while open ---
+    let modalReturnFocus = null;
+    function openModal(id) {
+      modalReturnFocus = document.activeElement;
+      const modal = document.getElementById(id);
+      modal.classList.remove('hidden');
+      const first = modal.querySelector('input, select, textarea, button:not([aria-label="Close"])');
+      if (first) first.focus();
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+      if (modalReturnFocus && document.body.contains(modalReturnFocus)) modalReturnFocus.focus();
+      modalReturnFocus = null;
+    }
+    function openModalId() {
+      return ['newBookModal', 'settingsModal'].find(id => !document.getElementById(id).classList.contains('hidden'));
+    }
+    document.addEventListener('keydown', e => {
+      const id = openModalId();
+      if (!id) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        closeModal(id);
+        return;
+      }
+      if (e.key === 'Tab') {
+        const focusable = [...document.getElementById(id).querySelectorAll('button, input, select, textarea, a[href]')]
+          .filter(el => !el.disabled && el.offsetParent !== null);
+        if (!focusable.length) return;
+        const first = focusable[0], last = focusable[focusable.length - 1];
+        if (!document.getElementById(id).contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+        else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    }, true);
+
     function toggleSettingsModal() {
-      document.getElementById('settingsModal').classList.toggle('hidden');
+      if (document.getElementById('settingsModal').classList.contains('hidden')) openModal('settingsModal');
+      else closeModal('settingsModal');
     }
 
     function toggleNewBookModal() {
-      document.getElementById('newBookModal').classList.toggle('hidden');
+      if (document.getElementById('newBookModal').classList.contains('hidden')) openModal('newBookModal');
+      else closeModal('newBookModal');
     }
+
+    // --- CHAPTER EDITOR: highlighted backdrop behind the textarea ---
+    function escapeHtml(str) {
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+    function syncEditorBackdrop() {
+      const editor = document.getElementById('chapterEditor');
+      const backdrop = document.getElementById('editorBackdrop');
+      const text = editor.value;
+      const html = text.split('\n').map(line => {
+        const safe = escapeHtml(line);
+        if (/^\s*(<br\s*\/?>\s*)+$/i.test(line)) return `<span class="md-spacer">${safe}</span>`;
+        if (/^#{1,6}\s/.test(line)) return `<span class="md-heading">${safe}</span>`;
+        return safe;
+      }).join('\n');
+      backdrop.innerHTML = html + (text.endsWith('\n') ? '\u200b' : ''); // a trailing newline needs a character to take up its line, as in the textarea
+      syncEditorScroll();
+    }
+    function syncEditorScroll() {
+      const editor = document.getElementById('chapterEditor');
+      document.getElementById('editorBackdrop').scrollTop = editor.scrollTop;
+    }
+    // Keep the backdrop in step whenever code (not typing) replaces the editor text.
+    (function () {
+      const desc = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value');
+      const editor = document.getElementById('chapterEditor');
+      Object.defineProperty(editor, 'value', {
+        get() { return desc.get.call(this); },
+        set(v) { desc.set.call(this, v); syncEditorBackdrop(); },
+        configurable: true
+      });
+    })();
 
     // --- LAYOUT: CHAPTERS DRAWER (phones) & COLLAPSIBLE REVIEW PANEL ---
     function openSidebar() {
@@ -843,6 +964,7 @@
         viewer.classList.remove('hidden');
       }
       document.getElementById('demographicBar').classList.toggle('hidden', mode !== 'author');
+      if (mode !== 'author') document.getElementById('newChapterForm').classList.add('hidden');
       renderAgentTabs();
       renderAgentStatus();
       applyReviewPanelState();
@@ -987,11 +1109,18 @@
     function renderChapterList(book) {
       const list = document.getElementById('chapterList');
       if (!book) return;
-      list.innerHTML = book.chapters.map(c => `
-        <button onclick="loadChapter('${c.id}'); closeSidebar();" id="chap-btn-${c.id}" class="w-full text-left px-3 py-2 rounded-lg text-xs font-medium text-slate-300 hover:bg-slate-800/80 transition-colors flex items-center justify-between">
-          <span class="truncate">${c.title}</span>
-        </button>
-      `).join('');
+      list.innerHTML = book.chapters.map(c => {
+        // "Chapter 5: Hello World" -> small "Chapter 5" label + "Hello World" (wraps to 2 lines)
+        const m = String(c.title).match(/^([^:]{1,30}):\s*(.+)$/);
+        const label = m ? m[1] : '';
+        const name = m ? m[2] : c.title;
+        const safeTitle = String(c.title).replace(/"/g, '&quot;');
+        return `
+        <button onclick="loadChapter('${c.id}'); closeSidebar();" id="chap-btn-${c.id}" title="${safeTitle}" class="w-full text-left px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800/80 transition-colors block">
+          ${label ? `<span class="block text-xs uppercase tracking-wide text-slate-400">${label}</span>` : ''}
+          <span class="block text-sm font-medium leading-snug line-clamp-2">${name}</span>
+        </button>`;
+      }).join('');
     }
 
     async function loadChapter(chapterId) {
@@ -1249,9 +1378,12 @@ ${chapterText.slice(0, 4000)}`;
         }
 
         return `
-          <div class="flex items-center justify-between text-slate-300">
-            <span class="truncate">${agent.icon} ${agent.name} <span class="text-xs text-slate-400">(${provider})</span></span>
-            ${statusBadge}
+          <div class="flex items-start justify-between gap-2 text-slate-300">
+            <div class="min-w-0">
+              <div class="truncate">${agent.icon} ${agent.name}</div>
+              <div class="text-xs text-slate-400 pl-5">${provider}</div>
+            </div>
+            <span class="shrink-0 w-20 text-right">${statusBadge}</span>
           </div>
         `;
       }).join('');
@@ -1384,8 +1516,18 @@ ${chapterText.slice(0, 4000)}`;
         if (target.scope === 'chapter') {
           input = buildChapterInput();
         } else {
+          const prevReviews = { ...state.reviews }, prevErrors = { ...state.reviewErrors };
           setAllPending(keys, "*Loading the full manuscript...*");
           input = await buildManuscript((n, total) => setAllPending(keys, `*Loading the full manuscript (${n}/${total} chapters)...*`));
+          const agentsText = keys.length === 1 ? `the ${AGENTS[keys[0]].name} agent` : `${keys.length} agents`;
+          const ok = confirm(`Send all ${input.chapterCount} chapters (about ${input.wordCount.toLocaleString()} words) to ${agentsText}?\n\nEach agent receives the whole book, so this uses a noticeable amount of your AI provider credits.`);
+          if (!ok) {
+            state.reviews = prevReviews;
+            state.reviewErrors = prevErrors;
+            renderAgentStatus();
+            renderReviewContent();
+            return null;
+          }
         }
         return { ...input, target };
       } catch (err) {
@@ -1953,18 +2095,38 @@ ${body}
       }
     }
 
-    async function promptNewChapter() {
-      if (!confirmDiscardChanges()) return;
-      const title = prompt("Enter new chapter title:");
-      if (!title) return;
+    function promptNewChapter() {
+      const form = document.getElementById('newChapterForm');
+      form.classList.remove('hidden');
+      document.getElementById('newChapterError').classList.add('hidden');
+      const input = document.getElementById('newChapterTitle');
+      input.value = '';
+      input.focus();
+    }
+
+    function cancelNewChapter() {
+      document.getElementById('newChapterForm').classList.add('hidden');
+      document.getElementById('newChapterBtn').focus();
+    }
+
+    async function submitNewChapter(e) {
+      e.preventDefault();
+      const input = document.getElementById('newChapterTitle');
+      const errorEl = document.getElementById('newChapterError');
+      const title = input.value.trim();
+      const showError = msg => { errorEl.innerText = msg; errorEl.classList.remove('hidden'); input.focus(); };
+      if (!title) return showError("Enter a title for the chapter.");
 
       const book = state.booksData.books.find(b => b.id === state.currentBookId);
       const chapNumber = String(book.chapters.length + 1).padStart(2, '0');
-      const chapId = `ch${chapNumber}-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
-      const fileName = `${chapId}.md`;
+      const chapId = `ch${chapNumber}-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`;
+      if (book.chapters.some(c => c.id === chapId)) return showError("A chapter with that title already exists.");
+      if (!confirmDiscardChanges()) return;
 
+      const fileName = `${chapId}.md`;
       const newChap = { id: chapId, title: title, file: fileName };
       book.chapters.push(newChap);
+      document.getElementById('newChapterForm').classList.add('hidden');
 
       renderChapterList(book);
       loadChapter(chapId);

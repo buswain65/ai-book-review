@@ -91,3 +91,6 @@ Mark tried to reach for his cell phone sitting on the desk to dial 911, but his 
 <br/>
 
 *And at least I don't have to explain to Brad why the build failed.*
+
+<br/>
+![Prologue: The Crunch Before the Dark](../images/Prologue-The%20Crunch%20Before%20the%20Dark.png)
