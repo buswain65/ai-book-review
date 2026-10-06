@@ -36,11 +36,7 @@ Beside him, a lanky first-year with a pale, anxious face and a mop of dark hair 
 
 "*Please don't do the thing*," the first-year whispered, and fled.
 
-<br/>
-
 ---
-
-<br/>
 
 "It's a trap," Mark said that evening, standing in the Fish & Hammer workshop with his clipboard. "It's a beautifully designed trap. I have to compete. If I don't, it's a failed exam, and Ignis gets to have me expelled. The Statute 402 transfer can't cover me if I fail the course on paper." He tapped the clipboard. "And if I do compete, I'll be in a public arena, in front of an audience. And I'll bet my entire Facilities budget that some of that audience will be wearing rings."
 
@@ -112,11 +108,7 @@ Lyra stared at him the way a master chef might stare at someone who'd asked her 
 
 "I know," Mark said. "So will I. For the first time in my entire life, I'm deliberately shipping bad code." He paused. "And I need it to be *really* convincingly bad."
 
-<br/>
-
 ---
-
-<br/>
 
 It took Lyra one evening. She worked in grim, tight-lipped silence, cutting the Sacred Restriction into a plain silver bracelet with exactly the specified forty-percent narrowing, exactly to Guild template, with the precision of someone performing an operation she found morally objectionable. Every so often she muttered, "This is *wrong*," under her breath. Twice she put the graver down and walked once around the workshop before she could pick it up again.
 
@@ -148,11 +140,7 @@ Mark picked it up and turned it over. It was flawless. Flawlessly, perfectly, de
 
 "I'm going to go and cut something *correctly*," said Lyra, "to cleanse myself."
 
-<br/>
-
 ---
-
-<br/>
 
 Then came strategy.
 
@@ -264,11 +252,7 @@ Lyra thought about it. Then a slow, wicked grin spread across her face.
 
 "I'll yell," she said, "*cheese*."
 
-<br/>
-
 ---
-
-<br/>
 
 The arena had been built into the Academy's eastern grounds centuries ago: a broad, round sand pit, ringed with a low stone wall and ward-lines, surrounded by tiered stone benches that rose steeply on all sides. By the morning of the tournament, every bench was full.
 
@@ -316,11 +300,7 @@ Four gold rings. Four men in the crowd, watching him.
 
 *"Right,"* Mark thought. *"Let's begin."*
 
-<br/>
-
 ---
-
-<br/>
 
 ### Round One: Tobin Pell
 
@@ -380,11 +360,7 @@ Mark looked down at the flask in his hand. Then he looked at the tunnel where To
 
 *Tobin Pell: first-year. Notices things. Bring water to strangers. Possible bus recruit. Academy node #2.*
 
-<br/>
-
 ---
-
-<br/>
 
 ### Round Two: Tessa Fenn
 
@@ -536,11 +512,7 @@ He had used no magic at all in that bout. Not one cast.
 
 *"Good,"* he thought. *"Budget intact."*
 
-<br/>
-
 ---
-
-<br/>
 
 ### Round Three: Percival Ashdown
 
@@ -620,11 +592,7 @@ Mark walked back to the water bucket and dipped his bracelet. It was still perfe
 
 *"Bad balance,"* he thought. *"Every universe."*
 
-<br/>
-
 ---
-
-<br/>
 
 ### Round Four: Hollis Grey
 
@@ -844,11 +812,7 @@ He took out his clipboard.
 
 He looked at the steam rising off the bucket and added, underneath: *Bracelet heat: rising.*
 
-<br/>
-
 ---
-
-<br/>
 
 ### Round Five: Corwin
 
@@ -1132,11 +1096,7 @@ He pulled out his clipboard. His hand was shaking very slightly.
 
 He added, at the bottom: *Bracelet: hot. One cast left, maybe two.*
 
-<br/>
-
 ---
-
-<br/>
 
 ### Round Six: The Final
 
@@ -1192,11 +1152,7 @@ Lyra pressed the bracelet into his hand, folded his fingers around it, and gripp
 
 Then she was gone, back up into the stands.
 
-<br/>
-
 ---
-
-<br/>
 
 Julian walked to the center of the sand.
 
@@ -1244,11 +1200,7 @@ Mark looked at him. At the dark circles under his eyes. At the tremor in the han
 
 "*Begin*."
 
-<br/>
-
 ---
-
-<br/>
 
 Julian opened with fire.
 
@@ -1360,11 +1312,7 @@ Julian hadn't noticed. He was too angry. He was already raising the staff again,
 
 Mark stood up and backed away. He let Julian come.
 
-<br/>
-
 ---
-
-<br/>
 
 The next three minutes were the longest of Mark's life.
 
@@ -1508,11 +1456,7 @@ The staff hit the sand beside him, still sparking. Still glowing. Still discharg
 
 It was rolling, Mark saw, slowly, sparking and spitting, toward Julian's head.
 
-<br/>
-
 ---
-
-<br/>
 
 Mark didn't think.
 
@@ -1552,11 +1496,7 @@ For a long moment, neither of them spoke.
 
 Up in the stands, the four men with gold rings were still on their feet. They were no longer watching Mark at all. Every one of them was staring at Julian.
 
-<br/>
-
 ---
-
-<br/>
 
 Archmage Ignis rose slowly from the judges' table.
 
@@ -1588,11 +1528,7 @@ In the front row, Lyra had both hands pressed over her mouth. Beside her, Vesper
 
 And at the edge of the sand, Corwin, still lying flat on his back with his eyes closed, slowly raised one hand in the air and gave a single, lazy thumbs-up.
 
-<br/>
-
 ---
-
-<br/>
 
 Julian turned his head on the sand and looked at Mark.
 
@@ -1648,11 +1584,7 @@ Mark stood up and stepped back, to give him a moment.
 
 When he looked up at the noble gallery, the man with the gold ring in the dark coat was gone.
 
-<br/>
-
 ---
-
-<br/>
 
 They celebrated at *The Deep Hearth*.
 
@@ -1720,11 +1652,7 @@ Mark sat back and watched them for a while.
 
 *"Team building,"* he thought. *"It's growing."*
 
-<br/>
-
 ---
-
-<br/>
 
 They left a little before midnight, spilling up the stone steps into the cool night air under the two moons, laughing and loud.
 
@@ -1788,11 +1716,7 @@ Nobody spoke until his footsteps had faded entirely.
 
 "Well," said Torren at last, into the silence. "That's a Gerald."
 
-<br/>
-
 ---
-
-<br/>
 
 It was nearly two in the morning when Mark sat at the desk in his narrow dorm room, his back to the wall, his clipboard beside his ledger, the sealed letter unopened on the desk in front of him.
 
