@@ -78,7 +78,7 @@ His vision tubed down to a pinprick. The dual 27-inch monitors blared a blinding
 
 <br/>
 
-Mark tried to reach for his cell phone sitting on the desk to dial 911, but his left arm felt like it had been filled with liquid lead. His upper body slouched forward, his forehead hitting the mechanical keyboard with a dull *thud*, holding down the backspace key.
+Mark tried to reach for his cell phone sitting on the desk to dial 911, but his left arm felt like it had been filled with liquid lead. His upper body slouched forward, his forehead hitting the mechanical keyboard with a dull *thud*, holding down the "b" key.
 
 <br/>
 
