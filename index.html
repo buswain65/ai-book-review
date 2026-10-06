@@ -16,10 +16,12 @@
           colors: {
             brand: {
               50: '#f0fdf4',
+              300: '#86efac',
               500: '#22c55e',
               600: '#16a34a',
               700: '#15803d',
               900: '#14532d',
+              950: '#052e16',
             }
           }
         }
@@ -111,6 +113,20 @@
       border-bottom-right-radius: 0.375rem;
     }
 
+    /* Long-form reading column (Reader view and Author preview):
+       serif text, ~66 characters per line, centered with side padding that scales with width */
+    .reading {
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+      font-size: 1.125rem;
+      line-height: 1.75;
+      padding: 2rem max(1.25rem, calc((100% - 66ch) / 2)) 4rem;
+    }
+    .reading p { margin: 0 0 1.1em; }
+    .reading > br { display: none; } /* spacer <br/> lines between paragraphs; paragraph margins handle spacing */
+    .reading h1, .reading h2 { line-height: 1.25; }
+    .reader-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: -0.25rem 0 1.75rem; font-family: ui-sans-serif, system-ui, sans-serif; }
+    .reader-meta:empty { display: none; }
+
     .prose hr {
       border: none;
       border-top: 1px solid #334155;
@@ -121,24 +137,28 @@
 <body class="h-full flex flex-col font-sans overflow-hidden bg-slate-950 text-slate-100 antialiased">
 
   <!-- TOP NAVBAR -->
-  <header class="h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur px-4 flex items-center justify-between z-10 shrink-0">
-    <div class="flex items-center space-x-4">
+  <header class="min-h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur px-3 md:px-4 py-2 md:py-0 flex flex-wrap items-center justify-between gap-2 z-10 shrink-0">
+    <div class="flex items-center gap-2 md:gap-4 min-w-0">
+      <!-- Chapters drawer button (phones / small tablets only) -->
+      <button id="sidebarToggleBtn" onclick="toggleSidebar()" class="md:hidden bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded-lg px-3 py-1.5 text-sm font-medium" aria-label="Show chapters" aria-controls="sidebar" aria-expanded="false">
+        ☰ <span class="hidden sm:inline">Chapters</span>
+      </button>
       <div class="flex items-center space-x-2">
         <span class="text-2xl">📚</span>
-        <h1 class="font-bold text-lg tracking-wide text-white">AI Critic Forge</h1>
+        <h1 class="hidden sm:block font-bold text-lg tracking-wide text-white">AI Critic Forge</h1>
       </div>
 
       <!-- Book Selector Dropdown, Word Count Badge & New Book Trigger -->
-      <div class="flex items-center space-x-2">
-        <select id="bookSelect" onchange="switchBook(this.value)" class="bg-slate-800 border border-slate-700 text-slate-200 text-sm rounded-lg focus:ring-brand-500 focus:border-brand-500 px-3 py-1.5 pr-8 cursor-pointer">
+      <div class="flex items-center gap-2 min-w-0">
+        <select id="bookSelect" aria-label="Book" onchange="switchBook(this.value)" class="max-w-[11rem] sm:max-w-none bg-slate-800 border border-slate-700 text-slate-200 text-sm rounded-lg focus:ring-brand-500 focus:border-brand-500 px-3 py-1.5 pr-8 cursor-pointer">
           <option value="">Loading books...</option>
         </select>
 
         <!-- Total Book Word Count Badge with Trigger Button -->
-        <span id="bookWordCountBadge" class="bg-slate-800/80 border border-slate-700/80 text-slate-300 text-xs px-2.5 py-1 rounded-lg font-medium flex items-center space-x-1.5" title="Total Word Count for Selected Book">
+        <span id="bookWordCountBadge" class="hidden sm:flex bg-slate-800/80 border border-slate-700/80 text-slate-300 text-xs px-2.5 py-1 rounded-lg font-medium items-center space-x-1.5" title="Total Word Count for Selected Book">
           <span>📝</span>
           <span id="bookWordCountValue">-- words</span>
-          <button id="calcWordCountBtn" onclick="updateBookWordCountUI()" class="text-slate-400 hover:text-white ml-1 transition-colors text-[11px]" title="Recalculate Word Count">
+          <button id="calcWordCountBtn" onclick="updateBookWordCountUI()" class="text-slate-400 hover:text-white ml-1 transition-colors text-xs" title="Recalculate Word Count">
             🔄
           </button>
         </span>
@@ -150,33 +170,33 @@
       </div>
     </div>
 
-    <div class="flex items-center space-x-3">
+    <div class="flex items-center gap-2 md:gap-3">
       <!-- Export Book (EPUB / PDF) -->
       <!-- Shown only in Author Mode with a GitHub token that has write access to the repo -->
       <div class="relative hidden" id="exportMenuWrap">
         <button id="exportBtn" onclick="toggleExportMenu(event)" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 hover:text-white text-xs px-3 py-1.5 rounded-lg font-medium transition-colors" title="Download the whole book">
-          ⬇ <span id="exportBtnLabel">Export Book</span>
+          ⬇ <span id="exportBtnLabel" class="hidden sm:inline">Export Book</span>
         </button>
         <div id="exportMenu" class="hidden absolute right-0 mt-1 w-56 bg-slate-900 border border-slate-700 rounded-lg shadow-2xl overflow-hidden z-50 text-xs">
           <button onclick="exportBook('epub')" class="w-full text-left px-3 py-2 hover:bg-slate-800 text-slate-200">
-            📘 EPUB <span class="text-slate-500">— for e-readers</span>
+            📘 EPUB <span class="text-slate-400">— for e-readers</span>
           </button>
           <button onclick="exportBook('pdf')" class="w-full text-left px-3 py-2 hover:bg-slate-800 text-slate-200 border-t border-slate-800">
-            📄 PDF <span class="text-slate-500">— opens print, choose "Save as PDF"</span>
+            📄 PDF <span class="text-slate-400">— opens print, choose "Save as PDF"</span>
           </button>
           <button onclick="exportBook('md')" class="w-full text-left px-3 py-2 hover:bg-slate-800 text-slate-200 border-t border-slate-800">
-            📝 Markdown <span class="text-slate-500">— single .md file</span>
+            📝 Markdown <span class="text-slate-400">— single .md file</span>
           </button>
         </div>
       </div>
 
       <!-- Mode Switcher -->
       <div class="flex items-center bg-slate-800 border border-slate-700 rounded-lg p-1 text-xs">
-        <button id="viewModeBtn" onclick="setMode('view')" class="px-3 py-1 rounded-md font-medium transition-colors bg-brand-600 text-white">
-          📖 Reader Mode
+        <button id="viewModeBtn" onclick="setMode('view')" class="px-3 py-1 rounded-md font-medium transition-colors bg-brand-700 text-white">
+          📖 <span class="hidden sm:inline">Reader Mode</span><span class="sm:hidden">Read</span>
         </button>
         <button id="authorModeBtn" onclick="setMode('author')" class="px-3 py-1 rounded-md font-medium transition-colors text-slate-400 hover:text-white">
-          ⚡ Author Mode
+          ⚡ <span class="hidden sm:inline">Author Mode</span><span class="sm:hidden">Write</span>
         </button>
       </div>
 
@@ -188,13 +208,16 @@
   </header>
 
   <!-- MAIN WORKSPACE -->
-  <div class="flex flex-1 overflow-hidden">
-    
-    <!-- LEFT SIDEBAR: CHAPTER TABLE OF CONTENTS -->
-    <aside class="w-64 border-r border-slate-800 bg-slate-900/50 flex flex-col shrink-0">
+  <div class="flex flex-1 overflow-hidden min-h-0">
+
+    <!-- Dimmed backdrop behind the chapters drawer (phones / small tablets) -->
+    <div id="sidebarOverlay" onclick="closeSidebar()" class="hidden fixed inset-0 bg-slate-950/70 z-30 md:hidden"></div>
+
+    <!-- LEFT SIDEBAR: CHAPTER TABLE OF CONTENTS (drawer below md) -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 -translate-x-full transition-transform duration-200 md:static md:z-auto md:w-64 md:translate-x-0 border-r border-slate-800 bg-slate-900 md:bg-slate-900/50 flex flex-col shrink-0">
       <div class="p-3 border-b border-slate-800 flex items-center justify-between">
         <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Chapters</span>
-        <button id="newChapterBtn" onclick="promptNewChapter()" class="hidden text-xs bg-brand-600 hover:bg-brand-500 text-white px-2 py-1 rounded font-medium transition-colors">
+        <button id="newChapterBtn" onclick="promptNewChapter()" class="hidden text-xs bg-brand-700 hover:bg-brand-600 text-white px-2 py-1 rounded font-medium transition-colors">
           + New Chapter
         </button>
       </div>
@@ -207,7 +230,7 @@
       <div id="agentStatusPanel" class="hidden border-t border-slate-800 p-3 bg-slate-900/80">
         <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 flex justify-between items-center">
           <span>AI Agents</span>
-          <button onclick="runAllAgents()" id="runAllBtn" title="Run every agent on the whole book" class="text-xs bg-brand-600 hover:bg-brand-500 text-white px-2 py-0.5 rounded transition-colors">
+          <button onclick="runAllAgents()" id="runAllBtn" title="Run every agent on the whole book" class="text-xs bg-brand-700 hover:bg-brand-600 text-white px-2 py-0.5 rounded transition-colors">
             <span id="runAllLabel">Review Book (All)</span>
           </button>
         </div>
@@ -221,13 +244,13 @@
     <main class="flex-1 flex flex-col overflow-hidden">
 
       <!-- TOP PANEL (67% Height): MANUSCRIPT EDITOR / READER / PREVIEW -->
-      <section id="manuscriptPanel" class="h-2/3 flex flex-col border-b border-slate-800 bg-slate-950 overflow-hidden">
-        <div class="h-10 border-b border-slate-800 bg-slate-900/30 px-4 flex items-center justify-between text-xs text-slate-400 shrink-0">
-          <span id="currentChapterTitle" class="font-medium text-slate-200">No chapter selected</span>
-          
-          <div id="editorControls" class="hidden flex items-center space-x-3">
+      <section id="manuscriptPanel" class="flex-1 min-h-0 flex flex-col border-b border-slate-800 bg-slate-950 overflow-hidden">
+        <div class="min-h-10 border-b border-slate-800 bg-slate-900/30 px-4 py-1.5 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400 shrink-0">
+          <span id="currentChapterTitle" class="font-medium text-slate-200 truncate min-w-0">No chapter selected</span>
+
+          <div id="editorControls" class="hidden flex flex-wrap items-center gap-2 sm:gap-3">
             <!-- Edit / Preview Mode Toggle -->
-            <div class="flex items-center bg-slate-800 border border-slate-700 rounded p-0.5 text-[11px]">
+            <div class="flex items-center bg-slate-800 border border-slate-700 rounded p-0.5 text-xs">
               <button id="editSubTabBtn" onclick="setEditorTab('edit')" class="px-2.5 py-0.5 rounded font-medium bg-slate-700 text-white">
                 ✏ Edit
               </button>
@@ -236,48 +259,52 @@
               </button>
             </div>
 
-            <span id="saveStatus" class="text-slate-500 text-[11px]">Saved</span>
-            <button onclick="saveCurrentChapter()" class="bg-brand-600 hover:bg-brand-500 text-white px-2.5 py-1 rounded font-medium transition-colors">
+            <span id="saveStatus" class="text-slate-400 text-xs">Saved</span>
+            <button onclick="saveCurrentChapter()" class="bg-brand-700 hover:bg-brand-600 text-white px-2.5 py-1 rounded font-medium transition-colors">
               💾 Commit Chapter
             </button>
           </div>
         </div>
 
         <!-- DEMOGRAPHIC ANALYSIS BADGE BAR -->
-        <div id="demographicBar" class="bg-slate-900/60 border-b border-slate-800/80 px-4 py-2 flex items-center justify-between text-xs text-slate-300 shrink-0">
-          <div class="flex items-center space-x-3">
-            <span class="font-semibold text-slate-400 text-[11px] uppercase tracking-wider">Demographic Analysis:</span>
-            <div id="demographicBadges" class="flex items-center space-x-2">
-              <span class="bg-slate-800 border border-slate-700 px-2 py-0.5 rounded text-[11px] text-slate-400 italic">Save chapter or click Analyze...</span>
+        <div id="demographicBar" class="hidden bg-slate-900/60 border-b border-slate-800/80 px-4 py-2 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-300 shrink-0">
+          <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+            <span class="font-semibold text-slate-400 text-xs uppercase tracking-wider">Demographic Analysis:</span>
+            <div id="demographicBadges" class="flex flex-wrap items-center gap-2">
+              <span class="bg-slate-800 border border-slate-700 px-2 py-0.5 rounded text-xs text-slate-400 italic">Save chapter or click Analyze...</span>
             </div>
-            <button id="runDemographicsBtn" onclick="runManualDemographics()" class="hidden bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white px-2 py-0.5 rounded text-[11px] font-medium transition-colors">
+            <button id="runDemographicsBtn" onclick="runManualDemographics()" class="hidden bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white px-2 py-0.5 rounded text-xs font-medium transition-colors">
               ⚡ Analyze
             </button>
           </div>
-          <span id="demographicRationale" class="text-[11px] text-slate-400 truncate max-w-sm hidden" title=""></span>
+          <span id="demographicRationale" class="text-xs text-slate-400 truncate max-w-sm hidden" title=""></span>
         </div>
 
         <div class="flex-1 relative overflow-hidden">
           <!-- Reader View (View Mode) -->
-          <div id="chapterViewer" class="absolute inset-0 p-8 overflow-y-auto prose prose-invert prose-slate max-w-4xl mx-auto leading-relaxed text-slate-200">
-            <p class="text-slate-500 italic">Select a chapter from the left menu to start reading.</p>
+          <div id="chapterViewer" class="reading absolute inset-0 overflow-y-auto prose prose-invert prose-slate text-slate-200">
+            <p class="text-slate-400 italic">Select a chapter from the left menu to start reading.</p>
           </div>
 
           <!-- Markdown Editor (Author Mode) -->
           <textarea id="chapterEditor" oninput="markUnsaved()" class="hidden absolute inset-0 w-full h-full p-6 bg-slate-950 text-slate-100 font-mono text-sm leading-relaxed border-none focus:ring-0 resize-none outline-none" placeholder="Write your chapter markdown here..."></textarea>
 
           <!-- Markdown Live Preview Panel (Author Mode) -->
-          <div id="authorPreviewPanel" class="hidden absolute inset-0 p-8 overflow-y-auto prose prose-invert prose-slate max-w-4xl mx-auto leading-relaxed text-slate-200 bg-slate-950">
+          <div id="authorPreviewPanel" class="reading hidden absolute inset-0 overflow-y-auto prose prose-invert prose-slate text-slate-200 bg-slate-950">
           </div>
         </div>
       </section>
 
       <!-- BOTTOM PANEL (33% Height): MULTI-AGENT CRITIQUE DASHBOARD -->
-      <section id="reviewPanel" class="h-1/3 flex flex-col bg-slate-900/30 overflow-hidden">
+      <section id="reviewPanel" class="h-1/3 flex flex-col bg-slate-900/30 overflow-hidden border-t border-slate-800">
         <!-- Review Tabs Header -->
-        <div class="h-10 border-b border-slate-800 bg-slate-900/50 px-3 flex items-center justify-between shrink-0 overflow-x-auto">
+        <div class="h-10 border-b border-slate-800 bg-slate-900/50 px-3 flex items-center shrink-0">
+          <button id="reviewToggleBtn" onclick="toggleReviewPanel()" aria-expanded="true" aria-controls="reviewContent" class="shrink-0 mr-3 px-2 py-1 rounded text-xs font-semibold text-slate-200 hover:text-white hover:bg-slate-800 transition-colors">
+            <span id="reviewToggleIcon">▾</span> Reviews<span id="reviewToggleCount" class="text-slate-400 font-normal"></span>
+          </button>
+          <div id="reviewHeaderControls" class="flex-1 min-w-0 flex items-center justify-between overflow-x-auto">
           <div class="flex items-center space-x-3">
-            <div class="flex items-center bg-slate-800 border border-slate-700 rounded p-0.5 text-[11px] shrink-0" title="Choose what the agents review">
+            <div class="flex items-center bg-slate-800 border border-slate-700 rounded p-0.5 text-xs shrink-0" title="Choose what the agents review">
               <button id="scopeBookBtn" onclick="setReviewScope('book')" class="px-2.5 py-0.5 rounded font-medium bg-slate-700 text-white">📘 Whole Book</button>
               <button id="scopeChapterBtn" onclick="setReviewScope('chapter')" class="px-2.5 py-0.5 rounded font-medium text-slate-400 hover:text-white">📄 Chapter</button>
             </div>
@@ -285,14 +312,15 @@
               <!-- Tabs generated dynamically -->
             </div>
           </div>
-          <button id="runCurrentAgentBtn" onclick="runCurrentSelectedAgent()" class="hidden text-xs bg-brand-600 hover:bg-brand-500 text-white px-2.5 py-1 rounded font-medium transition-colors shrink-0 ml-2">
+          <button id="runCurrentAgentBtn" onclick="runCurrentSelectedAgent()" class="hidden text-xs bg-brand-700 hover:bg-brand-600 text-white px-2.5 py-1 rounded font-medium transition-colors shrink-0 ml-2">
             <span id="runOneLabel">▶ Review Book</span>
           </button>
+          </div>
         </div>
 
         <!-- Critique Display Area -->
-        <div id="reviewContent" class="flex-1 p-5 overflow-y-auto prose prose-invert prose-slate max-w-4xl text-slate-300 text-sm leading-relaxed">
-          <div class="text-slate-500 italic">Select an agent tab to read their evaluation.</div>
+        <div id="reviewContent" class="flex-1 p-5 overflow-y-auto prose prose-invert prose-slate max-w-4xl w-full mx-auto text-slate-300 text-sm leading-relaxed">
+          <div class="text-slate-400 italic">Select an agent tab to read their evaluation.</div>
         </div>
       </section>
 
@@ -328,7 +356,7 @@
 
       <div class="p-4 border-t border-slate-800 bg-slate-900/50 flex justify-end space-x-2">
         <button onclick="toggleNewBookModal()" class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors">Cancel</button>
-        <button onclick="createNewBookSubmit()" class="px-4 py-2 rounded-lg bg-brand-600 text-white font-medium hover:bg-brand-500 transition-colors">Create Book</button>
+        <button onclick="createNewBookSubmit()" class="px-4 py-2 rounded-lg bg-brand-700 text-white font-medium hover:bg-brand-600 transition-colors">Create Book</button>
       </div>
     </div>
   </div>
@@ -432,7 +460,7 @@
 
       <div class="p-4 border-t border-slate-800 bg-slate-900/50 flex justify-end space-x-2">
         <button onclick="toggleSettingsModal()" class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors">Cancel</button>
-        <button onclick="saveSettings()" class="px-4 py-2 rounded-lg bg-brand-600 text-white font-medium hover:bg-brand-500 transition-colors">Save Settings</button>
+        <button onclick="saveSettings()" class="px-4 py-2 rounded-lg bg-brand-700 text-white font-medium hover:bg-brand-600 transition-colors">Save Settings</button>
       </div>
     </div>
   </div>
@@ -496,6 +524,7 @@
       reviewErrors: {},
       reviewMeta: {}, // per-agent saved review metadata
       reviewScope: 'book',
+      reviewsOpen: { view: false, author: true }, // review panel expanded? remembered per mode
       unsavedChanges: false, // editor text differs from the last loaded/committed version
       editVersion: 0,        // bumped on every edit; used to detect edits made during a commit
       patStatus: 'unknown', // GitHub token check: 'unknown' | 'checking' | 'valid' | 'invalid'
@@ -677,6 +706,48 @@
       document.getElementById('newBookModal').classList.toggle('hidden');
     }
 
+    // --- LAYOUT: CHAPTERS DRAWER (phones) & COLLAPSIBLE REVIEW PANEL ---
+    function openSidebar() {
+      document.getElementById('sidebar').classList.remove('-translate-x-full');
+      document.getElementById('sidebarOverlay').classList.remove('hidden');
+      document.getElementById('sidebarToggleBtn').setAttribute('aria-expanded', 'true');
+    }
+    function closeSidebar() {
+      document.getElementById('sidebar').classList.add('-translate-x-full'); // no effect at md+ (md:translate-x-0 wins)
+      document.getElementById('sidebarOverlay').classList.add('hidden');
+      document.getElementById('sidebarToggleBtn').setAttribute('aria-expanded', 'false');
+    }
+    function toggleSidebar() {
+      if (document.getElementById('sidebar').classList.contains('-translate-x-full')) openSidebar(); else closeSidebar();
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+
+    function toggleReviewPanel() {
+      state.reviewsOpen[state.mode] = !state.reviewsOpen[state.mode];
+      applyReviewPanelState();
+    }
+    function applyReviewPanelState() {
+      const open = !!state.reviewsOpen[state.mode];
+      const panel = document.getElementById('reviewPanel');
+      panel.classList.toggle('h-1/3', open);
+      document.getElementById('reviewHeaderControls').classList.toggle('hidden', !open);
+      document.getElementById('reviewContent').classList.toggle('hidden', !open);
+      document.getElementById('reviewToggleIcon').innerText = open ? '▾' : '▸';
+      document.getElementById('reviewToggleBtn').setAttribute('aria-expanded', String(open));
+      const ready = Object.keys(AGENTS).filter(k => state.reviews[k] && !String(state.reviews[k]).startsWith('*')).length;
+      document.getElementById('reviewToggleCount').innerText = open ? '' : ` (${ready} available) — click to open`;
+    }
+
+    // Reader view: demographic badges sit under the chapter title instead of in a full-width bar.
+    const readerMetaEl = document.createElement('div');
+    readerMetaEl.className = 'reader-meta';
+    function placeReaderMeta() {
+      const body = document.getElementById('chapterViewer');
+      const first = body.firstElementChild;
+      if (first && /^H[1-3]$/.test(first.tagName)) first.after(readerMetaEl);
+      else body.prepend(readerMetaEl);
+    }
+
     // --- UNSAVED-CHANGES GUARD ---
     // Ask before any action that would replace the editor text while it has uncommitted edits.
     function confirmDiscardChanges() {
@@ -701,7 +772,7 @@
       state.editVersion++;
       const statusEl = document.getElementById('saveStatus');
       statusEl.innerText = "Unsaved changes";
-      statusEl.className = "text-amber-400 text-[11px]";
+      statusEl.className = "text-amber-400 text-xs";
     }
 
     function setEditorTab(tab) {
@@ -746,7 +817,7 @@
 
       if (mode === 'author') {
         viewBtn.className = "px-3 py-1 rounded-md font-medium transition-colors text-slate-400 hover:text-white";
-        authorBtn.className = "px-3 py-1 rounded-md font-medium transition-colors bg-brand-600 text-white";
+        authorBtn.className = "px-3 py-1 rounded-md font-medium transition-colors bg-brand-700 text-white";
         settingsBtn.classList.remove('hidden');
         newBookBtn.classList.remove('hidden');
         newChapBtn.classList.remove('hidden');
@@ -759,7 +830,7 @@
         setEditorTab(state.editorTab);
       } else {
         authorBtn.className = "px-3 py-1 rounded-md font-medium transition-colors text-slate-400 hover:text-white";
-        viewBtn.className = "px-3 py-1 rounded-md font-medium transition-colors bg-brand-600 text-white";
+        viewBtn.className = "px-3 py-1 rounded-md font-medium transition-colors bg-brand-700 text-white";
         settingsBtn.classList.add('hidden');
         newBookBtn.classList.add('hidden');
         newChapBtn.classList.add('hidden');
@@ -771,8 +842,10 @@
         authorPreview.classList.add('hidden');
         viewer.classList.remove('hidden');
       }
+      document.getElementById('demographicBar').classList.toggle('hidden', mode !== 'author');
       renderAgentTabs();
       renderAgentStatus();
+      applyReviewPanelState();
       updateExportVisibility();
       if (mode === 'author') refreshPatStatus();
     }
@@ -811,6 +884,7 @@
 
     async function initApp() {
       renderScopeUI();
+      applyReviewPanelState();
       renderAgentTabs();
       renderAgentStatus();
 
@@ -914,7 +988,7 @@
       const list = document.getElementById('chapterList');
       if (!book) return;
       list.innerHTML = book.chapters.map(c => `
-        <button onclick="loadChapter('${c.id}')" id="chap-btn-${c.id}" class="w-full text-left px-3 py-2 rounded-lg text-xs font-medium text-slate-300 hover:bg-slate-800/80 transition-colors flex items-center justify-between">
+        <button onclick="loadChapter('${c.id}'); closeSidebar();" id="chap-btn-${c.id}" class="w-full text-left px-3 py-2 rounded-lg text-xs font-medium text-slate-300 hover:bg-slate-800/80 transition-colors flex items-center justify-between">
           <span class="truncate">${c.title}</span>
         </button>
       `).join('');
@@ -942,7 +1016,7 @@
 
       const statusEl = document.getElementById('saveStatus');
       statusEl.innerText = "Loading...";
-      statusEl.className = "text-slate-500 text-[11px]";
+      statusEl.className = "text-slate-400 text-xs";
 
       state.demographicData = null;
       renderDemographicUI();
@@ -961,7 +1035,7 @@
           document.getElementById('chapterViewer').innerHTML = `<p class='text-rose-400'>${msg}</p>`;
           document.getElementById('authorPreviewPanel').innerHTML = `<p class='text-rose-400'>${msg}</p>`;
           statusEl.innerText = "❌ Load failed";
-          statusEl.className = "text-rose-400 text-[11px]";
+          statusEl.className = "text-rose-400 text-xs";
           return;
         }
       }
@@ -974,12 +1048,13 @@
 
       document.getElementById('chapterEditor').value = content;
       document.getElementById('chapterViewer').innerHTML = marked.parse(content);
+      placeReaderMeta();
       if (state.editorTab === 'preview') {
         document.getElementById('authorPreviewPanel').innerHTML = marked.parse(content);
       }
 
       statusEl.innerText = "Saved";
-      statusEl.className = "text-slate-500 text-[11px]";
+      statusEl.className = "text-slate-400 text-xs";
 
       loadChapterDemographics();
       if (state.reviewScope === 'chapter') loadReviews();
@@ -1009,17 +1084,22 @@
       const rationaleEl = document.getElementById('demographicRationale');
 
       if (!state.demographicData) {
-        badgeContainer.innerHTML = `<span class="bg-slate-800 border border-slate-700 px-2 py-0.5 rounded text-[11px] text-slate-400 italic">Save chapter or click Analyze...</span>`;
+        readerMetaEl.innerHTML = '';
+        badgeContainer.innerHTML = `<span class="bg-slate-800 border border-slate-700 px-2 py-0.5 rounded text-xs text-slate-400 italic">Save chapter or click Analyze...</span>`;
         rationaleEl.classList.add('hidden');
         return;
       }
 
       const d = state.demographicData;
       badgeContainer.innerHTML = `
-        <span class="bg-brand-950/60 border border-brand-700/60 text-brand-300 font-medium px-2 py-0.5 rounded text-[11px]">🎯 ${d.target_age_group}</span>
-        <span class="bg-slate-800 border border-slate-700 text-slate-300 px-2 py-0.5 rounded text-[11px]">📖 ${d.reading_level}</span>
-        <span class="bg-slate-800 border border-slate-700 text-slate-300 px-2 py-0.5 rounded text-[11px]">🔥 Intensity: ${d.content_rating}</span>
+        <span class="bg-brand-950/60 border border-brand-700/60 text-brand-300 font-medium px-2 py-0.5 rounded text-xs">🎯 ${d.target_age_group}</span>
+        <span class="bg-slate-800 border border-slate-700 text-slate-300 px-2 py-0.5 rounded text-xs">📖 ${d.reading_level}</span>
+        <span class="bg-slate-800 border border-slate-700 text-slate-300 px-2 py-0.5 rounded text-xs">🔥 Intensity: ${d.content_rating}</span>
       `;
+
+      readerMetaEl.innerHTML = badgeContainer.innerHTML;
+      readerMetaEl.title = d.rationale || '';
+      placeReaderMeta();
 
       if (d.rationale) {
         rationaleEl.innerText = d.rationale;
@@ -1142,7 +1222,7 @@ ${chapterText.slice(0, 4000)}`;
     function renderAgentTabs() {
       const container = document.getElementById('agentTabs');
       container.innerHTML = Object.entries(AGENTS).map(([key, agent]) => `
-        <button onclick="selectAgentTab('${key}')" id="tab-${key}" class="px-3 py-1 rounded-md text-xs font-medium transition-colors border ${state.selectedAgentKey === key ? 'bg-slate-800 border-slate-700 text-white' : 'border-transparent text-slate-400 hover:text-slate-200'}">
+        <button onclick="selectAgentTab('${key}')" id="tab-${key}" class="whitespace-nowrap shrink-0 px-3 py-1 rounded-md text-xs font-medium transition-colors border ${state.selectedAgentKey === key ? 'bg-slate-800 border-slate-700 text-white' : 'border-transparent text-slate-400 hover:text-slate-200'}">
           ${agent.icon} ${agent.name}
         </button>
       `).join('');
@@ -1161,7 +1241,7 @@ ${chapterText.slice(0, 4000)}`;
         const hasError = !!state.reviewErrors[key];
         const provider = state.settings.agentProviders[key] || agent.provider;
 
-        let statusBadge = `<span class="text-slate-600">○ Pending</span>`;
+        let statusBadge = `<span class="text-slate-400">○ Pending</span>`;
         if (hasError) {
           statusBadge = `<span class="text-amber-400 font-medium" title="${state.reviewErrors[key]}">⚠️ Warning</span>`;
         } else if (hasReview) {
@@ -1170,11 +1250,12 @@ ${chapterText.slice(0, 4000)}`;
 
         return `
           <div class="flex items-center justify-between text-slate-300">
-            <span class="truncate">${agent.icon} ${agent.name} <span class="text-[10px] text-slate-500">(${provider})</span></span>
+            <span class="truncate">${agent.icon} ${agent.name} <span class="text-xs text-slate-400">(${provider})</span></span>
             ${statusBadge}
           </div>
         `;
       }).join('');
+      if (document.getElementById('reviewToggleCount')) applyReviewPanelState();
     }
 
     function renderReviewContent() {
@@ -1202,14 +1283,14 @@ ${chapterText.slice(0, 4000)}`;
               <h3 class="font-bold text-slate-100 text-base mb-0.5">${agent.icon} ${agent.name} Critique</h3>
               <p class="text-xs text-slate-400">${agent.role}</p>
             </div>
-            <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 bg-amber-900/30 border border-amber-700/50 rounded text-amber-300">${provider}</span>
+            <span class="text-xs uppercase tracking-wider px-2 py-0.5 bg-amber-900/30 border border-amber-700/50 rounded text-amber-300">${provider}</span>
           </div>
           <div class="bg-amber-950/40 border border-amber-800/60 rounded-lg p-4 text-xs text-amber-200 space-y-2">
             <div class="font-semibold text-amber-400 flex items-center space-x-1.5">
               <span>⚠️ API Execution Failed</span>
             </div>
             <p class="leading-relaxed">${error}</p>
-            <p class="text-[11px] text-amber-400/80 italic">Check your API key in Settings (⚙) or verify that the selected model endpoint is currently available.</p>
+            <p class="text-xs text-amber-400/80 italic">Check your API key in Settings (⚙) or verify that the selected model endpoint is currently available.</p>
           </div>
         `;
       } else if (content) {
@@ -1219,7 +1300,7 @@ ${chapterText.slice(0, 4000)}`;
               <h3 class="font-bold text-slate-100 text-base mb-0.5">${agent.icon} ${agent.name} — ${scopeTitle}</h3>
               <p class="text-xs text-slate-400">${agent.role}${metaLine}</p>
             </div>
-            <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-400">${provider}</span>
+            <span class="text-xs uppercase tracking-wider px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-400">${provider}</span>
           </div>
           ${marked.parse(content)}
         `;
@@ -1229,8 +1310,8 @@ ${chapterText.slice(0, 4000)}`;
             <div class="text-2xl mb-1">${agent.icon}</div>
             <h4 class="font-semibold text-slate-200 mb-0.5">${agent.name}</h4>
             <p class="text-xs text-slate-400 max-w-xs mx-auto mb-2">${agent.role}</p>
-            <span class="inline-block text-[10px] uppercase tracking-wider px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-400 mb-2">Assigned Provider: ${provider}</span>
-            <p class="text-xs text-slate-500 italic block">${isBook ? 'No whole-book critique generated for this book yet.' : 'No critique generated for this chapter yet.'}</p>
+            <span class="inline-block text-xs uppercase tracking-wider px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-400 mb-2">Assigned Provider: ${provider}</span>
+            <p class="text-xs text-slate-400 italic block">${isBook ? 'No whole-book critique generated for this book yet.' : 'No critique generated for this chapter yet.'}</p>
           </div>
         `;
       }
@@ -1783,6 +1864,7 @@ ${body}
       const content = document.getElementById('chapterEditor').value;
       
       document.getElementById('chapterViewer').innerHTML = marked.parse(content);
+      placeReaderMeta();
       if (state.editorTab === 'preview') {
         document.getElementById('authorPreviewPanel').innerHTML = marked.parse(content);
       }
@@ -1797,7 +1879,7 @@ ${body}
       const path = `books/${book.id}/chapters/${chap.file}`;
 
       statusEl.innerText = "Committing to GitHub...";
-      statusEl.className = "text-amber-400 text-[11px] animate-pulse";
+      statusEl.className = "text-amber-400 text-xs animate-pulse";
 
       const committedVersion = state.editVersion;
       const ok = await commitGitHubFile(path, content, `Update chapter: ${chap.title}`);
@@ -1805,24 +1887,24 @@ ${body}
       if (ok && state.editVersion !== committedVersion) {
         // Edits were made while the commit was in progress; those are still unsaved.
         statusEl.innerText = "Unsaved changes";
-        statusEl.className = "text-amber-400 text-[11px]";
+        statusEl.className = "text-amber-400 text-xs";
         analyzeChapterDemographics(content);
       } else if (ok) {
         state.unsavedChanges = false;
         statusEl.innerText = "✓ Committed to GitHub";
-        statusEl.className = "text-emerald-400 text-[11px]";
+        statusEl.className = "text-emerald-400 text-xs";
 
         analyzeChapterDemographics(content);
 
         setTimeout(() => { 
           if (statusEl.innerText === "✓ Committed to GitHub") {
             statusEl.innerText = "Saved"; 
-            statusEl.className = "text-slate-500 text-[11px]";
+            statusEl.className = "text-slate-400 text-xs";
           }
         }, 3000);
       } else {
         statusEl.innerText = "❌ Commit failed";
-        statusEl.className = "text-rose-400 text-[11px]";
+        statusEl.className = "text-rose-400 text-xs";
         alert(`Failed to save chapter to GitHub. Check your permissions or repository settings.`);
       }
     }
