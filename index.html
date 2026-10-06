@@ -496,6 +496,8 @@
       reviewErrors: {},
       reviewMeta: {}, // per-agent saved review metadata
       reviewScope: 'book',
+      unsavedChanges: false, // editor text differs from the last loaded/committed version
+      editVersion: 0,        // bumped on every edit; used to detect edits made during a commit
       patStatus: 'unknown', // GitHub token check: 'unknown' | 'checking' | 'valid' | 'invalid'
       patCheckedFor: null,  // token/owner/repo combination the status applies to // 'book' (whole manuscript) or 'chapter' (current chapter)
       demographicData: null,
@@ -675,7 +677,28 @@
       document.getElementById('newBookModal').classList.toggle('hidden');
     }
 
+    // --- UNSAVED-CHANGES GUARD ---
+    // Ask before any action that would replace the editor text while it has uncommitted edits.
+    function confirmDiscardChanges() {
+      if (!state.unsavedChanges) return true;
+      const book = state.booksData && state.booksData.books.find(b => b.id === state.currentBookId);
+      const chap = book && book.chapters.find(c => c.id === state.currentChapterId);
+      const name = chap ? `"${chap.title}"` : "this chapter";
+      if (!confirm(`You have unsaved changes to ${name}.\n\nDiscard them? Click Cancel to stay and commit your changes first.`)) return false;
+      state.unsavedChanges = false;
+      return true;
+    }
+
+    window.addEventListener('beforeunload', e => {
+      if (state.unsavedChanges) {
+        e.preventDefault();
+        e.returnValue = ''; // browsers show their own "Leave site?" message
+      }
+    });
+
     function markUnsaved() {
+      state.unsavedChanges = true;
+      state.editVersion++;
       const statusEl = document.getElementById('saveStatus');
       statusEl.innerText = "Unsaved changes";
       statusEl.className = "text-amber-400 text-[11px]";
@@ -870,6 +893,10 @@
     }
 
     function switchBook(bookId) {
+      if (!confirmDiscardChanges()) {
+        document.getElementById('bookSelect').value = state.currentBookId; // undo the dropdown change
+        return;
+      }
       state.currentBookId = bookId;
       const book = state.booksData.books.find(b => b.id === bookId);
       
@@ -894,6 +921,8 @@
     }
 
     async function loadChapter(chapterId) {
+      if (!confirmDiscardChanges()) return;
+      state.unsavedChanges = false;
       state.currentChapterId = chapterId;
       state.loadingChapterId = chapterId; // Set active loading request lock
 
@@ -1770,9 +1799,16 @@ ${body}
       statusEl.innerText = "Committing to GitHub...";
       statusEl.className = "text-amber-400 text-[11px] animate-pulse";
 
+      const committedVersion = state.editVersion;
       const ok = await commitGitHubFile(path, content, `Update chapter: ${chap.title}`);
 
-      if (ok) {
+      if (ok && state.editVersion !== committedVersion) {
+        // Edits were made while the commit was in progress; those are still unsaved.
+        statusEl.innerText = "Unsaved changes";
+        statusEl.className = "text-amber-400 text-[11px]";
+        analyzeChapterDemographics(content);
+      } else if (ok) {
+        state.unsavedChanges = false;
         statusEl.innerText = "✓ Committed to GitHub";
         statusEl.className = "text-emerald-400 text-[11px]";
 
@@ -1792,6 +1828,7 @@ ${body}
     }
 
     async function createNewBookSubmit() {
+      if (!confirmDiscardChanges()) return;
       const title = document.getElementById('newBookTitle').value.trim();
       const author = document.getElementById('newBookAuthor').value.trim();
       const genre = document.getElementById('newBookGenre').value.trim();
@@ -1835,6 +1872,7 @@ ${body}
     }
 
     async function promptNewChapter() {
+      if (!confirmDiscardChanges()) return;
       const title = prompt("Enter new chapter title:");
       if (!title) return;
 
