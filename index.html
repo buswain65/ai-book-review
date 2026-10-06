@@ -525,11 +525,29 @@
       initApp();
     });
 
+    // Public repository the books are read from. Readers need no GitHub login or token:
+    // the repo is public, so chapters and reviews load anonymously from raw.githubusercontent.com.
+    // On a GitHub Pages URL (<owner>.github.io/<repo>/) the owner/repo are detected automatically;
+    // otherwise these defaults are used. Settings (⚙) can still override them.
+    const DEFAULT_GH_OWNER = 'buswain65';
+    const DEFAULT_GH_REPO = 'ai-book-review';
+
+    function detectRepoFromUrl() {
+      const m = location.hostname.match(/^([^.]+)\.github\.io$/i);
+      if (!m) return null;
+      const firstPath = location.pathname.split('/').filter(Boolean)[0];
+      return { owner: m[1], repo: firstPath && !firstPath.includes('.') ? firstPath : `${m[1]}.github.io` };
+    }
+
     function loadSettings() {
-      const saved = localStorage.getItem('storyforge_settings');
+      let saved = null;
+      try { saved = localStorage.getItem('storyforge_settings'); } catch (e) {}
       if (saved) {
         state.settings = { ...state.settings, ...JSON.parse(saved) };
       }
+      const detected = detectRepoFromUrl();
+      if (!state.settings.ghOwner) state.settings.ghOwner = detected ? detected.owner : DEFAULT_GH_OWNER;
+      if (!state.settings.ghRepo) state.settings.ghRepo = detected ? detected.repo : DEFAULT_GH_REPO;
       // One-time migration: whole-book reviews are too large for Groq's free tier
       if (!state.settings.wholeBookMigrated) {
         if (state.settings.agentProviders && state.settings.agentProviders.genre_fan === 'groq') {
