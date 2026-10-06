@@ -152,7 +152,8 @@
 
     <div class="flex items-center space-x-3">
       <!-- Export Book (EPUB / PDF) -->
-      <div class="relative" id="exportMenuWrap">
+      <!-- Shown only in Author Mode with a GitHub token that has write access to the repo -->
+      <div class="relative hidden" id="exportMenuWrap">
         <button id="exportBtn" onclick="toggleExportMenu(event)" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 hover:text-white text-xs px-3 py-1.5 rounded-lg font-medium transition-colors" title="Download the whole book">
           ⬇ <span id="exportBtnLabel">Export Book</span>
         </button>
@@ -494,7 +495,9 @@
       reviews: {},
       reviewErrors: {},
       reviewMeta: {}, // per-agent saved review metadata
-      reviewScope: 'book', // 'book' (whole manuscript) or 'chapter' (current chapter)
+      reviewScope: 'book',
+      patStatus: 'unknown', // GitHub token check: 'unknown' | 'checking' | 'valid' | 'invalid'
+      patCheckedFor: null,  // token/owner/repo combination the status applies to // 'book' (whole manuscript) or 'chapter' (current chapter)
       demographicData: null,
       bookWordCounts: {},
       settings: {
@@ -621,6 +624,47 @@
       localStorage.setItem('storyforge_settings', JSON.stringify(state.settings));
       toggleSettingsModal();
       initApp();
+      refreshPatStatus();
+    }
+
+    // --- GITHUB TOKEN (PAT) CHECK ---
+    // A token counts as valid when GitHub accepts it and it has write (push) access to the repo.
+    async function refreshPatStatus() {
+      const { ghToken, ghOwner, ghRepo } = state.settings;
+      const key = `${ghToken}|${ghOwner}|${ghRepo}`;
+      if (state.patCheckedFor === key && state.patStatus !== 'unknown') { updateExportVisibility(); return; }
+      state.patCheckedFor = key;
+
+      if (!ghToken || !ghOwner || !ghRepo) {
+        state.patStatus = 'invalid';
+        updateExportVisibility();
+        return;
+      }
+      state.patStatus = 'checking';
+      updateExportVisibility();
+      let status = 'invalid';
+      try {
+        const res = await fetch(`https://api.github.com/repos/${ghOwner}/${ghRepo}`, {
+          headers: { "Accept": "application/vnd.github+json", "Authorization": `token ${ghToken}` },
+          cache: "no-store"
+        });
+        if (res.ok) {
+          const repo = await res.json();
+          if (repo.permissions && (repo.permissions.push || repo.permissions.admin)) status = 'valid';
+        }
+      } catch (e) {
+        console.warn("Could not verify GitHub token:", e);
+      }
+      if (state.patCheckedFor === key) {
+        state.patStatus = status;
+        updateExportVisibility();
+      }
+    }
+
+    function updateExportVisibility() {
+      const allowed = state.mode === 'author' && state.patStatus === 'valid';
+      document.getElementById('exportMenuWrap').classList.toggle('hidden', !allowed);
+      if (!allowed) document.getElementById('exportMenu').classList.add('hidden');
     }
 
     function toggleSettingsModal() {
@@ -706,6 +750,8 @@
       }
       renderAgentTabs();
       renderAgentStatus();
+      updateExportVisibility();
+      if (mode === 'author') refreshPatStatus();
     }
 
     // --- GITHUB FETCH HELPERS ---
@@ -1399,6 +1445,7 @@ ${manuscript}`;
 
     async function exportBook(format) {
       document.getElementById('exportMenu').classList.add('hidden');
+      if (state.mode !== 'author' || state.patStatus !== 'valid') return;
       const book = state.booksData && state.booksData.books.find(b => b.id === state.currentBookId);
       if (!book) return alert("Select a book to export.");
 
