@@ -93,4 +93,7 @@ Mark tried to reach for his cell phone sitting on the desk to dial 911, but his 
 *And at least I don't have to explain to Brad why the build failed.*
 
 <br/>
-![Prologue: The Crunch Before the Dark](../images/Prologue-The%20Crunch%20Before%20the%20Dark.png)
+
+<p align="center">
+  <img src="images/Prologue-The%20Crunch%20Before%20the%20Dark.png" alt="Mark slumped over his keyboard between two glowing monitors">
+</p>
