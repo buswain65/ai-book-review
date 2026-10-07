@@ -50,6 +50,12 @@ Then he stopped dead in his tracks.
 
 <br/>
 
+<p align="center">
+  <img src="books/nobody-trusts-a-brass-clipboard/images/ch8-the-translation-layer-and-street-level-leverage.png" >
+</p>
+
+<br/>
+
 He stared at the page, blinked, and then consciously disengaged his focus. He didn't read the words for their meaning—he looked at their *shapes*.
 
 <br/>
