@@ -26,6 +26,12 @@ The oak branch groaned, but Archimedes didn't lie. With a clean four-to-one mech
 
 <br/>
 
+<p align="center">
+  <img src="books/nobody-trusts-a-brass-clipboard/images/ch4-the-level-and-the-code.png" >
+</p>
+
+<br/>
+
 "Hold it right there!" Garin barked, his skepticism vanishing into sudden, wild-eyed panic. He dropped to his knees in the mud like a fallen bowling pin and shoved the wooden wheel back onto the freshly mended axle, slamming the iron cotter pin into place with two frantic strikes of his mallet.
 
 <br/>
