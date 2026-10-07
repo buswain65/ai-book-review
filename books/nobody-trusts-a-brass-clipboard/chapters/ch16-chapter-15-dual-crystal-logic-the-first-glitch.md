@@ -38,6 +38,12 @@ Mark stared at the growing pile. "How many pockets does that apron have?"
 
 <br/>
 
+<p align="center">
+  <img src="books/nobody-trusts-a-brass-clipboard/images/ch15-dual-crystal-logic.png" >
+</p>
+
+<br/>
+
 "Your power budget," Lyra said, as if this were obvious. "I'm not watching you eat another pocket sausage. It's upsetting."
 
 <br/>
