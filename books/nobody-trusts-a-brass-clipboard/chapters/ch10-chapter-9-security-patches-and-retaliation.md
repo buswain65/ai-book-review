@@ -26,6 +26,12 @@ The stable boy had nodded slowly and gone to find somewhere else to be. The chic
 
 <br/>
 
+<p align="center">
+  <img src="books/nobody-trusts-a-brass-clipboard/images/ch9-security-patches-and-retaliation.png" >
+</p>
+
+<br/>
+
 Mark tapped his charcoal stick against the paper, filling the page with neat, compact English cursive:
 
 <br/>
