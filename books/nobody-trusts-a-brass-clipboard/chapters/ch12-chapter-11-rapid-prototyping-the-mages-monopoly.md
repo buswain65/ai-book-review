@@ -26,6 +26,12 @@ Mark thought about it. "Forge supervision," he said. "You supervise the forge. F
 
 <br/>
 
+<p align="center">
+  <img src="books/nobody-trusts-a-brass-clipboard/images/ch11-rapid-prototyping.png" >
+</p>
+
+<br/>
+
 The apprentices looked at each other. Then they looked at the shade. Then they looked back at Mark with dawning, profound joy.
 
 <br/>
