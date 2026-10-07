@@ -50,6 +50,12 @@ Slowly, he turned his head. Legacy the spider had descended from the doorframe o
 
 <br/>
 
+<p align="center">
+  <img src="books/nobody-trusts-a-brass-clipboard/images/ch12-the-wearable-interface.png" >
+</p>
+
+<br/>
+
 Legacy hung there a moment longer, as if reserving judgment. Then she climbed back up her thread and returned to her corner.
 
 <br/>
