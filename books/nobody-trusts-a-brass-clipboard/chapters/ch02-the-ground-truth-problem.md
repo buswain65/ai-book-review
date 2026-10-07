@@ -11,7 +11,7 @@ Mark didn't flinch. He didn't drop his rock. He just stood there in his crisp, t
 <br/>
 
 <p align="center">
-  <img src="books/nobody-trusts-a-brass-clipboard/images/Chapter-2-the-ground-truth-problem.png" >
+  <img src="books/nobody-trusts-a-brass-clipboard/images/ch2-the-ground-truth-problem.png" >
 </p>
 
 
