@@ -74,6 +74,12 @@ A tiny, brilliant azure spark popped between his thumb and the pebble. It delive
 
 <br/>
 
+<p align="center">
+  <img src="books/nobody-trusts-a-brass-clipboard/images/ch5-hello-world.png" >
+</p>
+
+<br/>
+
 Across the wagon, Vespera’s head snapped toward him so fast her hood fell back. Her sharp brown eyes locked onto the river pebble, which was currently resting on a burlap sack, emitting a faint, wispy curl of grey, foul-smelling smoke right where his thumb had touched it.
 
 <br/>
