@@ -38,6 +38,12 @@ Lyra didn't return the greeting. She crossed her arms, her grey eyes sweeping ov
 
 <br/>
 
+<p align="center">
+  <img src="books/nobody-trusts-a-brass-clipboard/images/ch14-peer-review.png" >
+</p>
+
+<br/>
+
 Her gaze traveled up to the corner of the doorframe and stopped.
 
 <br/>
