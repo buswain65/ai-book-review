@@ -54,6 +54,12 @@ By seven o'clock, he was seated at his heavy oak bench in the stone storage shed
 
 <br/>
 
+<p align="center">
+  <img src="books/nobody-trusts-a-brass-clipboard/images/ch13-capacitor-calibration.png" >
+</p>
+
+<br/>
+
 Mark approached the work with factory-line efficiency.
 
 <br/>
