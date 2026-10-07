@@ -26,6 +26,12 @@ On the far side of the room, Garin was sitting on the edge of his cot, holding h
 
 <br/>
 
+<p align="center">
+  <img src="books/nobody-trusts-a-brass-clipboard/images/ch7-the-bottleneck-and-the-guild.png" >
+</p>
+
+<br/>
+
 "Hm," Mark said neutrally.
 
 <br/>
