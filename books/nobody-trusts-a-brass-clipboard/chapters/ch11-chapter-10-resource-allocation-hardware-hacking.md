@@ -66,6 +66,12 @@ Mark picked up a shovel, his face completely neutral. "That's slander. The chick
 
 <br/>
 
+<p align="center">
+  <img src="books/nobody-trusts-a-brass-clipboard/images/ch10-resource-allocation-and-hardware-hacking.png" >
+</p>
+
+<br/>
+
 Torren's eyebrows rose.
 
 <br/>
