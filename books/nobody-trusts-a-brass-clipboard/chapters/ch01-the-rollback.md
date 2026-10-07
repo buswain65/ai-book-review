@@ -90,6 +90,12 @@ Mark didn't flinch. He didn't duck. He didn't even drop his rock.
 
 <br/>
 
+<p align="center">
+  <img src="books/nobody-trusts-a-brass-clipboard/images/ch01-the-rollback.png" >
+</p>
+
+<br/>
+
 He simply crossed his small, teenage arms over his linen tunic and watched the monster with the bored, tired detachment of an IT director watching a user explain why they spilled coffee into their laptop for the third time this month.
 
 <br/>
