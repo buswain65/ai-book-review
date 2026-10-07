@@ -91,7 +91,7 @@ Mark didn't flinch. He didn't duck. He didn't even drop his rock.
 <br/>
 
 <p align="center">
-  <img src="books/nobody-trusts-a-brass-clipboard/images/ch01-the-rollback.png" >
+  <img src="books/nobody-trusts-a-brass-clipboard/images/ch-1-the-rollback.png" >
 </p>
 
 <br/>

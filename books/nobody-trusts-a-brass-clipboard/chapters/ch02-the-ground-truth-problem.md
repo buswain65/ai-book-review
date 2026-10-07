@@ -14,7 +14,6 @@ Mark didn't flinch. He didn't drop his rock. He just stood there in his crisp, t
   <img src="books/nobody-trusts-a-brass-clipboard/images/ch2-the-ground-truth-problem.png" >
 </p>
 
-
 <br/>
 
 Instead, the mucus dripped down his cheek.

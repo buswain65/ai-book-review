@@ -26,6 +26,12 @@ Standing a few feet away, holding a tall, carved wooden staff, was a woman in a 
 
 <br/>
 
+<p align="center">
+  <img src="books/nobody-trusts-a-brass-clipboard/images/ch-3-the-final-signal.png" >
+</p>
+
+<br/>
+
 Mark crouched behind a pine bush, narrowing his eyes. *"Right,"* he thought. *"Mercenary merchant, travelling sage. Classic fantasy archetypes. If a text box pops up asking me to collect six rat tails, I'm going to jump into the river."*
 
 <br/>
