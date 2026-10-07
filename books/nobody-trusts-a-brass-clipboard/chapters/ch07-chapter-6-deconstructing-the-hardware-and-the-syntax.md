@@ -22,6 +22,12 @@ The innkeeper let out the weary sigh of a man who had performed this exact ritua
 
 <br/>
 
+<p align="center">
+  <img src="books/nobody-trusts-a-brass-clipboard/images/ch6-deconstructing-the-hardware-and-the-syntax.png" >
+</p>
+
+<br/>
+
 He leaned back in his chair, taking a slow sip of cold cider. Beside him, Garin was already halfway through a plate of stew, eating with the grim focus of a man who suspected the bowl might be confiscated at any moment. Vespera sat upright, cutting her bread into perfectly even squares.
 
 <br/>
