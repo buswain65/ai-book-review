@@ -171,6 +171,11 @@
           "id": "ch33-chapter-32-the-patch",
           "title": "Chapter 32: The Patch",
           "file": "ch33-chapter-32-the-patch.md"
+        },
+        {
+          "id": "ch34-chapter-33-post-mortem",
+          "title": "Chapter 33: Post-Mortem",
+          "file": "ch34-chapter-33-post-mortem.md"
         }
       ]
     },
