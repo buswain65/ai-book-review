@@ -208,6 +208,11 @@
           "id": "ch02-chapter-2-processing",
           "title": "Chapter 2: Processing",
           "file": "ch02-chapter-2-processing.md"
+        },
+        {
+          "id": "ch03-chapter-3-the-status-screen",
+          "title": "Chapter 3: The Status Screen",
+          "file": "ch03-chapter-3-the-status-screen.md"
         }
       ]
     }
