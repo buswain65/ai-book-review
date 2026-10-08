@@ -295,7 +295,18 @@
       <!-- TOP PANEL (67% Height): MANUSCRIPT EDITOR / READER / PREVIEW -->
       <section id="manuscriptPanel" class="flex-1 min-h-0 flex flex-col border-b border-slate-800 bg-slate-950 overflow-hidden">
         <div class="min-h-10 border-b border-slate-800 bg-slate-900/30 px-4 py-1.5 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400 shrink-0">
-          <span id="currentChapterTitle" class="font-medium text-slate-200 truncate min-w-0">No chapter selected</span>
+          <div class="flex items-center gap-2 min-w-0">
+            <span id="currentChapterTitle" class="font-medium text-slate-200 truncate min-w-0">No chapter selected</span>
+            <!-- Rename chapter (Author Mode only) -->
+            <button id="renameChapterBtn" onclick="startRenameChapter()" aria-label="Rename this chapter" title="Rename this chapter" class="hidden shrink-0 px-2 py-0.5 rounded border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">✎ Rename</button>
+            <form id="renameChapterForm" onsubmit="submitRenameChapter(event)" class="hidden flex items-center gap-2 min-w-0">
+              <label for="renameChapterInput" class="sr-only">Chapter title</label>
+              <input id="renameChapterInput" type="text" onkeydown="if (event.key === 'Escape') { event.stopPropagation(); cancelRenameChapter(); }" class="w-[28rem] max-w-[55vw] bg-slate-800 border border-slate-700 rounded px-2 py-1 text-sm text-slate-100 focus:outline-none focus:border-brand-500" />
+              <button type="submit" class="shrink-0 px-2.5 py-1 rounded bg-brand-700 hover:bg-brand-600 text-white font-medium">Save</button>
+              <button type="button" onclick="cancelRenameChapter()" class="shrink-0 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">Cancel</button>
+              <span id="renameChapterError" class="hidden text-rose-400"></span>
+            </form>
+          </div>
 
           <div id="editorControls" class="hidden flex flex-wrap items-center gap-2 sm:gap-3">
             <!-- Edit / Preview Mode Toggle -->
@@ -397,6 +408,11 @@
         <div>
           <label for="newBookGenre" class="block font-medium text-slate-200 mb-1">Genre *</label>
           <input type="text" id="newBookGenre" placeholder="e.g. Epic Fantasy" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500" />
+        </div>
+        <div>
+          <label for="newBookFirstChapter" class="block font-medium text-slate-200 mb-1">First Chapter Title</label>
+          <input type="text" id="newBookFirstChapter" placeholder="Chapter 1" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500" />
+          <p class="text-xs text-slate-400 mt-1">You can rename any chapter later with ✎ Rename above the editor.</p>
         </div>
         <div>
           <label for="newBookBlurb" class="block font-medium text-slate-200 mb-1">Blurb / Summary</label>
@@ -965,6 +981,8 @@
       }
       document.getElementById('demographicBar').classList.toggle('hidden', mode !== 'author');
       if (mode !== 'author') document.getElementById('newChapterForm').classList.add('hidden');
+      document.getElementById('renameChapterBtn').classList.toggle('hidden', mode !== 'author');
+      if (mode !== 'author') cancelRenameChapter(false);
       renderAgentTabs();
       renderAgentStatus();
       applyReviewPanelState();
@@ -1125,6 +1143,7 @@
 
     async function loadChapter(chapterId) {
       if (!confirmDiscardChanges()) return;
+      cancelRenameChapter(false);
       state.unsavedChanges = false;
       state.currentChapterId = chapterId;
       state.loadingChapterId = chapterId; // Set active loading request lock
@@ -2064,8 +2083,10 @@ ${body}
       }
 
       const bookId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-      const firstChapFile = "ch01-the-awakening.md";
-      const firstChapId = "ch01-the-awakening";
+      const firstChapTitle = document.getElementById('newBookFirstChapter').value.trim() || "Chapter 1";
+      const firstChapSlug = firstChapTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'chapter-1';
+      const firstChapId = `ch01-${firstChapSlug}`.replace(/^ch01-chapter-1-?/, 'ch01-').replace(/-$/, '') || 'ch01';
+      const firstChapFile = `${firstChapId}.md`;
 
       const newBookObj = {
         id: bookId,
@@ -2074,7 +2095,7 @@ ${body}
         genre: genre,
         blurb: blurb,
         chapters: [
-          { id: firstChapId, title: "Chapter 1: The Awakening", file: firstChapFile }
+          { id: firstChapId, title: firstChapTitle, file: firstChapFile }
         ]
       };
 
@@ -2088,10 +2109,109 @@ ${body}
         const metaContent = JSON.stringify({ id: bookId, title, author, genre, blurb }, null, 2);
         await commitGitHubFile(`books/${bookId}/meta.json`, metaContent, `Create meta.json for ${title}`);
 
-        const initialChapMarkdown = `# Chapter 1: The Awakening\n\nStart writing your new manuscript chapter here...`;
+        const initialChapMarkdown = `## ${firstChapTitle}\n\n<br/>\n\nStart writing your new manuscript chapter here...\n`;
         await commitGitHubFile(`books/${bookId}/chapters/${firstChapFile}`, initialChapMarkdown, `Create initial chapter for ${title}`);
 
         await commitGitHubFile("books.json", JSON.stringify(state.booksData, null, 2), `Add '${title}' to books.json index`);
+      }
+    }
+
+    // --- RENAME CHAPTER ---
+    // Changes the chapter's title in books.json. The chapter's id and file name stay the same, so
+    // its text, saved reviews and demographics are kept. If the chapter text starts with a heading
+    // matching the old title, that heading is updated in the editor too (commit the chapter to save it).
+    function currentBookAndChapter() {
+      const book = state.booksData && state.booksData.books.find(b => b.id === state.currentBookId);
+      const chap = book && book.chapters.find(c => c.id === state.currentChapterId);
+      return { book, chap };
+    }
+
+    function startRenameChapter() {
+      const { chap } = currentBookAndChapter();
+      if (!chap) return;
+      document.getElementById('currentChapterTitle').classList.add('hidden');
+      document.getElementById('renameChapterBtn').classList.add('hidden');
+      document.getElementById('renameChapterError').classList.add('hidden');
+      document.getElementById('renameChapterForm').classList.remove('hidden');
+      const input = document.getElementById('renameChapterInput');
+      input.value = chap.title;
+      input.focus();
+      input.select();
+    }
+
+    function cancelRenameChapter(refocus = true) {
+      const form = document.getElementById('renameChapterForm');
+      if (form.classList.contains('hidden')) return;
+      form.classList.add('hidden');
+      document.getElementById('currentChapterTitle').classList.remove('hidden');
+      if (state.mode === 'author') {
+        document.getElementById('renameChapterBtn').classList.remove('hidden');
+        if (refocus) document.getElementById('renameChapterBtn').focus();
+      }
+    }
+
+    async function submitRenameChapter(e) {
+      e.preventDefault();
+      const { book, chap } = currentBookAndChapter();
+      if (!chap) return cancelRenameChapter();
+      const input = document.getElementById('renameChapterInput');
+      const errorEl = document.getElementById('renameChapterError');
+      const showError = msg => { errorEl.innerText = msg; errorEl.classList.remove('hidden'); input.focus(); };
+      const newTitle = input.value.trim();
+      const oldTitle = chap.title;
+
+      if (!newTitle) return showError("Enter a title.");
+      if (newTitle === oldTitle) return cancelRenameChapter();
+      if (book.chapters.some(c => c !== chap && c.title.toLowerCase() === newTitle.toLowerCase())) {
+        return showError("Another chapter already has that title.");
+      }
+
+      chap.title = newTitle;
+      cancelRenameChapter();
+      renderChapterList(book);
+      const activeBtn = document.getElementById(`chap-btn-${chap.id}`);
+      if (activeBtn) activeBtn.classList.add('bg-slate-800', 'text-white');
+      document.getElementById('currentChapterTitle').innerText = `${book.title} — ${newTitle}`;
+      renderReviewContent();
+
+      // Update the chapter's own leading heading if it matches the old title.
+      const editor = document.getElementById('chapterEditor');
+      const lines = editor.value.split('\n');
+      const first = lines.findIndex(l => l.trim());
+      let headingChanged = false;
+      if (first >= 0) {
+        const m = lines[first].match(/^(#{1,6})\s+(.*?)\s*$/);
+        if (m && m[2] === oldTitle) {
+          lines[first] = `${m[1]} ${newTitle}`;
+          editor.value = lines.join('\n');
+          markUnsaved();
+          headingChanged = true;
+        }
+      }
+
+      const statusEl = document.getElementById('saveStatus');
+      if (state.settings.ghToken && state.settings.ghOwner && state.settings.ghRepo) {
+        statusEl.innerText = "Saving new title...";
+        statusEl.className = "text-amber-400 text-xs animate-pulse";
+        const ok = await commitGitHubFile("books.json", JSON.stringify(state.booksData, null, 2), `Rename chapter '${oldTitle}' to '${newTitle}'`);
+        if (!ok) {
+          chap.title = oldTitle;
+          renderChapterList(book);
+          const btn = document.getElementById(`chap-btn-${chap.id}`);
+          if (btn) btn.classList.add('bg-slate-800', 'text-white');
+          document.getElementById('currentChapterTitle').innerText = `${book.title} — ${oldTitle}`;
+          statusEl.innerText = "❌ Rename failed";
+          statusEl.className = "text-rose-400 text-xs";
+          alert("Couldn't save the new chapter title to GitHub. Check your token in Settings (⚙) and try again.");
+          return;
+        }
+      }
+      if (headingChanged) {
+        statusEl.innerText = "Renamed — commit chapter to update its heading";
+        statusEl.className = "text-amber-400 text-xs";
+      } else {
+        statusEl.innerText = state.unsavedChanges ? "Unsaved changes" : "✓ Renamed";
+        statusEl.className = state.unsavedChanges ? "text-amber-400 text-xs" : "text-emerald-400 text-xs";
       }
     }
 
