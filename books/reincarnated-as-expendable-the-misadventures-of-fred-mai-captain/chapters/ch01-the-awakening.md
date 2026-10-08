@@ -1,0 +1,3 @@
+# Chapter 1: The Awakening
+
+Start writing your new manuscript chapter here...
