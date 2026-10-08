@@ -203,6 +203,11 @@
           "id": "ch01-truck-kun",
           "title": "Chapter 1: Truck-Kun",
           "file": "ch01-truck-kun.md"
+        },
+        {
+          "id": "ch02-chapter-2-processing",
+          "title": "Chapter 2: Processing",
+          "file": "ch02-chapter-2-processing.md"
         }
       ]
     }
