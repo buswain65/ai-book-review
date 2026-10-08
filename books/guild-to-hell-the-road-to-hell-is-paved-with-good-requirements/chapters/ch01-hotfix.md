@@ -188,31 +188,27 @@ Then he turned back to the export module. It was 11:47 p.m., and the fix wasn't 
 
 He spent the next two hours trying to prove himself wrong.
 
-This was, he knew, a well-established engineering technique. When you suspect the problem is something terrible, you first rule out everything that isn't terrible, slowly and carefully, in the hope that one of the non-terrible things turns out to be the culprit. It almost never works. Engineers do it anyway, for the same reason people check the same empty pocket three times for their keys.
+Every engineer knows this technique. When you suspect the problem is something terrible, you first rule out everything that isn't terrible, in the hope that one of the harmless things turns out to be guilty. It almost never works. Engineers do it anyway, the way people check the same empty pocket three times for their keys.
 
-First, he restarted the export service. This took four minutes and changed nothing.
+He restarted the export service. Nothing.
 
-Then he cleared the cache. Then he cleared the other cache, the one nobody remembered setting up. Then he found a third cache, inside the second one, and cleared that too. Nothing changed, except that the company dashboard briefly showed every customer's name as "undefined." He put the third cache back.
+He cleared the cache. Then the other cache, the one nobody remembered setting up. Then a third cache, hidden inside the second. For one terrible moment, every customer's name on the company dashboard read "undefined." He put the third cache back.
 
-At 12:15 a.m., the motion-sensor lights over the engineering pod decided that, since no one had moved in twenty minutes, the building must be empty. They switched off. Walter sat in the dark for a moment, lit only by his monitor, then raised both arms and waved them over his head like a man signaling a rescue helicopter. The lights came back on. He would do this four more times before the night was over.
+At 12:15, the motion-sensor lights decided the building was empty and switched off. Walter waved both arms over his head like a man flagging down a rescue helicopter. The lights came back on. He would do this four more times before the night was over.
 
-He moved on to the tests. Somewhere, in theory, SynergyStack had tests for the export module, and tests would tell him where it was breaking. After twenty minutes of searching, he found a single file called `test_export_TODO.js`. It contained one test. The test checked whether `true` was equal to `true`. It had passed every night since 2016, and it appeared on the company's quality dashboard as "100% passing," in a reassuring shade of green.
+He made the button purple. It took forty seconds, and it was the only thing all night that went according to plan. It was, he had to admit, a nice purple.
 
-Walter thought of Dana's laminated sign and felt a pang of something like grief.
+He tried the PDF. The PDF library needed version 4 of a tool called `datefmt`. The rest of the export needed version 2, and refused to start if version 4 was anywhere in the building. Walter spent half an hour trying to get them to share. It was like hosting Thanksgiving for divorced relatives. Finally he wrote *PDF — Monday* on a sticky note, knowing the note was a lie.
 
-At 12:50 a.m., in a spirit of pure self-defense, he did the parts of Brynn's list that he *could* do. The purple button took forty seconds. It was the only part of the night that went exactly according to plan. He looked at it for a while. It was, he had to admit, a nice purple.
-
-The PDF export was a different story. The library that made PDFs needed version 4 of a tool called `datefmt`. The library that ran the rest of the export needed version 2 of `datefmt`, and would not start if version 4 was anywhere in the building. Walter spent half an hour trying to persuade the two of them to coexist. It was like hosting Thanksgiving for divorced relatives. Eventually he gave up and wrote *PDF — Monday* on a sticky note, knowing even as he wrote it that the note was a lie.
-
-At 1:20 a.m., he searched online for the exact error message the export was producing. He found exactly one result: a forum post from 2011, by a user named `gary_builds_things`. It described Walter's problem precisely, in every detail. Under it, there was only one reply, also from `gary_builds_things`, posted three days later:
+He searched online for the error message. One result: a forum post from 2011 by a user named `gary_builds_things`, describing Walter's problem in perfect detail. Under it sat a single reply from `gary_builds_things`, three days later:
 
 > nvm fixed it
 
-That was the whole reply. No explanation. No code. Just the quiet, permanent satisfaction of a man who had solved a problem and taken the solution with him to Oregon.
+No explanation. No code. Just the permanent satisfaction of a man who had solved a problem and taken the answer with him to Oregon.
 
-Walter looked at that reply for a long time.
+Walter stared at it for a long time.
 
-Then, finally, because there was nothing left to rule out, he opened the network logs.
+Then, because there was nothing left to rule out, he opened the network logs.
 
 At 1:52 a.m., the logs confirmed it.
 
