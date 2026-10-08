@@ -6,7 +6,7 @@ Forty-two cans of cream of mushroom stood in three perfect rows, every label tur
 
 Facing, it was called. You pulled every can to the front edge of the shelf and turned it so the label faced out, so that a customer coming down the aisle saw a wall of order instead of a jumble. Nobody had ever thanked Fred for facing. Nobody, as far as he could tell, had ever noticed. That was fine. Fred noticed.
 
-The Quik-Stop on Route 9 was open twenty-four hours a day, three hundred and sixty-five days a year, and between midnight and six it belonged to Fred. The fluorescent tubes buzzed. The slushie machine turned its two slow colors, around and around, like a tiny weather system. The road outside was empty in both directions. Beyond the parking lot there was nothing but dark and a billboard for a personal-injury lawyer.
+The Quik-Stop on Route 9 was open twenty-four hours a day, three hundred and sixty-five days a year, and between midnight and six it belonged to Fred. The fluorescent tubes buzzed with the low, devotional hum of things that had been switched on in 1987 and never once allowed to rest. The slushie machine turned its two slow colors, around and around, like a tiny weather system forever on the verge of a storm that never came. The road outside was empty in both directions. Beyond the parking lot there was nothing but dark and a billboard for a personal-injury lawyer.
 
 Fred had worked the night shift for eleven years. He had been offered the day shift twice and turned it down both times. During the day there were people, and people moved the soup.
 
