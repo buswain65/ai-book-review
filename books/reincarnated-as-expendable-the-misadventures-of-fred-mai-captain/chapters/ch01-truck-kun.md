@@ -68,7 +68,7 @@ Fred thought about it. He liked to give questions their due. "What's a cheat ski
 
 The kid stared at him. Then he explained, with the patience of the very young explaining something to the very old. Fred was thirty-six.
 
-It was a whole genre, the kid said. Isekai. It meant "another world." You were some loser (no offense) and you got hit by a truck. A goddess appeared and apologized for killing you, and she reincarnated you in a fantasy world with a special power nobody else had, and you became a hero. "You level up. You've got stats. Everyone underestimates you, and then you destroy them. And you get, like, a harem."
+It was a whole genre, the kid said. Isekai. It meant "another world." You were some loser (no offense) and you got hit by a truck. "There's always a truck," the kid said. "Fans call it Truck-kun. It's basically a character." A goddess appeared and apologized for killing you, and she reincarnated you in a fantasy world with a special power nobody else had, and you became a hero. "You level up. You've got stats. Everyone underestimates you, and then you destroy them. And you get, like, a harem."
 
 "A harem," said Fred.
 
@@ -87,3 +87,77 @@ Fred considered all of it: the truck, the goddess, the dragon who was also a gir
 "It's not about responsibility. It's about being special. Like, finally being special." The kid's voice did something small and private at the end, and he looked back down at his book. "Everyone wants that."
 
 Fred did not, particularly. But he could see that the kid did, very much, so he said, "I hope you get a good one," and meant it. The kid looked embarrassed and pleased, and bought a second energy drink.
+
+Fred did not hear the door. That was the first odd thing about the man in the suit. The chime went off for everyone: for customers, for the wind, once for a moth. It did not go off for him. He was simply there in aisle 3, looking at the soup.
+
+The second odd thing was the suit. It was white, or gold, or white catching a gold light that wasn't there, and it fit the way suits fit in advertisements and nowhere else. He carried a clipboard. The clipboard was gold too.
+
+"Wonderful facing," said the man.
+
+Nobody had ever said that to Fred in his life. He felt himself go pink to the ears. "Thank you."
+
+"Truly. Look at that." The man ran a finger along the front edge of the shelf without touching a single can. "Order. Discipline. Attention to detail. Remarkable. Tell me, Mr.—" He glanced at the badge, and something flickered across his face, like a computer meeting a hyphen. "—Mai-Captain. Have you ever felt that you were destined for something more?"
+
+Fred thought about it, because he thought about everything. "No," he said. "Not really."
+
+The man's smile did not move. "Never? You've never lain awake wondering whether, somewhere out there, there's a world that would finally see you for who you really are?"
+
+"I work nights," said Fred. "I mostly sleep in the day. I sleep pretty well."
+
+"I see." The man made a small mark on his clipboard, then flipped to a fresh page with the air of someone bringing out the good china. "Let me tell you about our packages."
+
+There were three. Hero Basic came with a sword, a class assigned at the discretion of the realm, and "exciting opportunities for advancement." Hero Plus added a cheat skill, subject to availability. Hero Premium guaranteed one, along with a title, a theme tune and a companion of your choosing, within reason.
+
+"And how much is Premium?" Fred asked, because he knew how these things worked.
+
+"Premium is by invitation." The man smiled. "But Basic is free."
+
+Fred considered this. Then he asked the questions he would have asked about any job. Were there breaks? Between battles. Was there a stockroom? The man wasn't sure, but there was certainly an armory. What were the hours? Destiny did not keep hours. And what about dental?
+
+The man's pen paused. "You'd be the first," he said, "to ask about dental."
+
+"It's just that it's important," said Fred, "if you're going to be somewhere a long time."
+
+"Mm." Another small mark.
+
+"Well, why don't we start you on a free trial? No obligation. Just sign here—" he turned the clipboard around. There were a great many lines, a great deal of very small print, and one large box marked SIGNATURE OF HERO. "—and here, and here. Don't worry about that bit."
+
+Fred read that bit. It was an old habit; Dolores said he was the only person she had ever met who read the back of a lottery ticket. The small print was in a language he didn't know, made of curling letters that seemed to wriggle when he looked straight at them. One word near the bottom he could make out in plain English. It was EXPENDABLE. Fred did not know what it meant on a form like this, but he knew what it meant on a shelf. It meant the stock nobody would miss.
+
+"No, thank you," Fred said politely. "I like it here."
+
+The man looked at him for a long moment. Then he looked at the soup. Then he looked past it, at the empty parking lot, the dark road and the billboard for the injury lawyer. He sighed, the deep and personal sigh of a man two hundred souls behind on his numbers in the last week of the month.
+
+"Pity," he said. "Quota's quota."
+
+Fred turned to fetch him a bag for the clipboard, which seemed like the polite thing to offer. When he turned back, the aisle was empty. The door had not chimed. Three cans of tomato soup were facing the wrong way.
+
+Fred fixed them. His hands, he noticed, were not quite steady.
+
+At half past three Fred took out the trash. He always took out the trash at half past three. It was one of the fixed points of his night, like the soup and the gum and Hank. He found it calming to stand for a moment at the edge of the lot with the bag in his hand and the cold air on his face, looking at whatever stars he could see past the billboard. The night smelled of diesel and wet asphalt and, very faintly, of cherry slushie, which Fred had always taken as a sign that the world was in order.
+
+Route 9 was empty in both directions. It was always empty at half past three.
+
+He lifted the lid of the dumpster. Aisle 4, he thought. He'd do aisle 4 next. The canned vegetables were a mess. Somebody had put a can of creamed corn in with the green beans, and it had been bothering him since eleven.
+
+Light swung across the lot.
+
+Fred turned. Headlights were coming up Route 9, enormous and white. Behind them was a truck, the biggest he had ever seen on this road: a long, flat-faced box truck with a sound like the sea. There was no one in the cab. He could see that very clearly, the empty seat and the empty wheel turning on its own. On the side of the box, in tall gold letters with sparkles, were the words:
+
+**FEKFOSIO RECRUITMENT SERVICES**
+
+***Your Destiny Awaits!\****
+
+The truck was no longer on the road. The truck was in the parking lot. The truck was coming, with great purpose and no hurry, straight for Fred.
+
+Fred, who liked to give everything its due, had time, as it turned out, for a great many thoughts. He thought that the asterisk must lead to some small print somewhere, and that he would have liked to read it. He thought of the kid with the paperback, and hoped he was all right, and hoped somebody gave him a good cheat skill someday. He thought of Dolores at the airport, and of his application in the drawer marked FORMS, with the hyphen written extra small.
+
+Mostly, though, he thought about aisle 4. The creamed corn, in with the green beans. Now nobody would ever—
+
+Then nothing. Then dark, a great soft dark, like the inside of a stockroom with the lights off.
+
+Then, from somewhere very far above, came a cheerful three-note chime, the kind that comes before an announcement at an airport.
+
+"Congratulations!" said a bright voice. "You've been chosen!"
+
+"I think," said Fred, to no one, "there's been a mistake on my form."
