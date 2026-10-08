@@ -213,6 +213,11 @@
           "id": "ch03-chapter-3-the-status-screen",
           "title": "Chapter 3: The Status Screen",
           "file": "ch03-chapter-3-the-status-screen.md"
+        },
+        {
+          "id": "ch04-chapter-4-boot-camp",
+          "title": "Chapter 4: Boot Camp",
+          "file": "ch04-chapter-4-boot-camp.md"
         }
       ]
     }
