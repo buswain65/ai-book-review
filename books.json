@@ -272,6 +272,11 @@
           "id": "ch03-chapter-3-onboarding",
           "title": "Chapter 3: Onboarding",
           "file": "ch03-chapter-3-onboarding.md"
+        },
+        {
+          "id": "ch04-chapter-4-requirements",
+          "title": "Chapter 4: Requirements",
+          "file": "ch04-chapter-4-requirements.md"
         }
       ]
     }
