@@ -2,7 +2,7 @@
 
 Fred woke up in a queue, which was a great comfort to him, because he understood queues.
 
-He was sitting in a plastic chair. It was bolted to the chair on his left, which was bolted to the chair on its left, and so on, in a long curving row that ran off into a white haze where the far end should have been. There were more rows in front of him and more behind, thousands of them, tens of thousands, all full. Overhead there was no ceiling, only a soft bright cloud, lit so evenly that nothing cast a shadow.
+He was sitting in a plastic chair. It was bolted to the chair on his left, which was bolted to the chair on its left, and so on, in a long curving row that ran off into a white haze where the far end should have been. There were more rows in front of him and more behind, thousands of them, tens of thousands, all full. Overhead there was no ceiling, only a soft bright cloud, lit so evenly that nothing cast a shadow. The air smelled faintly of carpet cleaner and incense, like a cathedral that had been converted into a tax office.
 
 In his hand was a paper ticket. It said 4712-0381.
 
@@ -18,7 +18,7 @@ They were all dead too, he supposed, and they had all died in whatever they'd be
 
 What surprised him was their faces. He would have expected people who had just died to look upset. These people looked thrilled. The pizza courier was bouncing his knee. The salaryman kept checking his reflection in the laptop's dark screen and smoothing his hair. A woman two seats along was whispering to herself, "Fire magic, fire magic, please, fire magic."
 
-Posters hung in the aisles, hanging from nothing. They showed a young man with impossible hair on a clifftop, sword raised, cape blowing, with three beautiful women gazing at him and a small dragon on his shoulder. YOUR DESTINY AWAITS!\* said the posters. The asterisk was very small and led nowhere Fred could find.
+Posters floated in the aisles, hanging from nothing. They showed a young man with impossible hair on a clifftop, sword raised, cape blowing, with three beautiful women gazing at him and a small dragon on his shoulder. YOUR DESTINY AWAITS!\* said the posters. The asterisk was very small and led nowhere Fred could find.
 
 A cherub floated by. It was a real cherub, chubby and pink with small white wings, and it wore a lanyard and carried a clipboard. Fred raised a hand.
 
@@ -41,6 +41,24 @@ Fred looked at the form. The first box said HERO REGISTRATION NUMBER (REQUIRED).
 The cherub beamed at him as if he'd said something clever. "Now you've got it." And it drifted off, humming along with the angels.
 
 Fred folded the form neatly and put it in his shirt pocket. You never knew.
+
+The pizza courier leaned over. "So what are you hoping for?"
+
+"Hoping for?" said Fred.
+
+"Your skill. I'm hoping for speed. Flash Step, Speed Blitz, something like that." He patted his insulated bag. "Thirty minutes or it's free, you know? I was born for it."
+
+"Item Box," said the salaryman, without looking up from his reflection. "Infinite storage. Everyone underestimates Item Box. Then you corner the potion market." He had clearly given this a great deal of thought. "I've got a spreadsheet."
+
+They both looked at Fred.
+
+Fred considered the question. He tried to imagine wanting something so badly that you made a spreadsheet about it, and found that he couldn't, quite. What he wanted, if he was honest, was to go back and do aisle 4.
+
+"I don't mind," he said. "Whatever's going spare."
+
+The salaryman looked at him with pity. The pizza courier looked at him the way you'd look at a man who had brought a spoon to a sword fight.
+
+"Nobody gets what's going spare," the courier said kindly. "That's just for, like, NPCs."
 
 He had been waiting for what felt like an hour, or possibly a week, when the trumpets sounded. There were no clocks, only the red sign, which had crept forward from 0094 to 0102.
 
@@ -74,9 +92,9 @@ Fred looked down at his ticket and said nothing.
 
 It was a long time before the sign said 4712-0381, and when it did, Fred almost missed it, because he had been dozing in a way that wasn't quite sleep. A voice said, "Four seven one two, oh three eight one, to cubicle seven," so warmly and personally that it seemed to have waited all its life to say his number. He stood up. His knees didn't ache. Being dead had some advantages.
 
-Cubicle seven was one of a row of thousands. The gray fabric partitions were exactly like the ones at the Quik-Stop's regional office, except that these went up and up into the clouds. Inside were a desk, a terminal, a chair for visitors, and a goddess.
+Cubicle seven was one of a row of thousands. The gray fabric partitions were exactly like the ones at the Quik-Stop's regional office, except that these went up and up into the clouds, where, presumably, the managers sat. Inside were a desk, a terminal, a chair for visitors, and a goddess.
 
-She was radiant; there was no other word for it. She glowed gold at the edges, her hair floated as if underwater, and she wore something long and gauzy that moved without wind. She also wore a telephone headset. At her elbow sat a mug that said WORLD'S OKAYEST DEITY. Pinned to the partition behind her was a chart. Long ago its line had gone up. Lately it went down, steeply, toward a dotted red line marked QUOTA.
+She was radiant, in the way that suggested radiance was in her job description. She glowed gold at the edges, her hair floated as if underwater, and she wore something long and gauzy that moved without wind. She also wore a telephone headset. At her elbow sat a mug that said WORLD'S OKAYEST DEITY. Pinned to the partition behind her was a chart. Long ago its line had gone up. Lately it went down, steeply, toward a dotted red line marked QUOTA.
 
 "Welcome, welcome, sit down, congratulations," said the goddess, all in one breath, typing. "I am Facilmora, Goddess of Reincarnation and Second Chances. On behalf of the heavens, may I extend my deepest apologies for your untimely death. It was an accident, a terrible accident, and as compensation you have been chosen for a new life in a world of magic and adventure. Congratulations! You've been chosen!" She did not look up from the screen. "Name?"
 
@@ -182,7 +200,7 @@ Fred stood up. At the entrance to the cubicle he turned back, because it seemed 
 
 Facilmora was already typing. But as he went out, Fred thought her hand paused on the keys for just a second before it went on.
 
-The departures lounge was even bigger than the waiting hall, and it was full of people from his batch, all holding stamped tickets and all talking at once. Above them hung a banner in gold letters: BATCH #4712, DEPARTING TO THE HOLY KINGDOM OF FEKFOSIO. Underneath, in smaller letters, it said WE HOPE YOU ENJOY YOUR DESTINY.
+The departures lounge was even bigger than the waiting hall, and it was full of people from his batch, all holding stamped tickets and all talking at once. It had the high glass ceiling and stale optimism of an airport at the start of a holiday weekend. Above them hung a banner in gold letters: BATCH #4712, DEPARTING TO THE HOLY KINGDOM OF FEKFOSIO. Underneath, in smaller letters, it said WE HOPE YOU ENJOY YOUR DESTINY.
 
 "Fekfosio," said the pizza courier beside him, trying it out. "That sounds cool. That sounds like an elf name."
 
