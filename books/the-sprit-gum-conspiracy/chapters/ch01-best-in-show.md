@@ -2,13 +2,15 @@
 
 The thing nobody tells you about elf ears is that they're held on by faith and a two-dollar bottle of glue.
 
-I was learning this in the second-floor men's room of the Radisson in downtown Raleigh, which had been taken over for the weekend by FaeCon, the Triangle's third-largest fantasy convention, leaning so close to the mirror that my breath fogged a little circle where my face should have been. Spirit gum, for the uninitiated, is the adhesive of choice for serious cosplayers, theater kids, and anyone who has ever needed to stick something fake to their own head. It smells like a pine tree that's been drinking. You paint it on, wait for it to go tacky, press the prosthetic into place, and hold it there while you think about your choices.
+I was learning this in the second-floor men's room of the Radisson in downtown Raleigh, which had been taken over for the weekend by FaeCon, the Triangle's third-largest fantasy convention. I was leaning so close to the mirror that my breath fogged a little circle where my face should have been. Spirit gum, for the uninitiated, is the adhesive of choice for serious cosplayers, theater kids, and anyone who has ever needed to stick something fake to their own head. It smells like a pine tree that's been drinking. You paint it on, wait for it to go tacky, press the prosthetic into place, and hold it there while you think about your choices.
 
 I owned a big bottle of the professional stuff. It was on the bathroom counter of my apartment off Hillsborough Street, next to my phone charger, about a mile and a half away. What I had with me was the travel size, which holds about as much as a thimble and costs as much as a sandwich.
 
 "Come on," I told the left ear. "We talked about this."
 
 The left ear peeled up at the tip. I pressed it back down and counted to thirty in my head, which is a thing I do with seventh graders when somebody needs a minute before they say something they'll regret. It works on ears about as well as it works on twelve-year-olds, which is to say, eventually.
+
+My supervising teacher, Mrs. Okafor, says I have "a gift for redirecting energy." She said it the week I got Jaylen Price to stop throwing erasers by appointing him Official Eraser Monitor, with a lanyard. I think about it more than I should. Nobody had ever told me I had a gift for anything before.
 
 Inventory.
 
@@ -48,13 +50,13 @@ I didn't know yet how much I was going to miss him. You never do.
 
 The Radisson's lobby and ballroom level held a few thousand people in various states of armor, wings, and sleep deprivation. It smelled like popcorn, foam rubber, and the quiet desperation of people who'd been hot-gluing things at four in the morning. I loved it. I'd loved it since I was fourteen and came to my first convention as a very unconvincing wizard in my mom's bathrobe.
 
-I left a trail. Literally. Every step, a fine shimmer drifted off me and settled on the carpet, the people around me, and Dev.
+I left a trail. Every step, a fine shimmer drifted off me and settled on the carpet, the people around me, and Dev.
 
 "You're shedding," Dev said.
 
 "I'm sharing."
 
-We stopped at the coffee cart, where a medium cold brew cost $6.75. I tipped twenty percent. The guy running the cart had the eyes of someone who'd been asked about oat milk four hundred times since dawn, my mother raised me right, and I'm bad at math under pressure. That left $3.12 in my checking account until the fifteenth. I had a box of off-brand cereal at the apartment called Frosted Wheat Rectangles. I'd be fine.
+We stopped at the coffee cart, where a medium cold brew cost $6.75. I tipped twenty percent. The guy running the cart had the eyes of someone who'd been asked about oat milk four hundred times since dawn, my mother raised me right, and I'm bad at math under pressure. That left $3.12 in my checking account until the fifteenth. Student teaching is a full-time job that pays nothing. In fact, I pay tuition to do it. I had a box of off-brand cereal at the apartment called Frosted Wheat Rectangles. I'd be fine.
 
 I pulled out my phone to check the contest schedule. Battery: 41%.
 
@@ -74,15 +76,19 @@ He opened his mouth. He closed it. He took out his phone and looked it up, and I
 
 I'm bad at a lot of things: parallel parking, cooking anything that isn't cereal, saying no to my supervising teacher. But I have played *Elderlight III* eleven times, including once using only a frying pan, and I know that world better than I know the fire exits in my own apartment.
 
-The man who wrote all three games, Elliot Marsh, is famous for being impossible to find. He's given exactly one interview, in 2009, to a gaming magazine that doesn't exist anymore. When they asked him where the world of *Elderlight* came from, he said, "Some stories you can only tell if everyone thinks you made them up." Fans have argued about what that meant for seventeen years. I had a theory. My theory was that he was being pretentious.
+Behind the hoodie guy, the *Elderlight* booth had hung a banner the length of a minivan, printed with the only thing Elliot Marsh has ever said in public. Marsh wrote all three games, and he's famous for being impossible to find. He gave exactly one interview, in 2009, to a gaming magazine that doesn't exist anymore, and when they asked him where the world of *Elderlight* came from, he said: SOME STORIES YOU CAN ONLY TELL IF EVERYONE THINKS YOU MADE THEM UP.
+
+The booth was also selling it on tote bags, for twenty-five dollars. Next to the tote bags sat a stack of Collector's Edition Codexes, leather-bound replicas of the books from the game's royal library, for three hundred. Fans have argued about what Marsh meant for seventeen years. The studio had clearly settled the question. He meant merchandise.
+
+I had my own theory. My theory was that he was being pretentious.
 
 I was wrong about that, as it turned out. I was wrong about a lot of things that day.
-
-My supervising teacher, Mrs. Okafor, says I have "a gift for redirecting energy." She said it the week I got Jaylen Price to stop throwing erasers by appointing him Official Eraser Monitor, with a lanyard. I think about it more than I should. Nobody had ever told me I had a gift for anything before.
 
 \* \* \*
 
 The costume contest check-in was a folding table outside the Sovereign Crystal Grand Ballroom, which was neither crystal nor sovereign and had carpet the color of a hospital waiting room, staffed by a volunteer who handed me a sticker without looking up. HELLO MY NAME IS. I wrote AELINDOR in my best whiteboard capitals and pressed it over my heart.
+
+First prize was five hundred dollars and a year's supply of Mana Surge, the energy drink sponsoring the contest. I didn't care about the Mana Surge. Five hundred dollars was rent.
 
 The line wrapped down the hallway, and I did what I always do in lines, which is grade everyone. I can't help it. It's a sickness. A Viking in real chainmail: A. Two college girls in a two-person dragon: A-minus, points off because the back half kept walking into the front half. A guy in a hoodie with cat ears: incomplete, see me after class.
 
@@ -168,7 +174,7 @@ Here's what a semester of student teaching taught me: the first thirty seconds d
 
 So I walked onto that stage like I was expected.
 
-The cape caught on the mic stand three steps in. I made it part of the move. I spun, swept it free in a wide arc, and threw a cloud of glitter into the spotlight. It hung there in the air, glittering, for one perfect second. Somebody in the third row said, "*Whoa*."
+The cape caught on the mic stand three steps in. I made it part of the move. I spun, swept it free in a wide arc, and threw a cloud of glitter into the spotlight. It hung in the light for one perfect second. Somebody in the third row said, "*Whoa*."
 
 I drew the foam sword. I walked the runway slowly, chin up, scanning the crowd like they were my subjects and I was disappointed in some of them. At the end, I knelt to an invisible throne, rose, and swept the sword up toward the lights.
 
@@ -178,7 +184,9 @@ Then I gave them everything I had, from the diaphragm, the way my high school ch
 
 The room exploded.
 
-In the back, a cluster of *Elderlight* fans started chanting it back to me. Lily was on her dad's shoulders, shrieking and throwing her pinch of royal glitter into the air. Dev's cardboard arms were flailing so hard that one fell off. One of the judges, a woman in a professional armor build, had her head thrown back laughing, the good kind of laughing. Even Trent was clapping. Only a little. But he was.
+In the back, a cluster of *Elderlight* fans started chanting it back to me. Lily was on her dad's shoulders, shrieking and throwing her pinch of royal glitter into the air. Dev's cardboard arms were flailing so hard that one fell off. One of the judges, a woman in a professional armor build, had her head thrown back laughing, the good kind of laughing. In the front row, the tired wizard from the bathroom was clapping with damp hands. Even Trent was clapping. Only a little. But he was.
+
+At the judges' table, three pens were moving across three clipboards. For the first time in my life, I was the one being graded, and I didn't mind.
 
 I've been a lot of things in my life. The kid picked last. The guy who's "so funny." The student teacher whose supervisor has to remind him, gently, about his lesson plans.
 
