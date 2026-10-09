@@ -74,6 +74,10 @@ He opened his mouth. He closed it. He took out his phone and looked it up, and I
 
 I'm bad at a lot of things: parallel parking, cooking anything that isn't cereal, saying no to my supervising teacher. But I have played *Elderlight III* eleven times, including once using only a frying pan, and I know that world better than I know the fire exits in my own apartment.
 
+The man who wrote all three games, Elliot Marsh, is famous for being impossible to find. He's given exactly one interview, in 2009, to a gaming magazine that doesn't exist anymore. When they asked him where the world of *Elderlight* came from, he said, "Some stories you can only tell if everyone thinks you made them up." Fans have argued about what that meant for seventeen years. I had a theory. My theory was that he was being pretentious.
+
+I was wrong about that, as it turned out. I was wrong about a lot of things that day.
+
 My supervising teacher, Mrs. Okafor, says I have "a gift for redirecting energy." She said it the week I got Jaylen Price to stop throwing erasers by appointing him Official Eraser Monitor, with a lanyard. I think about it more than I should. Nobody had ever told me I had a gift for anything before.
 
 \* \* \*
