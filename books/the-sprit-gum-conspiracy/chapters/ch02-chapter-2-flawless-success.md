@@ -6,7 +6,7 @@ The rest of me was less lucky. I came out of the light about four feet above a s
 
 Glitter drifted down over me like the end of a very sad parade.
 
-I took inventory. Shoulder: hurt. Foam sword: under me, bent into a gentle question mark. Cape: wrapped around both legs. Gwendolyn: sideways. My hands went to my ears before my brain told them to. Both still there. I let out a breath I hadn't known I was holding.
+I took inventory. Shoulder: hurt. Foam sword: under me, bent into a gentle question mark. Cape: wrapped around both legs. Gwendolyn: sideways. My hands went to my ears before my brain told them to. Both still there. I let out a breath that was mostly relief and partly glitter.
 
 Then I noticed the people.
 
@@ -78,7 +78,11 @@ I was more offended on Gwendolyn's behalf than my own.
 
 "A troll?" Durgan was outraged. "Trolls don't *sparkle*."
 
-"The contract specifies the Lost Prince." Venrick turned to the others, raising his voice. "This is plainly a failure. And the law of summoning is clear. A failed summoning must be unmade. Return it to the Void."
+"The contract specifies the Lost Prince." Pinched turned to the others, raising his voice. "This is plainly a failure. And the law of summoning is clear. A failed summoning must be unmade. Return it to the Void."
+
+"Now, now," Durgan said, stepping between Pinched and me with his flask raised. "If my lords will consult section nine of the contract, the Guild's warranty is very clear. A subject may only be unmade within thirty days of delivery, with the original receipt." He paused. "And the completion bonus is non-refundable."
+
+For a second, I'd thought he was defending me. He was defending his bonus. I was being discussed like a blender.
 
 A murmur went around the circle. It wasn't a murmur of protest. It was the murmur of people agreeing that, sadly, rules were rules.
 
@@ -90,9 +94,9 @@ Rule one of every RPG: when you wake up somewhere strange, you do not tell the N
 
 And there's a rule from teaching, too. In every room, there's one person everyone else glances at before they react. Find that person, and talk to them, not the loudest kid in class.
 
-When Venrick said "unmade," every head in that circle had flicked, just for a moment, toward the silver-haired elf at the back.
+When Pinched said "unmade," every head in that circle had flicked, just for a moment, toward the silver-haired elf at the back.
 
-I walked straight past Venrick. He flinched, possibly from the glitter. I stopped in front of the silver-haired elf, looked up, and up, and dropped my voice into the register I'd practiced all summer in the bathroom mirror. Aelindor's voice. The one he uses when he comes home at the end of the second game.
+I walked straight past Pinched. He flinched, possibly from the glitter. I stopped in front of the silver-haired elf, looked up, and up, and dropped my voice into the register I'd practiced all summer in the bathroom mirror. Aelindor's voice. The one he uses when he comes home at the end of the second game.
 
 "I have crossed a very long way," I said. "I expected a warmer welcome in my own house."
 
@@ -110,9 +114,9 @@ Twelve elegant heads leaned toward the convention sticker over my heart. Twelve 
 
 "It says Aelindor," I said.
 
-Which was, technically, completely true.
+Which was true.
 
-A gasp went around the circle. Venrick sneered. "Anyone can scratch a name."
+A gasp went around the circle. Pinched sneered. "Anyone can scratch a name."
 
 That's when the silver-haired elf spoke for the first time. His voice was soft and pleasant, and every person in the room went still the moment they heard it.
 
@@ -122,7 +126,7 @@ That's when the silver-haired elf spoke for the first time. His voice was soft a
 
 We waited.
 
-I stood in the middle of the smoking circle, sweating under Gwendolyn and trying to look like a prince who was used to waiting for things. Venrick glared at me. The tuning-fork lady glared at Durgan. Durgan took a long pull from his flask and sidled closer.
+I stood in the middle of the smoking circle, sweating under Gwendolyn and trying to look like a prince who was used to waiting for things. Pinched glared at me. The tuning-fork lady glared at Durgan. Durgan took a long pull from his flask and sidled closer.
 
 "Don't you worry, Highness," he murmured. "I've never had a summoning returned." He thought about it. "Not this year."
 
@@ -142,7 +146,7 @@ He was an elf, technically, but he'd been one for so long that he'd started to l
 
 I went cold all over.
 
-I knew that line. I'd quoted that line to Trent in the check-in line, two hours earlier and one universe away. It's in *Elderlight III*, in a book on the second floor of the Silverwood royal library, word for word. I'd read it eleven times. I could have recited it along with him.
+I knew that line. I'd quoted that line to Trent in the check-in line, two hours earlier and one universe away. It's in *Elderlight III*, in a book on the second floor of the Silverwood royal library, word for word. I'd read it eleven times. I could have recited it along with him. There's a leather-bound replica at the booth for three hundred dollars. This one had actual dust on it.
 
 How does a video game know what's in this book?
 
@@ -162,13 +166,15 @@ The archivist reached up and touched my cheek with one fingertip. He held it up 
 
 Nobody said anything for a moment.
 
-Then the tuning-fork lady sank to one knee. Then the elf beside her. Then the next, and the next, a ring of silver robes folding to the floor like dominoes. Durgan dropped with a groan and a loud clank of flask. Venrick was second to last, and he did it with his jaw clenched so hard I could see the muscle jump.
+Then the tuning-fork lady sank to one knee. Then the elf beside her. Then the next, and the next, a ring of silver robes folding to the floor like dominoes. Durgan dropped with a groan and a loud clank of flask. Pinched was second to last, and he did it with his jaw clenched so hard I could see the muscle jump.
 
 The silver-haired elf was last.
 
 He knelt slowly and gracefully, the way water settles, and he smiled at me. It was a lovely smile. It didn't reach anywhere near his eyes.
 
 "Welcome home, Highness," said High Lord Caelith Vaunt.
+
+Of everything in that enormous book, he'd asked about one passage. The one I'd pass.
 
 Every person in that room was kneeling to me. I graduated high school with a 2.7 GPA.
 
@@ -178,7 +184,7 @@ Bells started ringing somewhere outside. Then more bells, farther off, and then 
 
 Four guards in silver armor escorted me out of the summoning tower and down a long corridor of pale stone. Up close, the walls didn't look built so much as grown: tree roots wove through the masonry like veins, and lights floated in little glass bulbs along the ceiling with nothing holding them up. I tried to look like I'd seen it all before. I've never wanted to take a picture of something so badly in my life.
 
-My chambers were bigger than my apartment building. I'm not exaggerating for comedy. There was a sitting room, a dressing room, a balcony with its curtains drawn, and a bed roughly the size of a parking space. There was also a bathtub carved from a single piece of crystal, deep enough to drown a horse in, already steaming.
+My chambers were bigger than my apartment building. There was a sitting room, a dressing room, a balcony with its curtains drawn, and a bed roughly the size of a parking space. There was also a bathtub carved from a single piece of crystal, deep enough to drown a horse in, already steaming.
 
 I looked at that bathtub the way you'd look at a loaded gun.
 
@@ -194,7 +200,7 @@ Phone: 38%. No service.
 
 "Of course," I said to the phone. I turned it off. It felt like turning off a lifeline, and it was.
 
-Then I sat there, and for a little while I didn't think about the elves at all. I thought about Dev, and whether anyone had picked his robot head up off the ballroom floor. I thought about my fish, Mr. Pickles, who has never once in his life been fed on time. I thought about Mrs. Okafor, and my third period on Monday, and Jaylen Price with his Eraser Monitor lanyard, wondering where his teacher went. I thought about Lily, waving at me with both hands, thinking it was the best part of the show.
+Then I sat there, and for a little while I didn't think about the elves at all. I thought about Dev, and whether anyone had picked his robot head up off the ballroom floor. I thought about rent, due on the first, and the five hundred dollars I'd never know if I'd won. I thought about my fish, Mr. Pickles, who has never once in his life been fed on time. I thought about Mrs. Okafor, and my third period on Monday, and Jaylen Price with his Eraser Monitor lanyard, wondering where his teacher went. I thought about Lily, waving at me with both hands, thinking it was the best part of the show.
 
 I let myself have about five minutes of that. Then I wiped my face very carefully, because of the glitter, and looked around the room for something else to think about.
 
@@ -225,6 +231,8 @@ I'd find out at dinner the next night what they were. Looking back, I should hav
 **Damage to premises:** Scorching of ritual floor (standard). One sword, bent. Sword appears to be made of an unknown soft substance. Not ours.
 
 **Notes:** Client personnel (Lord Venrick) expressed doubts regarding the subject, including the word "troll." These doubts were resolved by archival evidence. Ritualist requests that Lord Venrick's doubts be recorded in Lord Venrick's file, and not in mine.
+
+**Customer satisfaction:** The Prince has not complained. (The Prince has not been asked.)
 
 **Completion bonus:** Due. Overdue, as of the time of writing. Please advise.
 
