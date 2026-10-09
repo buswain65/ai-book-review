@@ -331,6 +331,11 @@
           "id": "ch01-best-in-show",
           "title": "Chapter 1: Best in Show",
           "file": "ch01-best-in-show.md"
+        },
+        {
+          "id": "ch02-chapter-2-flawless-success",
+          "title": "Chapter 2: Flawless Success",
+          "file": "ch02-chapter-2-flawless-success.md"
         }
       ]
     }
