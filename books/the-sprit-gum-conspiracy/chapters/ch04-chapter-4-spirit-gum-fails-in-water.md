@@ -16,7 +16,7 @@ It looked like this:
 >
 > **Objective:** Student (me) will be able to not get murdered.
 >
-> **Materials:** One elf costume, worn. One wig (Gwendolyn). One foam sword, bent. Spirit gum, approx. half a thimble. One phone, 38%, off.
+> **Materials:** One elf costume, worn. One wig (Gwendolyn). One foam sword, bent. Spirit gum, two tries left. Maybe. One phone, 38%, off.
 >
 > **Known problems:**
 >
@@ -39,7 +39,7 @@ It looked like this:
 
 I read it over twice. Then I underlined "Buy time," because it was the only thing on the list I knew how to start on.
 
-Here's a secret about lesson plans that nobody tells you in your education courses: the plan isn't really for the class. Twenty-eight seventh graders will blow up any plan you make within the first ten minutes. The plan is for you, so that when everything goes sideways, you have something to hold onto that isn't panic.
+Nobody tells you this in your education courses, but the plan isn't really for the class. Twenty-eight seventh graders will blow up any plan you make within the first ten minutes. The plan is for you, so that when everything goes sideways, you have something to hold onto that isn't panic.
 
 Mrs. Okafor told me that, the first week. I'd rolled my eyes a little.
 
@@ -94,6 +94,8 @@ He placed his own hand over his own ear and closed his eyes.
 Then one of the acolytes did it. Then Lady Ithrien, with a little gasp of feeling. Then a courtier on the path, and another, and another, until I was kneeling in the middle of a garden full of elves with their eyes closed and one hand pressed over one ear, all of them listening very hard to a forest that, as far as I could tell, wasn't saying anything at all.
 
 The ceremony took another twenty minutes. I kept my hand over my ear for every second of it.
+
+By that evening, Lady Ithrien informed me, the Dewkeepers had voted to add the Listening to the liturgy. It was now mandatory at every Blessing, for everyone except, presumably, the forest.
 
 Walking back to my chambers afterward, still holding it, I did the math. A few shakes of a wet branch had nearly ended me. A few shakes of a wet branch, on a sunny morning, in a garden.
 
@@ -153,7 +155,7 @@ I took the tray off the table and sat down on the floor across from him. It seem
 
 We ate.
 
-Here's something I didn't expect: Brakka had beautiful manners. He tore his bread into neat, even pieces. He ate with small, careful bites. When he was finished with a chicken leg, he set the bone down on the edge of the tray, lined up with the others, and wiped his tusks with a napkin. It was the most polite anyone had eaten in front of me since I'd arrived, and I'd been dining with the aristocracy.
+Brakka, it turned out, had beautiful manners. He tore his bread into neat, even pieces. He ate with small, careful bites. When he was finished with a chicken leg, he set the bone down on the edge of the tray, lined up with the others, and wiped his tusks with a napkin. It was the most polite anyone had eaten in front of me since I'd arrived, and I'd been dining with the aristocracy.
 
 He didn't talk much, but he talked a little. He'd served in the Silverwood for thirty-one years. The elves, he said, called orcs "the Concordance's spear."
 
@@ -163,7 +165,7 @@ He didn't talk much, but he talked a little. He'd served in the Silverwood for t
 
 He chewed for a while. "No."
 
-I didn't know what to say to that, so I passed him the pie.
+I didn't point out that one still hadn't. I passed him the pie.
 
 When the trays were empty, Brakka sat back, wiped his tusks one last time, and looked at me with an expression I'd later learn was the closest he came to a smile. He nodded slowly, as if he'd just worked something out.
 
@@ -254,3 +256,51 @@ Thessa turned to him, wringing her hands. "I know the Ashtusk patterns," she sai
 Brakka considered this for a long moment. Then he nodded once.
 
 That was how I got my second ally. She cost one bodyguard twelve years of war paint, and I'd do it again.
+
+\* \* \*
+
+That night, I went looking for a wine bottle, and I found Durgan Pell.
+
+This was not difficult. You find a wine bottle in the Silverwood palace the same way you find a dwarf: follow the sound of muttering until you reach an alcove with a crate in it. He was sitting on the crate, a quill in one hand and a goblet in the other, filling out a form by the light of a floating lamp. Empty bottles stood around him in a little glass forest.
+
+"Highness!" He leaped up, saw who it was, and immediately held out the form. "Excellent timing. Form 12-B, Acknowledgment of Satisfactory Summoning. Just a signature, here, and here, and initial here."
+
+"What does it do?" I asked.
+
+Durgan blinked at me. I got the impression nobody had ever asked him that before. "It closes the warranty, Highness. Once it's signed, the Guild's return window is waived." He beamed. "You'll be non-refundable."
+
+I have clicked "I agree" on a thousand terms and conditions without reading a single one. This was the first one I'd ever read, and I would have signed it in blood.
+
+"Also, can I have one of your empty bottles?"
+
+Durgan looked at the bottles, then at me, then at the form. He was a businessman. "Sign the form," he said, "and you can have *three*."
+
+I signed it *Aelindor*, in English, in my best whiteboard capitals. He couldn't read it. He was delighted anyway. I took one bottle and left him the other two, because I suspected he'd want them back.
+
+Back in my chambers, I collected the rest of my materials. A wide, shallow bowl from the washstand. A pitcher of water, which I carried very carefully at arm's length, like it was full of acid. A hollow reed I'd pulled from the garden fountain on my way back from the Blessing. A stub of candle wax.
+
+Thessa watched from her chair in the antechamber, where she'd decided she was going to sleep, as I poured water into the bottle until it was about a third full. Brakka watched from the doorway, freshly repainted with stripes that were, Thessa had apologized, "slightly crooked," and which he kept touching with quiet satisfaction.
+
+"Is it a spell, Highness?" Thessa asked.
+
+"It's science," I said. "Unit four. Weather."
+
+Mrs. Okafor had let me teach the weather unit a few weeks before the convention, back on Earth. It was the first unit I'd ever taught on my own. My seventh graders had built these out of two-liter soda bottles and cereal bowls, and half of them had leaked, and Jaylen Price's had somehow caught fire, and it had been one of the best weeks of my life.
+
+It works like this. Fill a bottle partway with water, put your thumb over the top, and turn it upside down into a bowl of water, so the neck sits under the surface. When the air pressure outside is high, which usually means clear weather, it pushes down on the water in the bowl and keeps the level in the neck low. When a storm is coming, the pressure drops, and the water in the neck creeps up.
+
+Watch the water climb, and you know it's going to rain. Usually a day ahead. Sometimes more.
+
+I warmed the wax over the lamp and used it to fix the reed upright along the side of the bottle, like a ruler. Then I scratched a line into the reed with the tip of my knife, right at the waterline. That was my baseline. Clear skies.
+
+Thessa asked if the bottle was praying. I told her it was listening. She solemnly put a hand over one ear.
+
+I carried the whole contraption out onto the balcony and set it on the stone rail, where the moon could see it. Below me, the Silverwood stretched out in the dark, silver-green and endless. The sky was full of stars I didn't know the names of. There wasn't a cloud anywhere.
+
+I stood there for a long time, watching the water not move.
+
+I thought about the lesson plan on my desk, and what I could check off. Buy time: started. Find allies: one bodyguard who thought lunch was strategy, one attendant whose only spell could end me, and the two of them were the best things that had happened to me in this world. Get information: the long rains, in a few weeks. And now I had a way to see them coming.
+
+A lesson plan, two allies, and a wine bottle full of water. Mrs. Okafor would have been proud.
+
+She'd also have had notes.
