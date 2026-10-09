@@ -319,6 +319,20 @@
           "file": "ch09-chapter-9-the-backlog.md"
         }
       ]
+    },
+    {
+      "id": "the-sprit-gum-conspiracy",
+      "title": "The Sprit Gum Conspiracy",
+      "author": "McSloth",
+      "genre": "Fantasy",
+      "blurb": "A broke American student teacher in a budget elf costume is summoned to a world that exterminated humans, and mistaken for their prophesied elven prince.",
+      "chapters": [
+        {
+          "id": "ch01-best-in-show",
+          "title": "Chapter 1: Best in Show",
+          "file": "ch01-best-in-show.md"
+        }
+      ]
     }
   ]
 }
