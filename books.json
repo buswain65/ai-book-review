@@ -443,6 +443,20 @@
           "file": "ch23-chapter-24-three-percent.md"
         }
       ]
+    },
+    {
+      "id": "scope-creep",
+      "title": "Scope Creep",
+      "author": "McSloth",
+      "genre": "Fantasy",
+      "blurb": "A burned-out software developer is reincarnated as a fantasy guild clerk with a perfect estimation skill, and his new boss still wants it done by Friday.",
+      "chapters": [
+        {
+          "id": "ch01-prologue-ticket-4471",
+          "title": "Prologue: Ticket #4471",
+          "file": "ch01-prologue-ticket-4471.md"
+        }
+      ]
     }
   ]
 }
