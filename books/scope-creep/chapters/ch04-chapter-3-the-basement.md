@@ -278,7 +278,7 @@ The skill answered before Mike could even think about it.
 
 **Estimated time to extend wards to the new stables: 9 days, 2 hours.**
 
-"About nine days," Mike said. It seemed safer to round.
+"Just over nine days," Mike said. It seemed safer to round.
 
 Pip took out his slate and chalk and began to calculate furiously: wall lengths, rune densities, junction loads, a long column of figures that spilled over onto the back of the slate. It took him ten minutes. When he finished, he stared at the result for a long time.
 
