@@ -460,6 +460,11 @@
           "id": "ch02-chapter-1-odd-jobs",
           "title": "Chapter 1: Odd Jobs",
           "file": "ch02-chapter-1-odd-jobs.md"
+        },
+        {
+          "id": "ch03-chapter-2-onboarding",
+          "title": "Chapter 2: Onboarding",
+          "file": "ch03-chapter-2-onboarding.md"
         }
       ]
     }
