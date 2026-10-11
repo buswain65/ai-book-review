@@ -2,9 +2,11 @@
 
 The first thing Mike learned in his new life was that babies cannot file complaints.
 
-He was born in the back room of a cobbler's shop in the river town of Brindlemoor, to a broad, cheerful cobbler named Hob and a sharp-eyed laundress named Greta, who held him up to the lamplight, looked him over, and named him Mikel.
+He was born in the back room of a cobbler's shop in the river town of Brindlemoor, to a broad, cheerful cobbler named Hob Dobbins and a sharp-eyed laundress named Greta, who held him up to the lamplight, looked him over, and named him Mikel.
 
 *Of course,* Mike thought. *Even the universe reuses old variable names.*
+
+Mikel Dobbins. It had reused the surname too. Somewhere, Mike suspected, a deity was copying and pasting.
 
 The second thing he learned was that \[Accurate Estimation\] did not switch off. It ran constantly, politely, in glowing letters only he could see.
 
@@ -34,7 +36,11 @@ A desk job. A steady paycheck. Paperwork, filing, a quill instead of a sword. Af
 
 *Indoor work at a stable institution,* he thought. *What could possibly go wrong.*
 
-The skill, for once, said nothing. He chose to take that as a good sign.
+The skill considered the question for a long moment.
+
+**Estimate unavailable. Requirements unclear.**
+
+He chose not to take that as a sign.
 
 In the meantime, the family needed coin, and in Brindlemoor nobody thought twice about a child running errands for pay. So Mike went to work.
 
@@ -66,7 +72,7 @@ They ground all night. The stone groaned and shed grit into the flour. By mornin
 
 Mistress Pell got her full cart four days later, as predicted, and had to buy the rest from a mill two towns over at twice the price.
 
-Oswin was furious. Not with himself, and not with the promise. He spent most of an afternoon shouting at the broken millstone, calling it lazy and ungrateful, and at one point hit it with a hammer.
+Oswin was furious. Not with himself, and not with the promise. He spent most of an afternoon shouting at the broken millstone, calling it lazy and ungrateful, and at one point hit it with a hammer. By evening, he was telling the whole market that the stone had underperformed.
 
 Then he turned to Mike and said, "And *you* should have warned me."
 
@@ -85,6 +91,8 @@ This was, Mike quickly realized, the most valuable job he could possibly have. H
 It also introduced him to Tobias Venn.
 
 Venn was a wool merchant with soft hands and a hard smile, and he could not leave a finished contract alone. He would approve a copy, watch Quillon seal it, and then return the next morning with "one small change." Then another. Then a clause that contradicted the first small change. Then a request to restore the clause he had removed the week before, which he did not remember removing.
+
+His masterpiece was a wool contract in which he changed "sheep" to "sheep (wool-bearing)," then back to "sheep," then returned a week later demanding to know who had removed "wool-bearing" and whether Quillon was trying to defraud him.
 
 By the third revision of a single shipping agreement, Mike had developed a system. Without really thinking about it, he started marking each draft in the corner: *Final.* Then *Final 2.* Then *Final (Venn approved).* Then *FINAL — ACTUALLY.*
 
@@ -112,6 +120,8 @@ Lord Ashcombe lived in the manor on the hill, and the Goose's owner, a nervous w
 
 "Right away," Hilde would say, and the kitchen would light back up, and Mike would be back at the washtub at one in the morning while the cook swore in three languages.
 
+The cook, a one-eyed woman named Marta, took a while to warm to Mike. "The boy said the soup would boil over in forty-one seconds," she told Hilde, his first week. "It did. I don't like him."
+
 "Couldn't he send the order in the afternoon?" Mike asked once. "Then we could plan."
 
 Hilde looked at him as if he had suggested negotiating with a thunderstorm. "He's *Lord Ashcombe*."
@@ -138,7 +148,7 @@ For the first time, a cold thought crept up the back of his neck: *What if the g
 
 He pushed it away. The adventurers worked in the dungeons. He would be at a desk. It would be different.
 
-The skill, again, declined to comment.
+The skill, still sulking, declined to comment.
 
 ---
 
@@ -166,7 +176,7 @@ Mike looked at the cold steel bars stacked by the wall, and the skill obliged.
 
 **Estimated time for 20 quality swords: 20 weeks.**
 
-**Estimated time for 20 swords in 10 days: 10 days.**
+**Estimated time for 20 swords in 10 days: 10 days (quality not included).**
 
 **Estimated time until those swords break: 3 weeks, 2 days.**
 
@@ -195,6 +205,12 @@ The skill flickered, as if it wanted to say something about the odds. Mike, for 
 ---
 
 ### The Guild (age 12)
+
+His mother had packed him bread and cheese. His father saw him to the door, beaming, and clapped him on the shoulder. "A guild clerk! We'll build you a proper writing desk at home to celebrate. This weekend."
+
+**Estimated time: 6 years, 3 months.**
+
+Mike hugged him anyway.
 
 On the morning of his twelfth birthday, Mikel Dobbins, son of Hob the cobbler, scrubbed his face, put on the one clean shirt he owned, and walked to the center of Brindlemoor.
 
