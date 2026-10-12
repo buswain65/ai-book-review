@@ -1,0 +1,8 @@
+{
+  "target_age_group": "Young Adult (12-18)",
+  "reading_level": "Grade 9-10 Level",
+  "content_rating": "Moderate",
+  "rationale": "The chapter uses sophisticated vocabulary and layered bureaucratic/fantasy concepts with mildly dark references (blood contract, crypt party, dead rat) that suit a teen audience without graphic detail.",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b"
+}
