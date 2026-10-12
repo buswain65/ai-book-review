@@ -505,8 +505,9 @@
             <div class="flex justify-between items-center">
               <label for="groqKeyInput" class="text-xs font-semibold text-slate-200">Groq API</label>
               <select id="groqModelInput" aria-label="Groq model" class="bg-slate-800 border border-slate-700 text-xs rounded px-2 py-1 text-slate-200">
-                <option value="llama-3.3-70b-versatile">llama-3.3-70b-versatile</option>
-                <option value="mixtral-8x7b-32768">mixtral-8x7b-32768</option>
+                <option value="openai/gpt-oss-120b">openai/gpt-oss-120b (Recommended)</option>
+                <option value="openai/gpt-oss-20b">openai/gpt-oss-20b (faster)</option>
+                <option value="qwen/qwen3.8-27b">qwen/qwen3.8-27b (preview)</option>
               </select>
             </div>
             <input type="password" id="groqKeyInput" placeholder="Groq API Key" class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-1.5 text-slate-100 text-xs focus:outline-none focus:border-brand-500" />
@@ -643,7 +644,7 @@
         anthropicKey: '',
         anthropicModel: 'claude-sonnet-5-5',
         groqKey: '',
-        groqModel: 'llama-3.3-70b-versatile',
+        groqModel: 'openai/gpt-oss-120b',
         openrouterKey: '',
         openrouterModel: '',
         analysisProvider: 'gemini', // provider for ⚡ Analyze (reading level / age group)
@@ -687,6 +688,11 @@
       const detected = detectRepoFromUrl();
       if (!state.settings.ghOwner) state.settings.ghOwner = detected ? detected.owner : DEFAULT_GH_OWNER;
       if (!state.settings.ghRepo) state.settings.ghRepo = detected ? detected.repo : DEFAULT_GH_REPO;
+      // Groq retired Llama 3.3 70B / Llama 3.1 8B (Aug 2026) and Mixtral; move saved settings to the replacement.
+      const retiredGroq = ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant', 'mixtral-8x7b-32768', 'mistral-saba-24b', 'qwen/qwen3-32b', 'qwen/qwen3.6-27b'];
+      if (retiredGroq.includes(state.settings.groqModel)) state.settings.groqModel = 'openai/gpt-oss-120b';
+      if (state.settings.analysisProvider === 'groq' && retiredGroq.includes(state.settings.analysisModel)) state.settings.analysisModel = '';
+
       // One-time migration: whole-book reviews are too large for Groq's free tier
       if (!state.settings.wholeBookMigrated) {
         if (state.settings.agentProviders && state.settings.agentProviders.genre_fan === 'groq') {
@@ -710,7 +716,7 @@
       document.getElementById('anthropicModelInput').value = state.settings.anthropicModel || 'claude-sonnet-5-5';
 
       document.getElementById('groqKeyInput').value = state.settings.groqKey || '';
-      document.getElementById('groqModelInput').value = state.settings.groqModel || 'llama-3.3-70b-versatile';
+      document.getElementById('groqModelInput').value = state.settings.groqModel || 'openai/gpt-oss-120b';
 
       document.getElementById('openrouterKeyInput').value = state.settings.openrouterKey || '';
       document.getElementById('openrouterModelInput').value = state.settings.openrouterModel || '';
@@ -1360,7 +1366,7 @@
 
     // The model chosen on a provider's card in Settings (or its built-in default).
     function providerDefaultModel(provider) {
-      const defaults = { gemini: 'gemini-3.8-flash', openai: 'gpt-4o', anthropic: 'claude-sonnet-5-5', groq: 'llama-3.3-70b-versatile', openrouter: '' };
+      const defaults = { gemini: 'gemini-3.8-flash', openai: 'gpt-4o', anthropic: 'claude-sonnet-5-5', groq: 'openai/gpt-oss-120b', openrouter: '' };
       return state.settings[`${provider}Model`] || defaults[provider] || '';
     }
 
@@ -1767,7 +1773,7 @@ ${manuscript}`;
           const model = state.settings.anthropicModel || 'claude-sonnet-5-5';
           feedback = await callAnthropic(state.settings.anthropicKey, model, systemPrompt, userPrompt);
         } else if (provider === 'groq' && state.settings.groqKey) {
-          const model = state.settings.groqModel || 'llama-3.3-70b-versatile';
+          const model = state.settings.groqModel || 'openai/gpt-oss-120b';
           feedback = await callGroq(state.settings.groqKey, model, systemPrompt, userPrompt);
         } else if (provider === 'openrouter' && state.settings.openrouterKey) {
           if (!state.settings.openrouterModel) throw new Error("Choose an OpenRouter model in Settings (⚙) before running this agent.");
@@ -2122,6 +2128,17 @@ ${body}
     }
 
     async function callGroq(apiKey, model, systemPrompt, userPrompt) {
+      try {
+        return await callGroqRaw(apiKey, model, systemPrompt, userPrompt);
+      } catch (err) {
+        if (/does not exist|decommissioned|not have access/i.test(err.message)) {
+          throw new Error(`${err.message} Groq retires models regularly; choose a current model on the Groq card in Settings (⚙) — see console.groq.com/docs/models.`);
+        }
+        throw err;
+      }
+    }
+
+    async function callGroqRaw(apiKey, model, systemPrompt, userPrompt) {
       const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
         headers: { "Content-Type": "application/json", "Authorization": `Bearer ${apiKey}` },
