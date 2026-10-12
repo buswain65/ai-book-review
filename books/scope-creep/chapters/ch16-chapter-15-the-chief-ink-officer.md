@@ -96,9 +96,9 @@ Mike looked at the stack.
 
 "Thank you," he said.
 
-The stack did not say anything else. But after a moment, a single, slightly crumpled biscuit emerged from between two folders, on a small, gray, wrinkled hand, and was set down on the corner of Mike's desk.
+The stack did not say anything else. But after a moment, a single, slightly crumpled cookie emerged from between two folders, on a small, gray, wrinkled hand, and was set down on the corner of Mike's desk.
 
-Mike ate it. It was a very old biscuit. It was, under the circumstances, extremely kind.
+Mike ate it. It was a very old cookie. It was, under the circumstances, extremely kind.
 
 ---
 
@@ -162,7 +162,7 @@ Gareth, beside him, nodded gravely. "Initiative," he said.
 
 Mike did not say anything else. He went back behind the stack, and sat down at his desk in the dim corner, and looked at the wall for a while.
 
-After a minute, a second old biscuit appeared on the corner of his desk.
+After a minute, a second old cookie appeared on the corner of his desk.
 
 ---
 
