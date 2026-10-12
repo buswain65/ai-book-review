@@ -1,0 +1,8 @@
+{
+  "target_age_group": "Young Adult (12-18)",
+  "reading_level": "Grade 9-10 Level",
+  "content_rating": "Mild",
+  "rationale": "The chapter uses moderately sophisticated vocabulary and a detailed, world‑building scene, but contains no graphic violence or mature themes, keeping the intensity low while exploring a modestly complex technological theme.",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b"
+}
