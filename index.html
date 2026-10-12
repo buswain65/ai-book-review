@@ -533,6 +533,30 @@
           <!-- Dynamic Agent Assignment UI controls injected via JS -->
         </div>
 
+        <hr class="border-slate-800" />
+
+        <!-- Reading-level analysis (⚡ Analyze) -->
+        <h3 class="font-semibold text-slate-200">Reading-Level Analysis (⚡ Analyze)</h3>
+        <p class="text-xs text-slate-400 -mt-4">Used by the Analyze button and the automatic check after each Commit Chapter. The word count is calculated in your browser and doesn't use AI.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="analysisProviderInput" class="block font-medium text-slate-200 mb-1">Provider</label>
+            <select id="analysisProviderInput" onchange="updateAnalysisModelOptions()" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500">
+              <option value="gemini">Google Gemini</option>
+              <option value="openai">OpenAI</option>
+              <option value="anthropic">Anthropic Claude</option>
+              <option value="groq">Groq</option>
+              <option value="openrouter">OpenRouter</option>
+            </select>
+          </div>
+          <div>
+            <label for="analysisModelInput" class="block font-medium text-slate-200 mb-1">Model</label>
+            <input type="text" id="analysisModelInput" list="analysisModelList" autocomplete="off" spellcheck="false" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500" />
+            <datalist id="analysisModelList"></datalist>
+          </div>
+        </div>
+        <p id="analysisModelHint" class="text-xs text-slate-400 -mt-4">Leave the model blank to use the model chosen on that provider's card above. The provider's API key above is used.</p>
+
       </div>
 
       <div class="p-4 border-t border-slate-800 bg-slate-900/50 flex justify-end space-x-2">
@@ -622,6 +646,8 @@
         groqModel: 'llama-3.3-70b-versatile',
         openrouterKey: '',
         openrouterModel: '',
+        analysisProvider: 'gemini', // provider for ⚡ Analyze (reading level / age group)
+        analysisModel: '',          // blank = use that provider's model from its card
         agentProviders: {
           publisher: 'gemini',
           editor: 'anthropic',
@@ -689,6 +715,10 @@
       document.getElementById('openrouterKeyInput').value = state.settings.openrouterKey || '';
       document.getElementById('openrouterModelInput').value = state.settings.openrouterModel || '';
 
+      document.getElementById('analysisProviderInput').value = state.settings.analysisProvider || 'gemini';
+      document.getElementById('analysisModelInput').value = state.settings.analysisModel || '';
+      updateAnalysisModelOptions();
+
       renderAgentSettingsUI();
     }
 
@@ -730,6 +760,9 @@
 
       state.settings.openrouterKey = document.getElementById('openrouterKeyInput').value.trim();
       state.settings.openrouterModel = document.getElementById('openrouterModelInput').value.trim();
+
+      state.settings.analysisProvider = document.getElementById('analysisProviderInput').value;
+      state.settings.analysisModel = document.getElementById('analysisModelInput').value.trim();
 
       Object.keys(AGENTS).forEach(key => {
         const select = document.getElementById(`agent-provider-select-${key}`);
@@ -1301,7 +1334,7 @@
 
       if (d.rationale) {
         rationaleEl.innerText = d.rationale;
-        rationaleEl.title = d.rationale;
+        rationaleEl.title = d.provider ? `${d.rationale}\n\nAnalyzed by ${PROVIDER_LABELS[d.provider] || d.provider} (${d.model})` : d.rationale;
         rationaleEl.classList.remove('hidden');
       }
     }
@@ -1318,8 +1351,71 @@
       btn.disabled = false;
     }
 
+    // --- PROVIDER HELPERS (shared) ---
+    const PROVIDER_LABELS = { gemini: 'Google Gemini', openai: 'OpenAI', anthropic: 'Anthropic Claude', groq: 'Groq', openrouter: 'OpenRouter' };
+
+    function providerKey(provider) {
+      return state.settings[`${provider}Key`] || '';
+    }
+
+    // The model chosen on a provider's card in Settings (or its built-in default).
+    function providerDefaultModel(provider) {
+      const defaults = { gemini: 'gemini-3.8-flash', openai: 'gpt-4o', anthropic: 'claude-sonnet-5-5', groq: 'llama-3.3-70b-versatile', openrouter: '' };
+      return state.settings[`${provider}Model`] || defaults[provider] || '';
+    }
+
+    // Send one prompt to any configured provider and return the text reply.
+    async function callAIProvider(provider, model, systemPrompt, userPrompt) {
+      const key = providerKey(provider);
+      const label = PROVIDER_LABELS[provider] || provider;
+      if (!key) throw new Error(`Add a ${label} API key in Settings (⚙).`);
+      if (!model) throw new Error(`Choose a ${label} model in Settings (⚙).`);
+      switch (provider) {
+        case 'gemini': return callGemini(key, model, systemPrompt, userPrompt);
+        case 'openai': return callOpenAI(key, model, systemPrompt, userPrompt);
+        case 'anthropic': return callAnthropic(key, model, systemPrompt, userPrompt);
+        case 'groq': return callGroq(key, model, systemPrompt, userPrompt);
+        case 'openrouter': return callOpenRouter(key, model, systemPrompt, userPrompt);
+        default: throw new Error(`Unknown provider "${provider}".`);
+      }
+    }
+
+    // Settings: suggest models for the provider chosen for ⚡ Analyze.
+    function updateAnalysisModelOptions() {
+      const provider = document.getElementById('analysisProviderInput').value;
+      const list = document.getElementById('analysisModelList');
+      if (provider === 'openrouter') {
+        list.innerHTML = document.getElementById('openrouterModelList').innerHTML;
+        loadOpenRouterModels().then(() => {
+          if (document.getElementById('analysisProviderInput').value === 'openrouter') {
+            list.innerHTML = document.getElementById('openrouterModelList').innerHTML;
+          }
+        });
+      } else {
+        const select = document.getElementById(`${provider}ModelInput`);
+        list.innerHTML = select ? [...select.options].map(o => `<option value="${o.value}"></option>`).join('') : '';
+      }
+      const cardModelEl = document.getElementById(`${provider}ModelInput`);
+      const cardModel = (cardModelEl && cardModelEl.value) || providerDefaultModel(provider);
+      document.getElementById('analysisModelInput').placeholder = cardModel ? `Blank = ${cardModel}` : 'Type a model ID';
+    }
+
+    function analysisProviderAndModel() {
+      const provider = state.settings.analysisProvider || 'gemini';
+      const model = state.settings.analysisModel || providerDefaultModel(provider);
+      return { provider, model };
+    }
+
+    function showDemographicError(message) {
+      const badgeContainer = document.getElementById('demographicBadges');
+      const safe = String(message).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+      badgeContainer.innerHTML = `<span class="bg-amber-950/40 border border-amber-800/60 text-amber-300 px-2 py-0.5 rounded text-xs" title="${safe}">⚠️ Analysis failed: ${safe}</span>`;
+    }
+
     async function analyzeChapterDemographics(chapterText) {
-      if (!state.settings.geminiKey) return;
+      const { provider, model } = analysisProviderAndModel();
+      const targetBookId = state.currentBookId;
+      const targetChapId = state.currentChapterId;
 
       const prompt = `Analyze the following manuscript chapter and estimate its target reader age demographic, reading complexity, content intensity, and rationale.
 Return strictly a valid JSON object matching this schema (do not wrap in code blocks or extra text):
@@ -1334,22 +1430,28 @@ Chapter Text:
 ${chapterText.slice(0, 4000)}`;
 
       try {
-        const apiKey = state.settings.geminiKey;
-        const model = state.settings.geminiModel || 'gemini-3.8-flash';
-        const rawResponse = await callGemini(apiKey, model, "You are an expert literary demographic and readability analyzer.", prompt);
-        
-        const cleanedJson = rawResponse.replace(/```json/g, '').replace(/```/g, '').trim();
-        const demoJson = JSON.parse(cleanedJson);
+        const rawResponse = await callAIProvider(provider, model, "You are an expert literary demographic and readability analyzer.", prompt);
 
+        // Accept replies wrapped in code fences or with extra text around the JSON object.
+        const cleaned = rawResponse.replace(/```json/gi, '').replace(/```/g, '').trim();
+        const match = cleaned.match(/\{[\s\S]*\}/);
+        let demoJson;
+        try { demoJson = JSON.parse(match ? match[0] : cleaned); }
+        catch (e) { throw new Error(`${PROVIDER_LABELS[provider]} (${model}) didn't return valid JSON. Try a different model.`); }
+        demoJson.provider = provider;
+        demoJson.model = model;
+
+        if (state.currentBookId !== targetBookId || state.currentChapterId !== targetChapId) return; // user moved on
         state.demographicData = demoJson;
         renderDemographicUI();
 
         if (state.settings.ghToken && state.settings.ghOwner && state.settings.ghRepo) {
-          const path = `books/${state.currentBookId}/demographics/${state.currentChapterId}.json`;
-          await commitGitHubFile(path, JSON.stringify(demoJson, null, 2), `Update demographic analysis for ${state.currentChapterId}`);
+          const path = `books/${targetBookId}/demographics/${targetChapId}.json`;
+          await commitGitHubFile(path, JSON.stringify(demoJson, null, 2), `Update demographic analysis for ${targetChapId}`);
         }
       } catch (err) {
         console.warn("Failed to generate demographic estimation:", err);
+        if (state.currentBookId === targetBookId && state.currentChapterId === targetChapId) showDemographicError(err.message);
       }
     }
 
