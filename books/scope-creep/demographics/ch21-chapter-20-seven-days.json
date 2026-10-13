@@ -1,0 +1,8 @@
+{
+  "target_age_group": "Young Adult (12-18)",
+  "reading_level": "Grade 10-11 Level",
+  "content_rating": "Mild",
+  "rationale": "The chapter uses sophisticated vocabulary and abstract business metaphors, but scenes remain non-graphic and themes revolve around fiscal negotiations, making it suitable for older teens.",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b"
+}
