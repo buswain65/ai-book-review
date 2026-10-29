@@ -180,19 +180,6 @@
       ]
     },
     {
-      "id": "default",
-      "title": "Default",
-      "author": "McSloth",
-      "genre": "Fantasy / Isekai",
-      "chapters": [
-        {
-          "id": "ch01-default",
-          "title": "Chapter 1: Default",
-          "file": "ch01-default.md"
-        }
-      ]
-    },
-    {
       "id": "reincarnated-as-expendable-the-misadventures-of-fred-mai-captain",
       "title": "Reincarnated as Expendable: The Misadventures of Fred Mai-Captain",
       "author": "McSloth",
