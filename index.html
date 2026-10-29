@@ -124,6 +124,7 @@
     .reading p { margin: 0 0 1.1em; }
     .reading > br { display: none; } /* spacer <br/> lines between paragraphs; paragraph margins handle spacing */
     .reading h1, .reading h2 { line-height: 1.25; }
+    .about-blurb p { margin: 0 0 1em; }
     .reader-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: -0.25rem 0 1.75rem; font-family: ui-sans-serif, system-ui, sans-serif; }
     .reader-meta:empty { display: none; }
 
@@ -202,7 +203,7 @@
         </span>
 
         <!-- New Book Button (Visible strictly in Author Mode) -->
-        <button id="newBookBtn" onclick="toggleNewBookModal()" class="hidden text-xs bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 hover:text-white px-2.5 py-1.5 rounded-lg font-medium transition-colors">
+        <button id="newBookBtn" onclick="openNewBookModal()" class="hidden text-xs bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 hover:text-white px-2.5 py-1.5 rounded-lg font-medium transition-colors">
           + New Book
         </button>
       </div>
@@ -320,7 +321,7 @@
             </div>
 
             <span id="saveStatus" class="text-slate-400 text-xs">Saved</span>
-            <button onclick="saveCurrentChapter()" class="bg-brand-700 hover:bg-brand-600 text-white px-2.5 py-1 rounded font-medium transition-colors">
+            <button id="commitChapterBtn" onclick="saveCurrentChapter()" class="bg-brand-700 hover:bg-brand-600 text-white px-2.5 py-1 rounded font-medium transition-colors">
               💾 Commit Chapter
             </button>
           </div>
@@ -341,6 +342,19 @@
         </div>
 
         <div class="flex-1 relative overflow-hidden">
+          <!-- Empty state: shown when there are no books, or the selected book has no chapters -->
+          <div id="emptyState" class="hidden absolute inset-0 z-20 bg-slate-950 flex items-center justify-center p-6 text-center">
+            <div class="max-w-md space-y-3">
+              <div class="text-4xl" aria-hidden="true">📚</div>
+              <h2 id="emptyStateTitle" class="text-lg font-semibold text-slate-100"></h2>
+              <p id="emptyStateText" class="text-sm text-slate-400"></p>
+              <button id="emptyStateAction" class="hidden px-4 py-2 rounded-lg bg-brand-700 hover:bg-brand-600 text-white text-sm font-medium transition-colors"></button>
+            </div>
+          </div>
+
+          <!-- About this book: title page with the blurb -->
+          <div id="aboutPage" class="reading hidden absolute inset-0 z-10 overflow-y-auto bg-slate-950 text-slate-200" aria-live="polite"></div>
+
           <!-- Reader View (View Mode) -->
           <div id="chapterViewer" class="reading absolute inset-0 overflow-y-auto prose prose-invert prose-slate text-slate-200">
             <p class="text-slate-400 italic">Select a chapter from the left menu to start reading.</p>
@@ -409,20 +423,21 @@
           <label for="newBookGenre" class="block font-medium text-slate-200 mb-1">Genre *</label>
           <input type="text" id="newBookGenre" placeholder="e.g. Epic Fantasy" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500" />
         </div>
-        <div>
+        <div id="newBookFirstChapterField">
           <label for="newBookFirstChapter" class="block font-medium text-slate-200 mb-1">First Chapter Title</label>
           <input type="text" id="newBookFirstChapter" placeholder="Chapter 1" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500" />
           <p class="text-xs text-slate-400 mt-1">You can rename any chapter later with ✎ Rename above the editor.</p>
         </div>
         <div>
           <label for="newBookBlurb" class="block font-medium text-slate-200 mb-1">Blurb / Summary</label>
-          <textarea id="newBookBlurb" rows="3" placeholder="Brief summary of the story premises..." class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500 resize-none"></textarea>
+          <textarea id="newBookBlurb" rows="6" placeholder="Back-cover copy readers will see on the book's title page (about 100–250 words works best)." class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-brand-500 resize-y"></textarea>
+          <p class="text-xs text-slate-400 mt-1">Shown to readers on the book's "About this book" page and sent to the AI agents as context.</p>
         </div>
       </div>
 
       <div class="p-4 border-t border-slate-800 bg-slate-900/50 flex justify-end space-x-2">
         <button onclick="toggleNewBookModal()" class="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors">Cancel</button>
-        <button onclick="createNewBookSubmit()" class="px-4 py-2 rounded-lg bg-brand-700 text-white font-medium hover:bg-brand-600 transition-colors">Create Book</button>
+        <button id="newBookSubmitBtn" onclick="createNewBookSubmit()" class="px-4 py-2 rounded-lg bg-brand-700 text-white font-medium hover:bg-brand-600 transition-colors">Create Book</button>
       </div>
     </div>
   </div>
@@ -626,6 +641,8 @@
       reviewErrors: {},
       reviewMeta: {}, // per-agent saved review metadata
       reviewScope: 'book',
+      viewingAbout: false, // showing the book's "About this book" title page
+      bookModalMode: 'create', // New Book window: 'create' or 'edit'
       reviewsOpen: { view: false, author: true }, // review panel expanded? remembered per mode
       unsavedChanges: false, // editor text differs from the last loaded/committed version
       editVersion: 0,        // bumped on every edit; used to detect edits made during a commit
@@ -896,7 +913,7 @@
     }
 
     function toggleNewBookModal() {
-      if (document.getElementById('newBookModal').classList.contains('hidden')) openModal('newBookModal');
+      if (document.getElementById('newBookModal').classList.contains('hidden')) openNewBookModal();
       else closeModal('newBookModal');
     }
 
@@ -972,6 +989,73 @@
       const first = body.firstElementChild;
       if (first && /^H[1-3]$/.test(first.tagName)) first.after(readerMetaEl);
       else body.prepend(readerMetaEl);
+    }
+
+    // --- EMPTY STATES: no books at all, or a book with no chapters ---
+    function libraryStatus() {
+      const books = (state.booksData && state.booksData.books) || [];
+      const book = books.find(b => b.id === state.currentBookId);
+      if (!books.length || !book) return 'no-books';
+      if (!book.chapters.length) return 'no-chapters';
+      return 'ok';
+    }
+
+    function setDisabled(id, disabled) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.disabled = disabled;
+      el.classList.toggle('opacity-40', disabled);
+      el.classList.toggle('cursor-not-allowed', disabled);
+      el.classList.toggle('pointer-events-none', disabled);
+    }
+
+    function updateEmptyState() {
+      if (!state.booksData) return;
+      const status = libraryStatus();
+      const author = state.mode === 'author';
+      const overlay = document.getElementById('emptyState');
+      const titleEl = document.getElementById('emptyStateTitle');
+      const textEl = document.getElementById('emptyStateText');
+      const actionEl = document.getElementById('emptyStateAction');
+      const book = state.booksData.books.find(b => b.id === state.currentBookId);
+
+      overlay.classList.toggle('hidden', status === 'ok');
+      actionEl.classList.add('hidden');
+      actionEl.onclick = null;
+
+      if (status === 'no-books') {
+        titleEl.innerText = 'No books yet';
+        textEl.innerText = author ? 'Click + New Book to start one.' : 'There are no books to read yet. Check back soon.';
+        if (author) {
+          actionEl.innerText = '+ New Book';
+          actionEl.onclick = () => openNewBookModal();
+          actionEl.classList.remove('hidden');
+        }
+        document.getElementById('currentChapterTitle').innerText = 'No books yet';
+        document.getElementById('chapterList').innerHTML = `<p class="px-3 py-2 text-sm text-slate-400">No books yet.</p>`;
+        document.getElementById('bookWordCountValue').innerText = '-- words';
+      } else if (status === 'no-chapters') {
+        titleEl.innerText = 'No chapters yet';
+        textEl.innerText = author ? `"${book.title}" doesn't have any chapters yet. Click + next to Chapters to add one.` : `"${book.title}" doesn't have any chapters yet. Check back soon.`;
+        if (author) {
+          actionEl.innerText = '+ Add a Chapter';
+          actionEl.onclick = () => { openSidebar(); promptNewChapter(); };
+          actionEl.classList.remove('hidden');
+        }
+        document.getElementById('currentChapterTitle').innerText = `${book.title} — no chapters yet`;
+        document.getElementById('chapterList').innerHTML = `<p class="px-3 py-2 text-sm text-slate-400">No chapters yet.</p>`;
+      }
+
+      // Buttons that need a book / a chapter
+      const noBook = status === 'no-books';
+      const noChapter = status !== 'ok';
+      ['commitChapterBtn', 'runAllBtn', 'runCurrentAgentBtn', 'runDemographicsBtn', 'renameChapterBtn', 'exportBtn', 'editSubTabBtn', 'previewSubTabBtn']
+        .forEach(id => setDisabled(id, noChapter));
+      setDisabled('newChapterBtn', noBook);
+      setDisabled('calcWordCountBtn', noBook);
+      document.getElementById('scopeBookBtn').disabled = noChapter;
+      document.getElementById('scopeChapterBtn').disabled = noChapter;
+      if (noChapter) renderReviewContent();
     }
 
     // --- UNSAVED-CHANGES GUARD ---
@@ -1076,6 +1160,13 @@
       renderAgentStatus();
       applyReviewPanelState();
       updateExportVisibility();
+      updateEmptyState();
+      applyAboutChrome();
+      if (state.viewingAbout) renderAboutPage();
+      if (mode === 'author' && !state.currentChapterId && libraryStatus() === 'ok') {
+        const book = state.booksData.books.find(b => b.id === state.currentBookId);
+        if (book) loadChapter(book.chapters[0].id); // Author mode opens the first chapter when none has been opened yet
+      }
       if (mode === 'author') refreshPatStatus();
     }
 
@@ -1145,14 +1236,21 @@
         };
       }
 
+      if (!Array.isArray(state.booksData.books)) state.booksData.books = [];
+
       renderBookDropdown();
       if (state.booksData.books.length > 0) {
         switchBook(state.booksData.books[0].id);
       }
+      updateEmptyState();
     }
 
     function renderBookDropdown() {
       const select = document.getElementById('bookSelect');
+      if (!state.booksData.books.length) {
+        select.innerHTML = `<option value="">No books yet</option>`;
+        return;
+      }
       select.innerHTML = state.booksData.books.map(b => {
         const count = state.bookWordCounts[b.id];
         const countStr = count !== undefined ? ` (${count.toLocaleString()} words)` : '';
@@ -1208,15 +1306,34 @@
 
       renderChapterList(book);
       if (state.reviewScope === 'book') loadReviews();
-      if (book && book.chapters.length > 0) {
+      if (book && book.chapters.length > 0 && state.mode !== 'author') {
+        // Readers land on the title page; the first chapter loads when they start reading.
+        state.currentChapterId = null;
+        state.demographicData = null;
+        renderDemographicUI();
+        showAboutPage();
+      } else if (book && book.chapters.length > 0) {
         loadChapter(book.chapters[0].id);
+      } else {
+        // No chapters: clear the previous book's chapter so nothing can be committed to the wrong place.
+        state.currentChapterId = null;
+        state.unsavedChanges = false;
+        document.getElementById('chapterEditor').value = '';
+        state.demographicData = null;
+        renderDemographicUI();
+        if (state.reviewScope === 'chapter') loadReviews();
       }
+      updateEmptyState();
     }
 
     function renderChapterList(book) {
       const list = document.getElementById('chapterList');
       if (!book) return;
-      list.innerHTML = book.chapters.map(c => {
+      const aboutBtn = `
+        <button onclick="showAboutPage(); closeSidebar();" id="chap-btn-__about" class="w-full text-left px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800/80 transition-colors block border-b border-slate-800/80 mb-1">
+          <span class="block text-sm font-medium">📖 About this book</span>
+        </button>`;
+      list.innerHTML = aboutBtn + book.chapters.map(c => {
         // "Chapter 5: Hello World" -> small "Chapter 5" label + "Hello World" (wraps to 2 lines)
         const m = String(c.title).match(/^([^:]{1,30}):\s*(.+)$/);
         const label = m ? m[1] : '';
@@ -1231,11 +1348,23 @@
     }
 
     async function loadChapter(chapterId) {
+      // Returning from the title page to the chapter already open: just show it again (keeps unsaved edits).
+      if (state.viewingAbout && chapterId === state.currentChapterId && document.getElementById('chapterEditor').value) {
+        hideAboutPage();
+        const book = state.booksData.books.find(b => b.id === state.currentBookId);
+        const chap = book && book.chapters.find(c => c.id === chapterId);
+        if (chap) document.getElementById('currentChapterTitle').innerText = `${book.title} — ${chap.title}`;
+        const activeBtn = document.getElementById(`chap-btn-${chapterId}`);
+        if (activeBtn) activeBtn.classList.add('bg-slate-800', 'text-white');
+        return;
+      }
       if (!confirmDiscardChanges()) return;
       cancelRenameChapter(false);
       state.unsavedChanges = false;
       state.currentChapterId = chapterId;
       state.loadingChapterId = chapterId; // Set active loading request lock
+      hideAboutPage();
+      updateEmptyState();
 
       // Highlight Active Sidebar Button
       document.querySelectorAll('#chapterList button').forEach(b => b.classList.remove('bg-slate-800', 'text-white'));
@@ -1346,6 +1475,7 @@
     }
 
     async function runManualDemographics() {
+      if (libraryStatus() !== 'ok') return;
       const btn = document.getElementById('runDemographicsBtn');
       btn.innerText = "⏳ Analyzing...";
       btn.disabled = true;
@@ -1569,6 +1699,11 @@ ${chapterText.slice(0, 4000)}`;
 
     function renderReviewContent() {
       const container = document.getElementById('reviewContent');
+      const status = libraryStatus();
+      if (status !== 'ok') {
+        container.innerHTML = `<p class="text-slate-400 italic">${status === 'no-books' ? 'Reviews will appear here once there is a book.' : 'Reviews will appear here once this book has a chapter.'}</p>`;
+        return;
+      }
       const content = state.reviews[state.selectedAgentKey];
       const error = state.reviewErrors[state.selectedAgentKey];
       const agent = AGENTS[state.selectedAgentKey];
@@ -1687,6 +1822,7 @@ ${chapterText.slice(0, 4000)}`;
     }
 
     async function prepareManuscript(keys) {
+      if (libraryStatus() !== 'ok') return null;
       const target = currentReviewTarget();
       try {
         let input;
@@ -2209,6 +2345,7 @@ ${body}
     }
 
     async function saveCurrentChapter() {
+      if (libraryStatus() !== 'ok') return;
       const statusEl = document.getElementById('saveStatus');
       const content = document.getElementById('chapterEditor').value;
       
@@ -2259,6 +2396,7 @@ ${body}
     }
 
     async function createNewBookSubmit() {
+      if (state.bookModalMode === 'edit') return saveBookDetails();
       if (!confirmDiscardChanges()) return;
       const title = document.getElementById('newBookTitle').value.trim();
       const author = document.getElementById('newBookAuthor').value.trim();
@@ -2294,13 +2432,163 @@ ${body}
       switchBook(bookId);
 
       if (state.settings.ghToken && state.settings.ghOwner && state.settings.ghRepo) {
-        const metaContent = JSON.stringify({ id: bookId, title, author, genre, blurb }, null, 2);
-        await commitGitHubFile(`books/${bookId}/meta.json`, metaContent, `Create meta.json for ${title}`);
-
+        // Book details (title, author, genre, blurb) live only in books.json — no per-book meta.json.
         const initialChapMarkdown = `## ${firstChapTitle}\n\n<br/>\n\nStart writing your new manuscript chapter here...\n`;
         await commitGitHubFile(`books/${bookId}/chapters/${firstChapFile}`, initialChapMarkdown, `Create initial chapter for ${title}`);
 
         await commitGitHubFile("books.json", JSON.stringify(state.booksData, null, 2), `Add '${title}' to books.json index`);
+      }
+    }
+
+    // --- ABOUT THIS BOOK (title page with blurb) ---
+    function showAboutPage() {
+      const book = state.booksData && state.booksData.books.find(b => b.id === state.currentBookId);
+      if (!book) return;
+      cancelRenameChapter(false);
+      state.viewingAbout = true;
+      document.querySelectorAll('#chapterList button').forEach(b => b.classList.remove('bg-slate-800', 'text-white'));
+      const btn = document.getElementById('chap-btn-__about');
+      if (btn) btn.classList.add('bg-slate-800', 'text-white');
+      document.getElementById('aboutPage').classList.remove('hidden');
+      document.getElementById('currentChapterTitle').innerText = `${book.title} — About this book`;
+      applyAboutChrome();
+      renderAboutPage();
+      document.getElementById('aboutPage').scrollTop = 0;
+
+      // Fill in the word count if it hasn't been calculated yet.
+      if (state.bookWordCounts[book.id] === undefined && state.settings.ghOwner && state.settings.ghRepo) {
+        calculateBookWordCount(book).then(() => {
+          if (state.viewingAbout && state.currentBookId === book.id) renderAboutPage();
+          const badge = document.getElementById('bookWordCountValue');
+          if (state.currentBookId === book.id) badge.innerText = `${state.bookWordCounts[book.id].toLocaleString()} words`;
+        }).catch(() => {});
+      }
+    }
+
+    function hideAboutPage() {
+      if (!state.viewingAbout) return;
+      state.viewingAbout = false;
+      document.getElementById('aboutPage').classList.add('hidden');
+      const btn = document.getElementById('chap-btn-__about');
+      if (btn) btn.classList.remove('bg-slate-800', 'text-white');
+      applyAboutChrome();
+    }
+
+    // While the title page is open, chapter-only controls (commit, edit/preview, rename, analyze) are hidden.
+    function applyAboutChrome() {
+      const onAbout = state.viewingAbout;
+      const author = state.mode === 'author';
+      document.getElementById('editorControls').classList.toggle('hidden', !author || onAbout);
+      document.getElementById('renameChapterBtn').classList.toggle('hidden', !author || onAbout);
+      document.getElementById('demographicBar').classList.toggle('hidden', !author || onAbout);
+    }
+
+    function renderAboutPage() {
+      const book = state.booksData && state.booksData.books.find(b => b.id === state.currentBookId);
+      const el = document.getElementById('aboutPage');
+      if (!book) { el.innerHTML = ''; return; }
+      const esc = t => String(t ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      const author = state.mode === 'author';
+      const words = state.bookWordCounts[book.id];
+      const n = book.chapters.length;
+      const stats = [`${n} chapter${n === 1 ? '' : 's'}`, words !== undefined ? `${words.toLocaleString()} words` : 'counting words…'].join(' · ');
+      const blurb = (book.blurb || '').trim();
+      const blurbHtml = blurb
+        ? `<div class="about-blurb">${marked.parse(blurb)}</div>`
+        : (author ? `<p class="text-slate-400 italic text-base">No blurb yet — add one with ✎ Edit book details.</p>` : '');
+
+      el.innerHTML = `
+        <div class="text-center pt-6 pb-2">
+          ${book.genre ? `<p class="text-xs uppercase tracking-widest text-slate-400 mb-3" style="font-family: ui-sans-serif, system-ui, sans-serif;">${esc(book.genre)}</p>` : ''}
+          <h1 class="text-3xl sm:text-4xl font-bold text-white leading-tight mb-3">${esc(book.title)}</h1>
+          ${book.author ? `<p class="text-lg text-slate-300 mb-2">by ${esc(book.author)}</p>` : ''}
+          <p class="text-sm text-slate-400" style="font-family: ui-sans-serif, system-ui, sans-serif;">${stats}</p>
+        </div>
+        <hr class="my-6 border-slate-800" />
+        ${blurbHtml}
+        <div class="flex flex-wrap items-center justify-center gap-3 mt-8 mb-6" style="font-family: ui-sans-serif, system-ui, sans-serif;">
+          ${n ? `<button onclick="startReading()" class="px-5 py-2.5 rounded-lg bg-brand-700 hover:bg-brand-600 text-white text-sm font-medium transition-colors">Start reading →</button>` : ''}
+          ${author ? `<button onclick="openEditBookModal()" class="px-4 py-2.5 rounded-lg border border-slate-700 text-slate-200 hover:bg-slate-800 text-sm font-medium transition-colors">✎ Edit book details</button>` : ''}
+        </div>
+        <p id="aboutSaveStatus" class="text-center text-sm text-emerald-400 min-h-[1.25rem]" style="font-family: ui-sans-serif, system-ui, sans-serif;"></p>`;
+    }
+
+    function startReading() {
+      const book = state.booksData.books.find(b => b.id === state.currentBookId);
+      if (book && book.chapters.length) loadChapter(book.chapters[0].id);
+    }
+
+    // --- NEW BOOK / EDIT BOOK DETAILS (same window) ---
+    function setBookModalMode(mode) {
+      state.bookModalMode = mode;
+      const edit = mode === 'edit';
+      document.getElementById('newBookModalTitle').innerText = edit ? 'Edit Book Details' : 'Create New Book Project';
+      document.getElementById('newBookSubmitBtn').innerText = edit ? 'Save Changes' : 'Create Book';
+      document.getElementById('newBookFirstChapterField').classList.toggle('hidden', edit);
+    }
+
+    function openNewBookModal() {
+      setBookModalMode('create');
+      ['newBookTitle', 'newBookAuthor', 'newBookGenre', 'newBookFirstChapter', 'newBookBlurb'].forEach(id => { document.getElementById(id).value = ''; });
+      openModal('newBookModal');
+    }
+
+    function openEditBookModal() {
+      const book = state.booksData.books.find(b => b.id === state.currentBookId);
+      if (!book) return;
+      setBookModalMode('edit');
+      document.getElementById('newBookTitle').value = book.title || '';
+      document.getElementById('newBookAuthor').value = book.author || '';
+      document.getElementById('newBookGenre').value = book.genre || '';
+      document.getElementById('newBookBlurb').value = book.blurb || '';
+      openModal('newBookModal');
+    }
+
+    // Saves title/author/genre/blurb to books.json (the single source for book details).
+    // The book's id and folder never change, so chapters and reviews stay attached.
+    async function saveBookDetails() {
+      const book = state.booksData.books.find(b => b.id === state.currentBookId);
+      if (!book) return;
+      const title = document.getElementById('newBookTitle').value.trim();
+      const author = document.getElementById('newBookAuthor').value.trim();
+      const genre = document.getElementById('newBookGenre').value.trim();
+      const blurb = document.getElementById('newBookBlurb').value.trim();
+      if (!title || !author || !genre) {
+        alert("Please fill in the required fields: Title, Author, and Genre.");
+        return;
+      }
+      if (state.booksData.books.some(b => b !== book && b.title.toLowerCase() === title.toLowerCase())) {
+        alert("Another book already has that title.");
+        return;
+      }
+
+      const before = { title: book.title, author: book.author, genre: book.genre, blurb: book.blurb };
+      Object.assign(book, { title, author, genre, blurb });
+      closeModal('newBookModal');
+      setBookModalMode('create');
+      renderBookDropdown();
+      document.getElementById('bookSelect').value = book.id;
+      if (state.viewingAbout) {
+        document.getElementById('currentChapterTitle').innerText = `${book.title} — About this book`;
+        renderAboutPage();
+      } else {
+        const chap = book.chapters.find(c => c.id === state.currentChapterId);
+        if (chap) document.getElementById('currentChapterTitle').innerText = `${book.title} — ${chap.title}`;
+      }
+
+      if (state.settings.ghToken && state.settings.ghOwner && state.settings.ghRepo) {
+        const setStatus = (msg, cls) => { const el = document.getElementById('aboutSaveStatus'); if (el) { el.className = `text-center text-sm min-h-[1.25rem] ${cls}`; el.innerText = msg; } };
+        setStatus('Saving to GitHub…', 'text-amber-400');
+        const ok = await commitGitHubFile("books.json", JSON.stringify(state.booksData, null, 2), `Update details for '${title}'`);
+        if (!ok) {
+          Object.assign(book, before);
+          renderBookDropdown();
+          document.getElementById('bookSelect').value = book.id;
+          if (state.viewingAbout) { document.getElementById('currentChapterTitle').innerText = `${book.title} — About this book`; renderAboutPage(); }
+          alert("Couldn't save the book details to GitHub. Check your token in Settings (⚙) and try again.");
+          return;
+        }
+        setStatus('✓ Book details saved', 'text-emerald-400');
       }
     }
 
@@ -2404,6 +2692,7 @@ ${body}
     }
 
     function promptNewChapter() {
+      if (libraryStatus() === 'no-books') return;
       const form = document.getElementById('newChapterForm');
       form.classList.remove('hidden');
       document.getElementById('newChapterError').classList.add('hidden');
@@ -2426,6 +2715,7 @@ ${body}
       if (!title) return showError("Enter a title for the chapter.");
 
       const book = state.booksData.books.find(b => b.id === state.currentBookId);
+      if (!book) return showError("Create a book first with + New Book.");
       const chapNumber = String(book.chapters.length + 1).padStart(2, '0');
       const chapId = `ch${chapNumber}-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`;
       if (book.chapters.some(c => c.id === chapId)) return showError("A chapter with that title already exists.");
