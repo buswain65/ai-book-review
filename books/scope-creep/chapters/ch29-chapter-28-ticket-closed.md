@@ -509,3 +509,5 @@ He picked up the chalk. And at the top of the board, in clear, plain, ordinary l
 Then he went back downstairs to tell the merchant it wasn't going to be Friday.
 
 *THE END*
+
+**Estimated time to sequel: UNKNOWN**
