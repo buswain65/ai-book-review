@@ -1,0 +1,8 @@
+{
+  "target_age_group": "Young Adult (12-18)",
+  "reading_level": "Grade 8-9 Level",
+  "content_rating": "Mild",
+  "rationale": "The prose uses moderately advanced vocabulary and layered world‑building, but the scenes are whimsical and non‑violent, keeping thematic complexity suitable for early teens.",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b"
+}
