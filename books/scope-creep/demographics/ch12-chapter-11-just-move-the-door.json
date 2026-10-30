@@ -1,0 +1,8 @@
+{
+  "target_age_group": "Young Adult (12-18)",
+  "reading_level": "Grade 9-10 Level",
+  "content_rating": "Mild",
+  "rationale": "The chapter uses moderately advanced vocabulary and abstract reasoning about time and seals, while the tension remains low‑key fantasy intrigue without graphic content.",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b"
+}
