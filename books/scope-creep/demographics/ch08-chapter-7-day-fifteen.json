@@ -1,0 +1,8 @@
+{
+  "target_age_group": "Young Adult (12-18)",
+  "reading_level": "Grade 8-9 Level",
+  "content_rating": "Mild",
+  "rationale": "The chapter uses moderately advanced fantasy terminology and layered dialogue, but presents only low‑intensity conflict and no graphic material, fitting a YA readership.",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b"
+}
