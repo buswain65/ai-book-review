@@ -1,0 +1,8 @@
+{
+  "target_age_group": "Young Adult (12-18)",
+  "reading_level": "Grade 9-10 Level",
+  "content_rating": "Mild",
+  "rationale": "The prose mixes moderate‑complex sentences, specialized fantasy terminology, and gentle, non‑graphic scenes of invention, placing it at a high‑school reading level with mild intensity.",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b"
+}
