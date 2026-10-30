@@ -1,0 +1,8 @@
+{
+  "target_age_group": "Young Adult (12-18)",
+  "reading_level": "Grade 9-10 Level",
+  "content_rating": "Moderate",
+  "rationale": "The prose uses layered bureaucratic satire and some dark, implied imagery (e.g., blood contract, crypt party) with a vocabulary beyond early readers, indicating a YA audience and moderate intensity.",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b"
+}
