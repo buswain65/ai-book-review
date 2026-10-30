@@ -1,0 +1,8 @@
+{
+  "target_age_group": "Young Adult (12-18)",
+  "reading_level": "Grade 9-10 Level",
+  "content_rating": "Moderate",
+  "rationale": "The chapter uses moderately sophisticated fantasy vocabulary and complex sentence structures while presenting tense, implied danger and moral duty, suitable for older teens without graphic detail.",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b"
+}
