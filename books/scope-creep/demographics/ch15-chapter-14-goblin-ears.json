@@ -1,0 +1,8 @@
+{
+  "target_age_group": "Young Adult (12-18)",
+  "reading_level": "Grade 9-10 Level",
+  "content_rating": "Mild",
+  "rationale": "Vocabulary includes corporate jargon and fantasy terms, scene intensity is low-key (no graphic violence), and themes explore bureaucracy and metric-driven motivation, fitting a slightly advanced teen reader.",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b"
+}
