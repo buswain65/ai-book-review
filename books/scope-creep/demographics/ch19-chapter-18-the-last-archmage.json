@@ -2,7 +2,7 @@
   "target_age_group": "Young Adult (12-18)",
   "reading_level": "Grade 9-10 Level",
   "content_rating": "Mild",
-  "rationale": "The prose mixes fantasy terminology with technical jargon and subtle satire, demanding higher vocabulary and abstract reasoning, while the scenes remain non‑violent and emotionally low‑intensity.",
+  "rationale": "The chapter uses advanced vocabulary, software‑engineer analogies, and abstract world‑building, but contains only low‑stakes dialogue and no graphic content, making it suitable for older teens.",
   "provider": "groq",
   "model": "openai/gpt-oss-120b"
 }
