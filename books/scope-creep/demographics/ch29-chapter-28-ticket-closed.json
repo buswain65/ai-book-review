@@ -1,8 +1,8 @@
 {
   "target_age_group": "Middle Grade (8-12)",
-  "reading_level": "Grade 6-7 Level",
+  "reading_level": "Grade 7-8 Level",
   "content_rating": "Mild",
-  "rationale": "The prose uses moderate vocabulary and clear narrative flow with low‑intensity scenes and simple workplace themes, making it suitable for middle‑grade readers.",
+  "rationale": "Vocabulary is moderately advanced with some abstract concepts, but scenes are non‑violent and focus on a first‑day workplace experience, making it suitable for younger readers.",
   "provider": "groq",
   "model": "openai/gpt-oss-120b"
 }
