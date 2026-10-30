@@ -1,8 +1,0 @@
-{
-  "target_age_group": "Young Adult (12-18)",
-  "reading_level": "Grade 9-10 Level",
-  "content_rating": "Mild",
-  "rationale": "The prose uses elevated vocabulary and intricate atmospheric detail, while the tension remains eerie rather than graphic, fitting a YA audience with moderate thematic complexity.",
-  "provider": "groq",
-  "model": "openai/gpt-oss-120b"
-}

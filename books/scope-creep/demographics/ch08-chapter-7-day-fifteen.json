@@ -1,8 +1,0 @@
-{
-  "target_age_group": "Young Adult (12-18)",
-  "reading_level": "Grade 9-10 Level",
-  "content_rating": "Mild",
-  "rationale": "The chapter uses moderately advanced vocabulary and layered sentence structures, while depicting low‑intensity adventure scenes with only mild coarse humor and no graphic violence.",
-  "provider": "groq",
-  "model": "openai/gpt-oss-120b"
-}

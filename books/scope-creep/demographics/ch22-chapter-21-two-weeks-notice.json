@@ -1,8 +1,0 @@
-{
-  "target_age_group": "Young Adult (12-18)",
-  "reading_level": "Grade 10-11 Level",
-  "content_rating": "Moderate",
-  "rationale": "The chapter employs sophisticated vocabulary and workplace metaphors while presenting a darkly comic, tension‑filled scenario that stops short of graphic detail, suiting older teen readers.",
-  "provider": "groq",
-  "model": "openai/gpt-oss-120b"
-}

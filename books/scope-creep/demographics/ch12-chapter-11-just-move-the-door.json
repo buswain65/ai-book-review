@@ -1,8 +1,0 @@
-{
-  "target_age_group": "Young Adult (12-18)",
-  "reading_level": "Grade 9-10 Level",
-  "content_rating": "Mild",
-  "rationale": "The chapter uses moderately advanced vocabulary and abstract problem‑solving dialogue, with fantasy elements like dragons and a sealed demon but no graphic violence, making it suitable for teen readers.",
-  "provider": "groq",
-  "model": "openai/gpt-oss-120b"
-}

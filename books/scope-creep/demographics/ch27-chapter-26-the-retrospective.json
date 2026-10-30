@@ -1,8 +1,0 @@
-{
-  "target_age_group": "Young Adult (12-18)",
-  "reading_level": "Grade 9-10 Level",
-  "content_rating": "Mild",
-  "rationale": "The chapter uses sophisticated, workplace‑like vocabulary and multi‑sentence structures while depicting a non‑violent, introspective meeting, making it appropriate for older teens but not requiring adult‑only content.",
-  "provider": "groq",
-  "model": "openai/gpt-oss-120b"
-}

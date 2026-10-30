@@ -1,8 +1,0 @@
-{
-  "target_age_group": "Young Adult (12-18)",
-  "reading_level": "Grade 9-10 Level",
-  "content_rating": "Mild",
-  "rationale": "The chapter uses moderately advanced vocabulary and layered bureaucratic humor with low‑intensity suspense, fitting a YA readership without explicit content.",
-  "provider": "groq",
-  "model": "openai/gpt-oss-120b"
-}

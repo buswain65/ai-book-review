@@ -1,8 +1,0 @@
-{
-  "target_age_group": "Young Adult (12-18)",
-  "reading_level": "Grade 10-11 Level",
-  "content_rating": "Mild",
-  "rationale": "The passage uses sophisticated vocabulary and layered dialogue, presents subtle psychological pressure without graphic violence, and explores themes of autonomy and corporate coercion, matching a YA reading complexity.",
-  "provider": "groq",
-  "model": "openai/gpt-oss-120b"
-}
