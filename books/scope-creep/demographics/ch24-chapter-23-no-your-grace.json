@@ -1,0 +1,8 @@
+{
+  "target_age_group": "Young Adult (12-18)",
+  "reading_level": "Grade 10-11 Level",
+  "content_rating": "Mild",
+  "rationale": "The chapter uses moderately advanced vocabulary and layered dialogue about authority and personal agency, creating tense but non‑graphic scenes that suit a teen audience.",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b"
+}
