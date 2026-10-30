@@ -1,0 +1,8 @@
+{
+  "target_age_group": "Middle Grade (8-12)",
+  "reading_level": "Grade 7-8 Level",
+  "content_rating": "Mild",
+  "rationale": "The prose uses mostly concrete language with occasional higher‑level terms, the scenes are low‑intensity with no graphic content, and the thematic complexity about work scope is presented in a straightforward way.",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b"
+}
