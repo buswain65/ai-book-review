@@ -1,0 +1,8 @@
+{
+  "target_age_group": "Young Adult (12-18)",
+  "reading_level": "Grade 8-9 Level",
+  "content_rating": "Mild",
+  "rationale": "The vocabulary includes moderately complex terms and multi‑clause sentences, while the scenes involve light fantasy tension without graphic or sexual content, fitting a teen readership.",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b"
+}
