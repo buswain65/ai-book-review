@@ -1,0 +1,8 @@
+{
+  "target_age_group": "Young Adult (12-18)",
+  "reading_level": "Grade 9-10 Level",
+  "content_rating": "Moderate",
+  "rationale": "The prose uses moderately advanced vocabulary and layered metaphor while the tension of an imminent building collapse creates a steady, non-graphic intensity, and the themes of duty, resignation, and bureaucratic absurdity add thematic depth suited to older teens.",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b"
+}
