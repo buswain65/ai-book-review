@@ -1,0 +1,8 @@
+{
+  "target_age_group": "Young Adult (12-18)",
+  "reading_level": "Grade 9-10 Level",
+  "content_rating": "Mild",
+  "rationale": "The chapter uses moderately complex vocabulary and sentence structures, with low‑intensity intrigue and no graphic scenes, fitting a YA audience focused on thematic nuance rather than explicit content.",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b"
+}
