@@ -1,0 +1,8 @@
+{
+  "target_age_group": "Young Adult (12-18)",
+  "reading_level": "Grade 7-8 Level",
+  "content_rating": "Mild",
+  "rationale": "The prose uses moderately sophisticated vocabulary and world‑building details, but the scenes are low‑intensity and the themes revolve around workplace humor and mystery, keeping it appropriate for early teens.",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b"
+}
