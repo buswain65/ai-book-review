@@ -1,0 +1,8 @@
+{
+  "target_age_group": "Young Adult (12-18)",
+  "reading_level": "Grade 8 Level",
+  "content_rating": "Mild",
+  "rationale": "Vocabulary is mostly straightforward with occasional fantasy terms, the scenes are humorous and low‑stakes, and thematic complexity stays around workplace satire, making it suitable for early teens.",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b"
+}
